@@ -218,6 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &279973537
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -391,6 +392,7 @@ GameObject:
   - component: {fileID: 590135529}
   - component: {fileID: 590135528}
   - component: {fileID: 590135531}
+  - component: {fileID: 590135532}
   m_Layer: 0
   m_Name: Personaje
   m_TagString: Untagged
@@ -412,6 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &590135529
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -493,6 +496,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 36
   m_CollisionDetection: 0
+--- !u!65 &590135532
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590135527}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.31, y: 4.400001, z: 0.20000005}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &951602687
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -832,6 +849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1010632249
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -946,6 +964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1057449400
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1060,6 +1079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1415638218
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1137,6 +1157,7 @@ GameObject:
   - component: {fileID: 1440494929}
   - component: {fileID: 1440494928}
   - component: {fileID: 1440494927}
+  - component: {fileID: 1440494931}
   m_Layer: 0
   m_Name: Personaje (4)
   m_TagString: Untagged
@@ -1174,6 +1195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1440494929
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1239,6 +1261,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!65 &1440494931
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440494926}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.31, y: 4.400001, z: 0.20000005}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1690715612
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,6 +1369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1776236257
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1430,6 +1466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   user: {fileID: 135464788}
   user2: {fileID: 1690715612}
+  objeto: {fileID: 4027493554161819694, guid: 3c33e84780c1fe1488d280a7b83b7bd9, type: 3}
 --- !u!4 &1892269651
 Transform:
   m_ObjectHideFlags: 0

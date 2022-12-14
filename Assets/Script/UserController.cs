@@ -9,9 +9,10 @@ public class UserController : MonoBehaviour
 
     public void MoverEjercito()
     {
-            foreach (var soldado in ejercito)
-            {
-                soldado.GetComponent<movimiento>().Moverse();
-            }
+         foreach (var soldado in ejercito)
+         {
+            soldado.GetComponent<movimiento>().esTurno = true;
+            //soldado.GetComponent<movimiento>().realizaAccion();
+         }
     }
 }

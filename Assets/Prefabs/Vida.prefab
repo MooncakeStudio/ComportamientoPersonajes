@@ -54,6 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2328870663906597146}
   - component: {fileID: 1630349474663246176}
+  - component: {fileID: 1615321133649041514}
   m_Layer: 0
   m_Name: Imagen
   m_TagString: Untagged
@@ -126,3 +127,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &1615321133649041514
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8481872964212046592}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.1500025, y: 5.76, z: 0.20000103}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     bool esTurno = true;
     public static bool hayObj = false;
 
+    public static Vector3 objetivo;
+
     // Update is called once per frame
     void Start()
     {
@@ -25,11 +27,6 @@ public class GameManager : MonoBehaviour
         {
             hayObj = CrearObjeto();
         }
-    }
-
-    public void CambiaTurno()
-    {
-        esTurno = false;
     }
 
     IEnumerator Actuar()
@@ -58,6 +55,8 @@ public class GameManager : MonoBehaviour
 
         var instance = Instantiate(objeto);
         instance.transform.position = posicion;
+
+        objetivo = posicion;
 
         return true;
     }
