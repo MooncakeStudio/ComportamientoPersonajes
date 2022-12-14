@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class UserController : MonoBehaviour
@@ -14,5 +15,18 @@ public class UserController : MonoBehaviour
             soldado.GetComponent<movimiento>().esTurno = true;
             //soldado.GetComponent<movimiento>().realizaAccion();
          }
+    }
+
+    public IEnumerator MoverSoldados(int contador, int maxSoldados)
+    {
+        ejercito[contador].GetComponent<movimiento>().esTurno = true;
+        contador++;
+
+        yield return new WaitForSeconds(1);
+
+        if(contador < maxSoldados)
+        {
+            MoverSoldados(contador, maxSoldados);
+        }
     }
 }

@@ -154,6 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ejercito:
   - {fileID: 590135527}
+  - {fileID: 1415638215}
+  - {fileID: 1057449397}
+  - {fileID: 951602684}
   esTurno: 0
 --- !u!4 &135464790
 Transform:
@@ -187,7 +190,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &279973535
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -218,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  esTurno: 0
   objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &279973537
 SpriteRenderer:
@@ -414,6 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  esTurno: 0
   objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &590135529
 SpriteRenderer:
@@ -620,7 +625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &951602685
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -651,6 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  esTurno: 0
   objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &951602687
 SpriteRenderer:
@@ -693,7 +699,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8352941, b: 0.8352941, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -818,7 +824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1010632247
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -849,6 +855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  esTurno: 0
   objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1010632249
 SpriteRenderer:
@@ -933,7 +940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1057449398
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -964,6 +971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  esTurno: 0
   objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1057449400
 SpriteRenderer:
@@ -1006,7 +1014,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8352941, b: 0.8352941, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1048,7 +1056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1415638216
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1079,6 +1087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  esTurno: 0
   objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1415638218
 SpriteRenderer:
@@ -1121,7 +1130,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8352941, b: 0.8352941, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1195,6 +1204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  esTurno: 0
   objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1440494929
 SpriteRenderer:
@@ -1305,6 +1315,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ejercito:
   - {fileID: 1440494926}
+  - {fileID: 1010632246}
+  - {fileID: 1776236254}
+  - {fileID: 279973534}
   esTurno: 0
 --- !u!4 &1690715614
 Transform:
@@ -1338,7 +1351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1776236255
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1369,6 +1382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteDrcha: {fileID: 21300000, guid: 00640c10278bc064bbe4c8dff9a136c2, type: 3}
   spriteIzqda: {fileID: 21300000, guid: f0ddbed502c369f4c8f0a2c77a06b181, type: 3}
+  esTurno: 0
   objetivo: {x: 0, y: 0, z: 0}
 --- !u!212 &1776236257
 SpriteRenderer:

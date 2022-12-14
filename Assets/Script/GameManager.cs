@@ -31,15 +31,29 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Actuar()
     {
+        //if (esTurno)
+        //{
+        //    user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
+        //    yield return new WaitForSeconds(1);
+        //    esTurno = false;
+        //}
+        //else
+        //{
+        //    user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
+        //    yield return new WaitForSeconds(1);
+        //    esTurno = true;
+        //}
+
         if (esTurno)
         {
             user.GetComponent<UserController>().MoverEjercito();
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
             esTurno = false;
-        } else
+        }
+        else
         {
             user2.GetComponent<UserController>().MoverEjercito();
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
             esTurno = true;
         }
 
