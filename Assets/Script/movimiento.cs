@@ -109,8 +109,11 @@ public class movimiento : MonoBehaviour
         esTurno = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        Destroy(collision.gameObject);
+        if (collision.gameObject.name == "Vida(Clone)")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

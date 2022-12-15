@@ -31,31 +31,31 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Actuar()
     {
-        //if (esTurno)
-        //{
-        //    user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
-        //    yield return new WaitForSeconds(1);
-        //    esTurno = false;
-        //}
-        //else
-        //{
-        //    user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
-        //    yield return new WaitForSeconds(1);
-        //    esTurno = true;
-        //}
-
         if (esTurno)
         {
-            user.GetComponent<UserController>().MoverEjercito();
+            user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
             yield return new WaitForSeconds(1);
             esTurno = false;
         }
         else
         {
-            user2.GetComponent<UserController>().MoverEjercito();
+            user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
             yield return new WaitForSeconds(1);
             esTurno = true;
         }
+
+        //if (esTurno)
+        //{
+        //    user.GetComponent<UserController>().MoverEjercito();
+        //    yield return new WaitForSeconds(1);
+        //    esTurno = false;
+        //}
+        //else
+        //{
+        //    user2.GetComponent<UserController>().MoverEjercito();
+        //    yield return new WaitForSeconds(1);
+        //    esTurno = true;
+        //}
 
         StartCoroutine(Actuar());
     }
