@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject user;
     [SerializeField] GameObject user2;
 
+    [SerializeField] Grid grid;
+
     [SerializeField] GameObject objeto;
 
     bool esTurno = true;
@@ -18,14 +20,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-            StartCoroutine(Actuar());
+            //StartCoroutine(Actuar());
     }
 
     private void Update()
     {
         if (!hayObj)
         {
-            hayObj = CrearObjeto();
+            hayObj = true;
+            Invoke("CrearObjeto", 3);
         }
     }
 
@@ -60,18 +63,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Actuar());
     }
 
-    public bool CrearObjeto()
+    public void CrearObjeto()
     {
-        var x = UnityEngine.Random.Range(-85, 86);
-        var z = UnityEngine.Random.Range(-85, 86);
+        var x = UnityEngine.Random.Range(0, grid.GetGrid().GetLength(0));
+        var z = UnityEngine.Random.Range(0, grid.GetGrid().GetLength(1));
 
-        Vector3 posicion = new Vector3(x, 1, z);
+        Vector3 posicion = grid.GetPosicionGlobal(x, z);
+
+        posicion.y = 0.02f;
 
         var instance = Instantiate(objeto);
         instance.transform.position = posicion;
 
         objetivo = posicion;
-
-        return true;
     }
 }

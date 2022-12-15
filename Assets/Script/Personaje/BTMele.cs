@@ -4,17 +4,20 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
+using System;
 
-public class movimiento : MonoBehaviour
+public class BTMele : MonoBehaviour
 {
 
     [SerializeField] Sprite spriteDrcha;
     [SerializeField] Sprite spriteIzqda;
 
     private BehaviourTreeEngine BTPersonaje;
-    public bool esTurno = false;
+    public bool esTurno = true;
 
     public Vector3 objetivo;
+
+    public PathFinding pf;
 
     public void Start()
     {
@@ -44,11 +47,6 @@ public class movimiento : MonoBehaviour
 
         // Establecer Raíz
         BTPersonaje.SetRootNode(mainLoop);
-    }
-
-    public void realizaAccion()
-    {
-        BTPersonaje.Update();
     }
 
     public void Update()
@@ -101,12 +99,7 @@ public class movimiento : MonoBehaviour
 
     public void Moverse(Vector3 objetivo)
     {
-
-        Vector3 u_distancia = (objetivo - gameObject.transform.position).normalized;
-
-        gameObject.transform.position += u_distancia * 5;
-
-        esTurno = false;
+        pf.EncuentraCamino(transform.position, objetivo);
     }
 
     private void OnCollisionEnter(Collision collision)

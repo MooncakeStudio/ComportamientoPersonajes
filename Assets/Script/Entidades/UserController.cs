@@ -12,14 +12,14 @@ public class UserController : MonoBehaviour
     {
          foreach (var soldado in ejercito)
          {
-            soldado.GetComponent<movimiento>().esTurno = true;
+            soldado.GetComponent<BTMele>().esTurno = true;
             //soldado.GetComponent<movimiento>().realizaAccion();
          }
     }
 
     public IEnumerator MoverSoldados(int contador, int maxSoldados)
     {
-        ejercito[contador].GetComponent<movimiento>().esTurno = true;
+        ejercito[contador].GetComponent<BTMele>().esTurno = true;
         contador++;
 
         yield return new WaitForSeconds(1);
