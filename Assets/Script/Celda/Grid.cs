@@ -96,6 +96,10 @@ public class Grid : MonoBehaviour
                 
                 bool transitable = !Physics.CheckBox(posicion, Vector3.one / 2 * this.tamanyoCelda, Quaternion.identity, mascaraObstaculos);
 
+                if (i == 0 || i == this.alto - 1 || j == 0 ||j == this.ancho - 1){
+                    transitable = false;
+                }
+
                 grid[i, j] = new Celda(i,j);
                 grid[i, j].transitable = transitable;
             }

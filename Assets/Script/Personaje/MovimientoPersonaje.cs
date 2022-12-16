@@ -45,7 +45,7 @@ public class MovimientoPersonaje : MonoBehaviour
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         //arbol.GetBT().Update();
 
