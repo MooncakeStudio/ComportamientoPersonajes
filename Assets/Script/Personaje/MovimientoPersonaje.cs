@@ -21,7 +21,11 @@ public class MovimientoPersonaje : MonoBehaviour
 
     // GETTERS & SETTERS
 
+    public int GetX() { return x; }
+    public int GetY() { return y; }
 
+    public void SetX(int x) { this.x = x; }
+    public void SetY(int y) { this.y = y; }
 
 
     // METODOS
@@ -35,11 +39,16 @@ public class MovimientoPersonaje : MonoBehaviour
     {
         grid = GameManager.GetGrid();
 
-        do
-        {
-            x = Random.Range(0, this.grid.GetGrid().GetLength(0));
-            y = Random.Range(0, this.grid.GetGrid().GetLength(1));
-        } while (!grid.GetGrid()[x, y].transitable);
+        //do
+        //{
+        //    x = Random.Range(0, this.grid.GetGrid().GetLength(0));
+        //    y = Random.Range(0, this.grid.GetGrid().GetLength(1));
+        //} while (!grid.GetGrid()[x, y].transitable);
+
+        GetComponent<PersonajeController>().GetPersonaje().SetX(x);
+        GetComponent<PersonajeController>().GetPersonaje().SetY(y);
+
+        grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
         transform.position = grid.GetPosicionGlobal(this.x, this.y);
 
@@ -51,10 +60,28 @@ public class MovimientoPersonaje : MonoBehaviour
 
         if(objet != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, grid.GetPosicionGlobal(camino[0].xGrid, camino[0].yGrid), 1 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, grid.GetPosicionGlobal(objet.xGrid, objet.yGrid), 1 * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, grid.GetPosicionGlobal(camino[0].xGrid, camino[0].yGrid)) < 0.05f)
+            if (Vector3.Distance(transform.position, grid.GetPosicionGlobal(objet.xGrid, objet.yGrid)) < 0.05f)
+            {
+                grid.GetGrid()[x, y].SetPersonaje(null);
+
+                x = objet.xGrid;
+                y = objet.yGrid;
+
+                Debug.Log(GetComponent<PersonajeController>().GetPersonaje().GetX());
+                Debug.Log(GetComponent<PersonajeController>().GetPersonaje().GetY());
+
+                GetComponent<PersonajeController>().GetPersonaje().SetX(x);
+                GetComponent<PersonajeController>().GetPersonaje().SetY(y);
+
+                Debug.Log(GetComponent<PersonajeController>().GetPersonaje().GetX());
+                Debug.Log(GetComponent<PersonajeController>().GetPersonaje().GetY());
+
+                grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
+
                 objet = null;
+            }
         }
     }
 
@@ -79,6 +106,14 @@ public class MovimientoPersonaje : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Objeto"))
         {
+            var personaje = GetComponent<PersonajeController>().GetPersonaje();
+
+            personaje.SetVida(personaje.GetVida() + 5);
+
+            GetComponent<PersonajeController>().SetPersonaje(personaje);
+
+            Debug.Log("Mira mi vida: " + personaje.GetVida());
+
             Destroy(collision.gameObject);
         }
     }

@@ -12,6 +12,8 @@ public class Celda
 
     public Celda padre;
 
+    private PersonajeController personaje = null;
+
     public int costeG;
     public int costeH;
     public int costeF 
@@ -24,7 +26,9 @@ public class Celda
 
     // GETTERS & SETTERS
 
+    public PersonajeController GetPersonaje() { return this.personaje; }
 
+    public void SetPersonaje(PersonajeController prsonaje) { this.personaje = prsonaje; }
 
     
     // CONSTRUCTOR
@@ -36,5 +40,13 @@ public class Celda
         this.transitable = transitable;
         this.costeG = costeG;
         this.costeH = costeH;
+    }
+
+
+    // METODOS
+
+    public bool isOccupied()
+    {
+        return (personaje != null) ? true : false;
     }
 }

@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class PersonajeController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // ATRIBUTOS
 
-    // Update is called once per frame
-    void Update()
+    private Personaje personaje;
+
+
+    // GETTERS & SETTERS
+
+    public Personaje GetPersonaje() { return this.personaje; }
+
+    public void SetPersonaje(Personaje personaje) { this.personaje = personaje; }
+
+
+    // METODOS
+
+    private void Awake()
     {
-        
+        this.personaje = new Mele();
     }
 }

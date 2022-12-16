@@ -6,19 +6,24 @@ public class Personaje
 {
     // ATRIBUTOS
 
-    protected int vida;
-    protected int ataque;
+    protected int vida = 30;
+    protected int ataque = 10;
 
-    protected int x;
-    protected int y;
+    public int x;
+    public int y;
 
     // GETTERS & SETTERS
 
     public int GetVida() { return vida; }
     public int GetAtaque() { return ataque; }
+    public int GetX() { return x; }
+    public int GetY() { return y; }
 
     public void SetVida(int vida) { this.vida = vida; }
     public void SetAtaque(int ataque) { this.ataque = ataque; }
+
+    public void SetX(int x) { this.x = x; }
+    public void SetY(int y) { this.y = y; }
 
     // METODOS
 
@@ -26,5 +31,5 @@ public class Personaje
 
     virtual public void UsarEspecial() { }
 
-    virtual public Personaje EnemigoARango() { return null; }
+    virtual public PersonajeController EnemigoARango() { return null; }
 }

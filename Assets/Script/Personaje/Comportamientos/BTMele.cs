@@ -6,38 +6,24 @@ using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 using System;
 
-public class BTMele : MonoBehaviour
+public class BTMele : BTAbstracto
 {
-    // ATRIBUTOS
+    public BTMele() : base()
+    {
+        this.BT = new BehaviourTreeEngine(false);
 
-    [SerializeField] Sprite spriteDrcha;
-    [SerializeField] Sprite spriteIzqda;
-
-    private BehaviourTreeEngine BT;
-
-    [SerializeField] Grid grid;
-    
-    public Vector3 objetivo;
-    private PersonajeController enemigo;
-
-
-    // GETTERS & SETTERS
-
-    public BehaviourTreeEngine GetBT() { return this.BT; }
+        this.CrearIA();
+    }
 
 
     // METODOS
 
-    public void Start()
+    private void Start()
     {
-        BT = new BehaviourTreeEngine(false);
-
-        CrearIA();
-
         StartCoroutine(ejecutarArbol());
     }
 
-    private void CrearIA()
+    public override void CrearIA()
     {
         // Nodos
         SelectorNode nodoSelec = BT.CreateSelectorNode("nodoSelec");
@@ -88,16 +74,23 @@ public class BTMele : MonoBehaviour
 
     private ReturnValues EnemigoARangoSuccessCheck()
     {
-        enemigo = GetComponent<PersonajeController>.GetPersonaje().Get
+        enemigo = GetComponent<PersonajeController>().GetPersonaje().EnemigoARango();
 
-        return ReturnValues.Failed;
+        if(enemigo != null)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
     }
 
     private void SuficienteVidaAction() { }
 
     private ReturnValues SuficienteVidaSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().GetVida > 20)
+        if (GetComponent<PersonajeController>().GetPersonaje().GetVida() > 20)
         {
             return ReturnValues.Succeed;
         }
@@ -109,9 +102,8 @@ public class BTMele : MonoBehaviour
 
     private void AtacarAction()
     {
-        enemigo = 
-
-        GetComponent<PersonajeController>().Atacar();
+        Debug.Log("Lo agarro a putasos");
+        GetComponent<PersonajeController>().GetPersonaje().Atacar(enemigo);
     }
 
     private ReturnValues AtacarSuccessCheck()
@@ -123,7 +115,7 @@ public class BTMele : MonoBehaviour
 
     private ReturnValues EnemigoPocaVidaSuccessCheck()
     {
-        if (enemigo.GetComponent<PersonajeController>().GetVida() <= 15)
+        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <= 15)
         {
             return ReturnValues.Succeed;
         }
@@ -137,7 +129,7 @@ public class BTMele : MonoBehaviour
 
     private ReturnValues PocaVidaSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().GetVida <= 20)
+        if (GetComponent<PersonajeController>().GetPersonaje().GetVida() <= 20)
         {
             return ReturnValues.Succeed;
         }
