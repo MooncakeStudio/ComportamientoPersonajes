@@ -74,13 +74,13 @@ public class Grid : MonoBehaviour
                     Gizmos.color = Color.red;
                 }
 
-                if(camino != null)
-                {
+                //if(camino != null)
+                //{
                     if (camino.Contains(grid[i, j]))
                     {
                         Gizmos.color = Color.white;
                     }
-                }
+                //}
 
                 Gizmos.DrawCube(posicion, Vector3.one/4);
             }

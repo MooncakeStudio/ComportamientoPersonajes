@@ -45,7 +45,7 @@ public class PathFinding : MonoBehaviour
             listaAbierta.Remove(celdaActual);
             listaCerrada.Add(celdaActual);
 
-            if(celdaActual == celdaFin)
+            if(celdaActual.xGrid == celdaFin.xGrid && celdaActual.yGrid == celdaFin.yGrid)
             {
                 ObtenerCamino(celdaIni, celdaFin);
                 return;
@@ -94,11 +94,11 @@ public class PathFinding : MonoBehaviour
 
     Celda CeldaDeGlobal(Vector3 posicion)
     {
-        //float porcentajeX = (posicion.x + grid.GetAncho()/2)/grid.GetAncho();
-        //float porcentajeZ = (posicion.z + grid.GetAlto()/2)/grid.GetAlto();
+        float porcentajeX = (posicion.x + grid.GetAncho()/2)/grid.GetAncho();
+        float porcentajeZ = (posicion.z + grid.GetAlto()/2)/grid.GetAlto();
 
-        float porcentajeX = (posicion.x) / grid.GetAncho();
-        float porcentajeZ = (posicion.z) / grid.GetAlto();
+        //float porcentajeX = (posicion.x) / grid.GetAncho();
+        //float porcentajeZ = (posicion.z) / grid.GetAlto();
 
         porcentajeX = Mathf.Clamp01(porcentajeX);
         porcentajeZ = Mathf.Clamp01(porcentajeZ);

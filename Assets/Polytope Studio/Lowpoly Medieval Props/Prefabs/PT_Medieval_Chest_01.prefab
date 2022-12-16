@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8881863970567503841}
   - component: {fileID: 6681885078404485821}
+  - component: {fileID: 700512663514145356}
+  - component: {fileID: 7945171990631578073}
   m_Layer: 0
   m_Name: PT_Medieval_Chest_01
-  m_TagString: Untagged
+  m_TagString: Objeto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +47,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb3819dc2a8572438a76a7793856322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &700512663514145356
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8881863970567463873}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.838171, y: 0.39270818, z: 0.50064206}
+  m_Center: {x: 0.0023118258, y: 0.17880642, z: 0.013871074}
+--- !u!54 &7945171990631578073
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8881863970567463873}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1
 --- !u!1 &8881863970567463875
 GameObject:
   m_ObjectHideFlags: 0

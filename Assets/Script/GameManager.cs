@@ -65,15 +65,21 @@ public class GameManager : MonoBehaviour
 
     public void CrearObjeto()
     {
-        var x = UnityEngine.Random.Range(0, grid.GetGrid().GetLength(0));
-        var z = UnityEngine.Random.Range(0, grid.GetGrid().GetLength(1));
+        var x = 0;
+        var z = 0;
+        do
+        {
+            x = UnityEngine.Random.Range(0, grid.GetGrid().GetLength(0));
+            z = UnityEngine.Random.Range(0, grid.GetGrid().GetLength(1));
+        } while (!grid.GetGrid()[x, z].transitable);
+        
 
         Vector3 posicion = grid.GetPosicionGlobal(x, z);
 
         posicion.y = 0.02f;
 
-        var instance = Instantiate(objeto);
-        instance.transform.position = posicion;
+        var instance = Instantiate(objeto,posicion,Quaternion.identity);
+        //instance.transform.position = posicion;
 
         objetivo = posicion;
     }

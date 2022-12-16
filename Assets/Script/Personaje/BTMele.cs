@@ -19,6 +19,8 @@ public class BTMele : MonoBehaviour
 
     public PathFinding pf;
 
+    [SerializeField] Grid grid;
+
     public void Start()
     {
         BTPersonaje = new BehaviourTreeEngine(false);
@@ -100,11 +102,17 @@ public class BTMele : MonoBehaviour
     public void Moverse(Vector3 objetivo)
     {
         pf.EncuentraCamino(transform.position, objetivo);
+        grid.camino.Reverse();
+        foreach(var pos in grid.camino)
+        {
+            Debug.Log("No entro");
+            transform.position = grid.GetPosicionGlobal(pos.xGrid, pos.yGrid);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Vida(Clone)")
+        if (collision.gameObject.CompareTag("Objeto"))
         {
             Destroy(collision.gameObject);
         }
