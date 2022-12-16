@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class MovimientoPersonaje : MonoBehaviour
 {
+    // ATRIBUTOS
+
     [Header("Posición")]
     [SerializeField] int x;
     [SerializeField] int y;
 
     [Header("Tablero")]
-    [SerializeField] Grid grid;
+    Grid grid;
 
+    [SerializeField] PathFinding pf;
     BTMele arbol;
+    List<Celda> camino;
+
+
+    // GETTERS & SETTERS
+
+
+
+
+    // METODOS
 
     private void Awake()
     {
@@ -20,6 +32,8 @@ public class MovimientoPersonaje : MonoBehaviour
 
     private void Start()
     {
+        grid = GameManager.GetGrid();
+
         do
         {
             x = Random.Range(0, this.grid.GetGrid().GetLength(0));
@@ -32,90 +46,24 @@ public class MovimientoPersonaje : MonoBehaviour
 
     private void Update()
     {
-        arbol.Update();
+        arbol.GetBT().Update();
     }
 
-    public IEnumerator Moverse()
+    public void Moverse(Vector3 objetivo)
     {
-        int eleccion = Random.Range(0, 4);
+        pf.EncuentraCamino(transform.position, objetivo);
+        this.camino = pf.ObtenerCamino(transform.position, objetivo);
 
-        switch (eleccion)
+        camino.Reverse();
+
+        transform.position = grid.GetPosicionGlobal(camino[0].xGrid, camino[0].yGrid);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Objeto"))
         {
-            case 0:
-                if (y+1 < this.grid.GetGrid().GetLength(1) && grid.GetGrid()[x, y + 1].transitable)
-                {
-                    MoverArriba();
-                }
-                else
-                {
-                    break;
-                }
-                break;
-            case 1:
-                if (x - 1 < this.grid.GetGrid().GetLength(1) && grid.GetGrid()[x - 1,y].transitable)
-                {
-                    MoverIzquierda();
-                }
-                else
-                {
-                    break;
-                }
-                break;
-            case 2:
-                if (y - 1 < this.grid.GetGrid().GetLength(1) && grid.GetGrid()[x, y - 1].transitable)
-                {
-                    MoverAbajo();
-                }
-                else
-                {
-                    break;
-                }
-                break;
-            case 3:
-                if (x + 1 < this.grid.GetGrid().GetLength(1) && grid.GetGrid()[x + 1, y].transitable)
-                {
-                    MoverDerecha();
-                }
-                else
-                {
-                    break;
-                }
-                break;
-            default:
-                break;
+            Destroy(collision.gameObject);
         }
-
-        //yield return new WaitForSeconds(2);
-        yield return null;
-
-        StartCoroutine(Moverse());
-    }
-
-    public void MoverArriba() 
-    {
-        this.y += 1;
-
-        transform.position = grid.GetPosicionGlobal(this.x, this.y);
-    }
-
-    public void MoverIzquierda() 
-    {
-        this.x -= 1;
-
-        transform.position = grid.GetPosicionGlobal(this.x, this.y);
-    }
-
-    public void MoverAbajo() 
-    {
-        this.y -= 1;
-
-        transform.position = grid.GetPosicionGlobal(this.x, this.y);
-    }
-
-    public void MoverDerecha() 
-    {
-        this.x += 1;
-
-        transform.position = grid.GetPosicionGlobal(this.x, this.y);
     }
 }

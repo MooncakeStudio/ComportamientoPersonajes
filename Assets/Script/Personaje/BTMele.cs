@@ -8,23 +8,27 @@ using System;
 
 public class BTMele : MonoBehaviour
 {
+    // ATRIBUTOS
 
     [SerializeField] Sprite spriteDrcha;
     [SerializeField] Sprite spriteIzqda;
 
-    private BehaviourTreeEngine BTPersonaje;
-    public bool esTurno = true;
-
-    public Vector3 objetivo;
-
-    public PathFinding pf;
+    private BehaviourTreeEngine BT;
 
     [SerializeField] Grid grid;
+    public Vector3 objetivo;
+
+
+    // GETTERS & SETTERS
+
+    public BehaviourTreeEngine GetBT() { return this.BT; }
+
+
+    // METODOS
 
     public void Start()
     {
-        BTPersonaje = new BehaviourTreeEngine(false);
-
+        BT = new BehaviourTreeEngine(false);
 
         CrearIA();
     }
@@ -32,13 +36,13 @@ public class BTMele : MonoBehaviour
     private void CrearIA()
     {
         // Nodos
-        SelectorNode nodoSeleccion = BTPersonaje.CreateSelectorNode("selectorNode");
-        SequenceNode nodoSecuencia = BTPersonaje.CreateSequenceNode("seqNode", false);
-        LeafNode compruebaObjetivo = BTPersonaje.CreateLeafNode("compruebaObjetivo", compruebaObjetivoAction, compruebaObjetivoSuccessCheck);
-        LeafNode irObjetivo = BTPersonaje.CreateLeafNode("irObjetivo", irObjetivoAction, irObjetivoSuccessCheck);
-        LeafNode idle = BTPersonaje.CreateLeafNode("idle", idleAction, idleSuccessCheck);
+        SelectorNode nodoSeleccion = BT.CreateSelectorNode("selectorNode");
+        SequenceNode nodoSecuencia = BT.CreateSequenceNode("seqNode", false);
+        LeafNode compruebaObjetivo = BT.CreateLeafNode("compruebaObjetivo", compruebaObjetivoAction, compruebaObjetivoSuccessCheck);
+        LeafNode irObjetivo = BT.CreateLeafNode("irObjetivo", irObjetivoAction, irObjetivoSuccessCheck);
+        LeafNode idle = BT.CreateLeafNode("idle", idleAction, idleSuccessCheck);
 
-        LoopDecoratorNode mainLoop = BTPersonaje.CreateLoopNode("loop", nodoSeleccion);
+        LoopDecoratorNode mainLoop = BT.CreateLoopNode("loop", nodoSeleccion);
 
         // Añadir hijos
         nodoSeleccion.AddChild(nodoSecuencia);
@@ -48,24 +52,12 @@ public class BTMele : MonoBehaviour
         nodoSecuencia.AddChild(irObjetivo);
 
         // Establecer Raíz
-        BTPersonaje.SetRootNode(mainLoop);
+        BT.SetRootNode(mainLoop);
     }
 
-    public void Update()
-    {
-        if (esTurno)
-        {
-            BTPersonaje.Update();
-        }
-    }
+    /* ACCIONES */
 
-    private void compruebaObjetivoAction()
-    {
-        if (GameManager.hayObj == true)
-        {
-            objetivo = GameManager.objetivo;
-        }
-    }
+    private void compruebaObjetivoAction() {}
 
     private ReturnValues compruebaObjetivoSuccessCheck()
     {
@@ -81,7 +73,9 @@ public class BTMele : MonoBehaviour
 
     private void irObjetivoAction()
     {
-        Moverse(objetivo);
+        var movimientoManager = GetComponent<MovimientoPersonaje>();
+
+        movimientoManager.Moverse(GameManager.objetivo);
     }
 
     private ReturnValues irObjetivoSuccessCheck()
@@ -89,32 +83,10 @@ public class BTMele : MonoBehaviour
         return ReturnValues.Succeed;
     }
 
-    private void idleAction()
-    {
-
-    }
+    private void idleAction() {}
 
     private ReturnValues idleSuccessCheck()
     {
         return ReturnValues.Succeed;
-    }
-
-    public void Moverse(Vector3 objetivo)
-    {
-        pf.EncuentraCamino(transform.position, objetivo);
-        grid.camino.Reverse();
-        foreach(var pos in grid.camino)
-        {
-            Debug.Log("No entro");
-            transform.position = grid.GetPosicionGlobal(pos.xGrid, pos.yGrid);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Objeto"))
-        {
-            Destroy(collision.gameObject);
-        }
     }
 }

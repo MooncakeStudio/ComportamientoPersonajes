@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    // ATRIBUTOS
+
     Celda[,] grid;
 
     [Header("Dimensiones")]
@@ -15,13 +17,16 @@ public class Grid : MonoBehaviour
     [Header("Máscara de Obstáculos")]
     [SerializeField] LayerMask mascaraObstaculos;
 
-    public List<Celda> camino;
+
+    // GETTERS & SETTERS
 
     public int GetAncho() { return this.ancho; }
     public int GetAlto() { return this.alto; }
     public Celda[,] GetGrid() { return this.grid; }
 
-    // Start is called before the first frame update
+    
+    // METODOS
+
     void Awake()
     {
         this.grid = new Celda[alto, ancho];
@@ -74,14 +79,6 @@ public class Grid : MonoBehaviour
                     Gizmos.color = Color.red;
                 }
 
-                //if(camino != null)
-                //{
-                    if (camino.Contains(grid[i, j]))
-                    {
-                        Gizmos.color = Color.white;
-                    }
-                //}
-
                 Gizmos.DrawCube(posicion, Vector3.one/4);
             }
         }
@@ -108,5 +105,19 @@ public class Grid : MonoBehaviour
         Vector3 posicion = new Vector3(transform.position.x + x * this.tamanyoCelda, 0f, transform.position.z + z * this.tamanyoCelda);
 
         return posicion;
+    }
+
+    public Celda GetCelda(Vector3 posicion)
+    {
+        float porcentajeX = (posicion.x + ancho / 2) / ancho;
+        float porcentajeZ = (posicion.z + alto / 2) / alto;
+
+        porcentajeX = Mathf.Clamp01(porcentajeX);
+        porcentajeZ = Mathf.Clamp01(porcentajeZ);
+
+        var x = Mathf.RoundToInt(porcentajeX * (grid.GetLength(0) - 1));
+        var z = Mathf.RoundToInt(porcentajeZ * (grid.GetLength(1) - 1));
+
+        return grid[x, z];
     }
 }

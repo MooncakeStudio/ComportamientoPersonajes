@@ -4,23 +4,32 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // ATRIBUTOS
 
     [SerializeField] GameObject user;
     [SerializeField] GameObject user2;
 
-    [SerializeField] Grid grid;
+    [SerializeField] Grid worldGrid;
+    static Grid grid;
 
     [SerializeField] GameObject objeto;
 
-    bool esTurno = true;
+    bool esTurnoUno = true;
     public static bool hayObj = false;
 
     public static Vector3 objetivo;
 
-    // Update is called once per frame
-    void Start()
+
+    // GETTERS & SETTERS
+
+    public static Grid GetGrid() { return grid; }
+
+
+    // METODOS
+
+    private void Awake()
     {
-            //StartCoroutine(Actuar());
+        grid = worldGrid;
     }
 
     private void Update()
@@ -34,31 +43,18 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Actuar()
     {
-        if (esTurno)
+        if (esTurnoUno)
         {
             user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
             yield return new WaitForSeconds(1);
-            esTurno = false;
+            esTurnoUno = false;
         }
         else
         {
             user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
             yield return new WaitForSeconds(1);
-            esTurno = true;
+            esTurnoUno = true;
         }
-
-        //if (esTurno)
-        //{
-        //    user.GetComponent<UserController>().MoverEjercito();
-        //    yield return new WaitForSeconds(1);
-        //    esTurno = false;
-        //}
-        //else
-        //{
-        //    user2.GetComponent<UserController>().MoverEjercito();
-        //    yield return new WaitForSeconds(1);
-        //    esTurno = true;
-        //}
 
         StartCoroutine(Actuar());
     }
@@ -78,8 +74,7 @@ public class GameManager : MonoBehaviour
 
         posicion.y = 0.02f;
 
-        var instance = Instantiate(objeto,posicion,Quaternion.identity);
-        //instance.transform.position = posicion;
+        var instance = Instantiate(objeto, posicion, Quaternion.identity);
 
         objetivo = posicion;
     }

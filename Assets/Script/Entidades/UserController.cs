@@ -5,21 +5,26 @@ using UnityEngine;
 
 public class UserController : MonoBehaviour
 {
+    // ATRIBUTOS
+
     [SerializeField] public List<GameObject> ejercito;
-    [SerializeField] public bool esTurno;
+    [SerializeField] public bool esMiTurno;
+
+
+    // GETTERS & SETTERS
+
+
+
+
+    // METODOS
 
     public void MoverEjercito()
     {
-         foreach (var soldado in ejercito)
-         {
-            soldado.GetComponent<BTMele>().esTurno = true;
-            //soldado.GetComponent<movimiento>().realizaAccion();
-         }
+         
     }
 
     public IEnumerator MoverSoldados(int contador, int maxSoldados)
     {
-        ejercito[contador].GetComponent<BTMele>().esTurno = true;
         contador++;
 
         yield return new WaitForSeconds(1);

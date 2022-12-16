@@ -9,21 +9,22 @@ using UnityEngine;
 
 public class PathFinding : MonoBehaviour
 {
+    // ATRIBUTOS
+
     [SerializeField] Grid grid;
 
-    public Transform buscador;
 
-    Vector3 objvo;
+    // GETTERS & SETTERS
 
-    private void Update()
-    {
-        //EncuentraCamino(buscador.position, objvo);
-    }
+
+
+
+    // METODOS
 
     public void EncuentraCamino(Vector3 posicion, Vector3 objetivo)
     {
-        Celda celdaIni = CeldaDeGlobal(posicion);
-        Celda celdaFin = CeldaDeGlobal(objetivo);
+        Celda celdaIni = grid.GetCelda(posicion);
+        Celda celdaFin = grid.GetCelda(objetivo);
 
         List<Celda> listaAbierta = new List<Celda>();
         HashSet<Celda> listaCerrada = new HashSet<Celda>();
@@ -47,7 +48,6 @@ public class PathFinding : MonoBehaviour
 
             if(celdaActual.xGrid == celdaFin.xGrid && celdaActual.yGrid == celdaFin.yGrid)
             {
-                ObtenerCamino(celdaIni, celdaFin);
                 return;
             }
 
@@ -75,8 +75,11 @@ public class PathFinding : MonoBehaviour
         }
     }
 
-    void ObtenerCamino(Celda ini, Celda fin)
+    public List<Celda> ObtenerCamino(Vector3 posIni, Vector3 posFin)
     {
+        Celda ini = grid.GetCelda(posIni);
+        Celda fin = grid.GetCelda(posFin);
+
         List<Celda> camino = new List<Celda>();
         Celda celdaActual = fin;
 
@@ -86,27 +89,7 @@ public class PathFinding : MonoBehaviour
             celdaActual = celdaActual.padre;
         }
 
-        camino.Reverse();
-
-        grid.camino = camino;
-
-    }
-
-    Celda CeldaDeGlobal(Vector3 posicion)
-    {
-        float porcentajeX = (posicion.x + grid.GetAncho()/2)/grid.GetAncho();
-        float porcentajeZ = (posicion.z + grid.GetAlto()/2)/grid.GetAlto();
-
-        //float porcentajeX = (posicion.x) / grid.GetAncho();
-        //float porcentajeZ = (posicion.z) / grid.GetAlto();
-
-        porcentajeX = Mathf.Clamp01(porcentajeX);
-        porcentajeZ = Mathf.Clamp01(porcentajeZ);
-
-        var x = Mathf.RoundToInt(porcentajeX * (grid.GetGrid().GetLength(0) - 1));
-        var z = Mathf.RoundToInt(porcentajeZ * (grid.GetGrid().GetLength(1) - 1));
-
-        return grid.GetGrid()[x, z];
+        return camino;
     }
 
     int DistManhattan(Celda ini, Celda fin)

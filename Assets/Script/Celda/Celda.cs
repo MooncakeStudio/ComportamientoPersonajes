@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Celda
 {
+    // ATRIBUTOS
+
     public int xGrid, yGrid;
 
     public bool transitable;
@@ -19,12 +21,19 @@ public class Celda
         }
     }
 
+
+    // GETTERS & SETTERS
+
+
+
+    
+    // CONSTRUCTOR
+
     public Celda(int xGrid = 0, int yGrid = 0, bool transitable = true, int costeG = 0, int costeH = 0)
     {
         this.xGrid = xGrid;
         this.yGrid = yGrid;
         this.transitable = transitable;
-        this.padre = padre;
         this.costeG = costeG;
         this.costeH = costeH;
     }
