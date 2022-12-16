@@ -31,6 +31,8 @@ public class BTMele : MonoBehaviour
         BT = new BehaviourTreeEngine(false);
 
         CrearIA();
+
+        StartCoroutine(ejecutarArbol());
     }
 
     private void CrearIA()
@@ -58,6 +60,13 @@ public class BTMele : MonoBehaviour
     /* ACCIONES */
 
     private void compruebaObjetivoAction() {}
+
+    IEnumerator ejecutarArbol()
+    {
+        BT.Update();
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.05f, 0.25f));
+        StartCoroutine(ejecutarArbol());
+    }
 
     private ReturnValues compruebaObjetivoSuccessCheck()
     {

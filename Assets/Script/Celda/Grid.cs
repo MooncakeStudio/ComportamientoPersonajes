@@ -22,6 +22,8 @@ public class Grid : MonoBehaviour
 
     public int GetAncho() { return this.ancho; }
     public int GetAlto() { return this.alto; }
+
+    public float GetTamCelda() { return tamanyoCelda; }
     public Celda[,] GetGrid() { return this.grid; }
 
     

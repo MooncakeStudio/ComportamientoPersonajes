@@ -17,6 +17,7 @@ public class MovimientoPersonaje : MonoBehaviour
     BTMele arbol;
     List<Celda> camino;
 
+    Celda objet;
 
     // GETTERS & SETTERS
 
@@ -46,7 +47,15 @@ public class MovimientoPersonaje : MonoBehaviour
 
     private void Update()
     {
-        arbol.GetBT().Update();
+        //arbol.GetBT().Update();
+
+        if(objet != null)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, grid.GetPosicionGlobal(camino[0].xGrid, camino[0].yGrid), 1 * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, grid.GetPosicionGlobal(camino[0].xGrid, camino[0].yGrid)) < 0.05f)
+                objet = null;
+        }
     }
 
     public void Moverse(Vector3 objetivo)
@@ -54,9 +63,16 @@ public class MovimientoPersonaje : MonoBehaviour
         pf.EncuentraCamino(transform.position, objetivo);
         this.camino = pf.ObtenerCamino(transform.position, objetivo);
 
-        camino.Reverse();
+        if(camino.Count > 0)
+        {
+            camino.Reverse();
 
-        transform.position = grid.GetPosicionGlobal(camino[0].xGrid, camino[0].yGrid);
+            objet = camino[0];
+
+            
+        }
+        
+        
     }
 
     private void OnCollisionEnter(Collision collision)
