@@ -69,14 +69,10 @@ public class MovimientoPersonaje : MonoBehaviour
                 x = objet.xGrid;
                 y = objet.yGrid;
 
-                Debug.Log(GetComponent<PersonajeController>().GetPersonaje().GetX());
-                Debug.Log(GetComponent<PersonajeController>().GetPersonaje().GetY());
 
                 GetComponent<PersonajeController>().GetPersonaje().SetX(x);
                 GetComponent<PersonajeController>().GetPersonaje().SetY(y);
 
-                Debug.Log(GetComponent<PersonajeController>().GetPersonaje().GetX());
-                Debug.Log(GetComponent<PersonajeController>().GetPersonaje().GetY());
 
                 grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
@@ -95,8 +91,6 @@ public class MovimientoPersonaje : MonoBehaviour
             camino.Reverse();
 
             objet = camino[0];
-
-            
         }
         
         

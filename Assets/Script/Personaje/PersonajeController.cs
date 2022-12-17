@@ -7,9 +7,12 @@ public class PersonajeController : MonoBehaviour
     // ATRIBUTOS
 
     private Personaje personaje;
-    bool provocado;
-    bool aliadoAuxilio;
-    bool especialCargado;
+
+    private GameObject enemigoObjetivo;
+
+    bool provocado = false;
+    bool aliadoAuxilio = false;
+    bool especialCargado = false;
 
     // GETTERS & SETTERS
 
@@ -22,6 +25,9 @@ public class PersonajeController : MonoBehaviour
     public bool alguienPidiendoAuxilio() { return aliadoAuxilio; }
 
     public bool tengoAtaqueEspecial() { return especialCargado; }
+
+    public void setEnemigoObjetivo(GameObject enemigoObjetivo) { this.enemigoObjetivo = enemigoObjetivo; }
+    public GameObject getEnemigoObjetivo() { return enemigoObjetivo; }
     // METODOS
 
     private void Awake()

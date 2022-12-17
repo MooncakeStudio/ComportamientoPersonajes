@@ -32,11 +32,7 @@ public class BTAbstracto : MonoBehaviour
 
     virtual public IEnumerator ejecutarArbol()
     {
-        BT.Update();
-
-        yield return new WaitForSeconds(0.1f);
-
-        StartCoroutine(ejecutarArbol());
+        yield return null;
     }
 
     virtual public void IniciaArbol()

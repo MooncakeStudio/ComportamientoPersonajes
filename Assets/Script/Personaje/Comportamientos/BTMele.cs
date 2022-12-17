@@ -23,6 +23,17 @@ public class BTMele : BTAbstracto
         StartCoroutine(ejecutarArbol());
     }
 
+
+    public override IEnumerator ejecutarArbol()
+    {
+        BT.Update();
+
+        yield return new WaitForSeconds(0.2f);
+
+        //BT.Reset();
+        StartCoroutine(ejecutarArbol());
+    }
+
     public override void CrearIA()
     {
         //Nodo root
@@ -110,7 +121,7 @@ public class BTMele : BTAbstracto
         nodoRoot.AddChild(moverseSelector);
 
         // Establecer Raíz
-        BT.SetRootNode(mainLoop);
+        BT.SetRootNode(nodoRoot);
     }
 
     /* ACCIONES */
@@ -131,7 +142,13 @@ public class BTMele : BTAbstracto
     }
 
     //Moverse enemigo
-    private void MoverseEnemigoAction() { }
+    private void MoverseEnemigoAction() 
+    {
+        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+        GetComponent<MovimientoPersonaje>().Moverse(enemigo.transform.position);
+
+        Debug.Log("Me muevo al enemigo");
+    }
 
     private ReturnValues MoverseEnemigoSuccessCheck() { return ReturnValues.Succeed; }
 
@@ -144,6 +161,7 @@ public class BTMele : BTAbstracto
 
         if(enemigo != null)
         {
+            Debug.Log("Enemigo a rango");
             return ReturnValues.Succeed;
         }
         else
@@ -201,7 +219,7 @@ public class BTMele : BTAbstracto
     //Provocar
     private void ProvocarAction() { }
 
-    private ReturnValues ProvocarSuccessCheck() { return ReturnValues.Running; }
+    private ReturnValues ProvocarSuccessCheck() { return ReturnValues.Succeed; }
 
     //Atacar
     private void AtacarAction()
@@ -221,7 +239,7 @@ public class BTMele : BTAbstracto
 
     private ReturnValues EnemigoPocaVidaSuccessCheck()
     {
-        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <= 15)
+        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <= 20)
         {
             return ReturnValues.Succeed;
         }
@@ -278,7 +296,7 @@ public class BTMele : BTAbstracto
     }
 
     //Pedir auxilio
-    private void PedirAuxilioAction() { }
+    private void PedirAuxilioAction() {  }
 
-    private ReturnValues PedirAuxilioSuccessCheck() { return ReturnValues.Succeed; }
+    private ReturnValues PedirAuxilioSuccessCheck() { return ReturnValues.Failed; }
 }
