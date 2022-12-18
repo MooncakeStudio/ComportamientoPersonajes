@@ -136,14 +136,8 @@ public class BTMele : BTAbstracto
 
     private ReturnValues EnemigoProvocandoSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().siendoProvocado())
-        {
-            return ReturnValues.Succeed;
-        }
-        else
-        {
-            return ReturnValues.Failed;
-        }
+        return ReturnValues.Failed;
+
     }
 
     //Moverse enemigo
@@ -152,10 +146,23 @@ public class BTMele : BTAbstracto
         var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
         GetComponent<MovimientoPersonaje>().Moverse(enemigo.transform.position);
 
-        Debug.Log("Me muevo al enemigo");
+        Debug.Log(gameObject.name + "Me muevo al enemigo");
     }
 
-    private ReturnValues MoverseEnemigoSuccessCheck() { return ReturnValues.Succeed; }
+    private ReturnValues MoverseEnemigoSuccessCheck() 
+    {
+        enemigo = GetComponent<PersonajeController>().GetPersonaje().EnemigoARango();
+
+        if (enemigo != null)
+        {
+            Debug.Log(gameObject.name + "Enemigo a rango");
+            return ReturnValues.Failed;
+        }
+        else
+        {
+            return ReturnValues.Succeed;
+        }
+    }
 
     //Enemigo a rango
     private void EnemigoARangoAction() { }
@@ -166,7 +173,7 @@ public class BTMele : BTAbstracto
 
         if(enemigo != null)
         {
-            Debug.Log("Enemigo a rango");
+            Debug.Log(gameObject.name +  "Enemigo a rango");
             return ReturnValues.Succeed;
         }
         else
@@ -224,6 +231,7 @@ public class BTMele : BTAbstracto
     //Provocar
     private void ProvocarAction() 
     {
+        
         GetComponent<MeleeController>().Provocar();
     }
 
@@ -232,7 +240,7 @@ public class BTMele : BTAbstracto
     //Atacar
     private void AtacarAction()
     {
-        Debug.Log("Lo agarro a putasos");
+        Debug.Log(gameObject.name + "Lo agarro a putasos");
         GetComponent<PersonajeController>().GetPersonaje().Atacar(enemigo);
     }
 
@@ -306,7 +314,11 @@ public class BTMele : BTAbstracto
     //Pedir auxilio
     private void PedirAuxilioAction() 
     {
+        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        GetComponent<MovimientoPersonaje>().Moverse(aliado.transform.position);
         GetComponent<PersonajeController>().pidiendoAuxilio();
+
+        Debug.Log(gameObject.name + "Estoy Pidiendo auxilio");
     }
 
     private ReturnValues PedirAuxilioSuccessCheck() 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PersonajeController : MonoBehaviour
 {
@@ -9,11 +10,15 @@ public class PersonajeController : MonoBehaviour
     private Personaje personaje;
 
     private GameObject enemigoObjetivo;
+    private GameObject aliadoCercano;
 
     bool provocado = false;
     bool aliadoAuxilio = false;
     bool especialCargado = false;
     bool necesitoAuxilio = false;
+
+   
+    
 
     [SerializeField] float velocidad;
 
@@ -31,22 +36,30 @@ public class PersonajeController : MonoBehaviour
 
     public bool pidoAuxilio() { return necesitoAuxilio; }
 
-    public void pidiendoAuxilio() { necesitoAuxilio = true; Debug.Log("Estoy Pidiendo auxilio"); }
+    public void pidiendoAuxilio() { necesitoAuxilio = true; }
     public void noMasAuxilio() { necesitoAuxilio = false; }
+
+   
 
     public float GetVelocidad() { return velocidad; }
 
     public void setEnemigoObjetivo(GameObject enemigoObjetivo) { this.enemigoObjetivo = enemigoObjetivo; }
+
+    public void setAliadoCercano(GameObject aliadoCercano) { this.aliadoCercano= aliadoCercano; }
+    public GameObject getAliadoCercano() { return aliadoCercano; }
     public GameObject getEnemigoObjetivo() { return enemigoObjetivo; }
     // METODOS
 
     private void Awake()
     {
         this.personaje = new Mele();
+        
     }
 
     private void Start()
     {
+        personaje.SetFaccion(gameObject.tag);
+        Debug.Log(personaje.GetFaccion());
         StartCoroutine(cargarEspecial());
     }
 

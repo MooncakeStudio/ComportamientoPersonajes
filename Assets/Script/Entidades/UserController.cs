@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UserController : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class UserController : MonoBehaviour
     [SerializeField] private List<GameObject> ejercitoEnemigo;
     int aliadoPidiendoAuxilio = 0;
     GameObject aliadoProblemas;
+
+    public UnityEvent aliadoPideAuxilio = new UnityEvent();
 
     // GETTERS & SETTERS
 
@@ -35,6 +38,18 @@ public class UserController : MonoBehaviour
             }
 
             personaje.GetComponent<PersonajeController>().setEnemigoObjetivo(posibleObjetivo);
+
+            /*distance = Mathf.Infinity;
+            foreach(var aliado in ejercito)
+            {
+                if (Vector3.Distance(aliado.transform.position, personaje.transform.position) < distance)
+                {
+                    posibleObjetivo = aliado;
+                    distance = Vector3.Distance(aliado.transform.position, personaje.transform.position);
+                }
+            }
+
+            personaje.GetComponent<PersonajeController>().setAliadoCercano(posibleObjetivo);*/
         }
 
 

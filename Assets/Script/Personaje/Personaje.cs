@@ -25,6 +25,11 @@ public class Personaje
     public void SetX(int x) { this.x = x; }
     public void SetY(int y) { this.y = y; }
 
+    protected string faccion;
+
+    public void SetFaccion(string faccion) { this.faccion = faccion; }
+    public string GetFaccion() { return faccion; }  
+
     // METODOS
 
     virtual public void Atacar(PersonajeController enemigo) { }
