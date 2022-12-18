@@ -106,6 +106,10 @@ public class MovimientoPersonaje : MonoBehaviour
 
             GetComponent<PersonajeController>().SetPersonaje(personaje);
 
+            if(personaje.GetVida() > 20)
+            {
+                GetComponent<PersonajeController>().noMasAuxilio();
+            }
             Debug.Log("Mira mi vida: " + personaje.GetVida());
 
             Destroy(collision.gameObject);

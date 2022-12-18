@@ -28,7 +28,7 @@ public class BTMele : BTAbstracto
     {
         BT.Update();
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(GetComponent<PersonajeController>().GetVelocidad());
 
         //BT.Reset();
         StartCoroutine(ejecutarArbol());
@@ -63,16 +63,21 @@ public class BTMele : BTAbstracto
         LeafNode EnemigoARango = BT.CreateLeafNode("EnemigoARango", EnemigoARangoAction, EnemigoARangoSuccessCheck);
         SelectorNode selecAtaque1 = BT.CreateSelectorNode("SelectorAtaque1");
         SequenceNode secAtaque1 = BT.CreateSequenceNode("SecAtaque1", false);
+        LeafNode suficienteVidaAtaque = BT.CreateLeafNode("VidaAataque", SuficienteVidaAction, SuficienteVidaSuccessCheck);
+        LeafNode atacarAtaque = BT.CreateLeafNode("AtacarAtaque", AtacarAction, AtacarSuccessCheck);
         SelectorNode selecAtaque2 = BT.CreateSelectorNode("SelectorAtaque2");
         SequenceNode secAtaque2 = BT.CreateSequenceNode("SecAtaque2", false);
         LeafNode EnemigoPocaVida = BT.CreateLeafNode("EnemigoPocaVida", EnemigoPocaVidaAction, EnemigoPocaVidaSuccessCheck);
+        LeafNode atacarEnemigo = BT.CreateLeafNode("AtacarEnemigo", AtacarAction, AtacarSuccessCheck);
         LeafNode pedirAuxilioAccion = BT.CreateLeafNode("PedirAuxilio", PedirAuxilioAction, PedirAuxilioSuccessCheck);
 
 
         //Nodos moverse
+        LeafNode moverse = BT.CreateLeafNode("MoverseEnemigo", MoverseEnemigoAction, MoverseEnemigoSuccessCheck);
         SequenceNode secMoverse1 = BT.CreateSequenceNode("SecMoverse1", false);
         LeafNode PocaVida = BT.CreateLeafNode("PocaVida", PocaVidaAction, PocaVidaSuccessCheck);
         SelectorNode selecMoverse = BT.CreateSelectorNode("SelecMoverse");
+        LeafNode auxilio = BT.CreateLeafNode("AuxilioPedir", PedirAuxilioAction, PedirAuxilioSuccessCheck);
         SequenceNode vidaGenerado = BT.CreateSequenceNode("VidaGeneradaSec", false);
         LeafNode VidaGenerada = BT.CreateLeafNode("VidaGenerada", VidaGeneradaAction, VidaGeneradaSuccessCheck);
         LeafNode IrAVida = BT.CreateLeafNode("IrAVida", IrAVidaAction, IrAVidaSuccessCheck);
@@ -98,20 +103,20 @@ public class BTMele : BTAbstracto
         ataqueSecuencia.AddChild(selecAtaque1);
         selecAtaque1.AddChild(secAtaque1);
         selecAtaque1.AddChild(selecAtaque2);
-        secAtaque1.AddChild(SuficienteVida);
-        secAtaque1.AddChild(atacarAccion);
+        secAtaque1.AddChild(suficienteVidaAtaque);
+        secAtaque1.AddChild(atacarAtaque);
         selecAtaque2.AddChild(secAtaque2);
         selecAtaque2.AddChild(pedirAuxilioAccion);
         secAtaque2.AddChild(EnemigoPocaVida);
-        secAtaque2.AddChild(atacarAccion);
+        secAtaque2.AddChild(atacarEnemigo);
 
         //Añadir hijos moverse
         moverseSelector.AddChild(secMoverse1);
-        moverseSelector.AddChild(moverseAccion);
+        moverseSelector.AddChild(moverse);
         secMoverse1.AddChild(PocaVida);
         secMoverse1.AddChild(selecMoverse);
         selecMoverse.AddChild(vidaGenerado);
-        selecMoverse.AddChild(pedirAuxilioAccion);
+        selecMoverse.AddChild(auxilio);
         vidaGenerado.AddChild(VidaGenerada);
         vidaGenerado.AddChild(IrAVida);
 
@@ -217,7 +222,10 @@ public class BTMele : BTAbstracto
     }
 
     //Provocar
-    private void ProvocarAction() { }
+    private void ProvocarAction() 
+    {
+        GetComponent<MeleeController>().Provocar();
+    }
 
     private ReturnValues ProvocarSuccessCheck() { return ReturnValues.Succeed; }
 
@@ -239,7 +247,7 @@ public class BTMele : BTAbstracto
 
     private ReturnValues EnemigoPocaVidaSuccessCheck()
     {
-        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <= 20)
+        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() < GetComponent<PersonajeController>().GetPersonaje().GetVida())
         {
             return ReturnValues.Succeed;
         }
@@ -296,7 +304,20 @@ public class BTMele : BTAbstracto
     }
 
     //Pedir auxilio
-    private void PedirAuxilioAction() {  }
+    private void PedirAuxilioAction() 
+    {
+        GetComponent<PersonajeController>().pidiendoAuxilio();
+    }
 
-    private ReturnValues PedirAuxilioSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues PedirAuxilioSuccessCheck() 
+    {
+        if (!GetComponent<PersonajeController>().pidoAuxilio())
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 }

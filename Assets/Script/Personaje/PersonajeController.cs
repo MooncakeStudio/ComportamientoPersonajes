@@ -13,6 +13,9 @@ public class PersonajeController : MonoBehaviour
     bool provocado = false;
     bool aliadoAuxilio = false;
     bool especialCargado = false;
+    bool necesitoAuxilio = false;
+
+    [SerializeField] float velocidad;
 
     // GETTERS & SETTERS
 
@@ -26,6 +29,13 @@ public class PersonajeController : MonoBehaviour
 
     public bool tengoAtaqueEspecial() { return especialCargado; }
 
+    public bool pidoAuxilio() { return necesitoAuxilio; }
+
+    public void pidiendoAuxilio() { necesitoAuxilio = true; Debug.Log("Estoy Pidiendo auxilio"); }
+    public void noMasAuxilio() { necesitoAuxilio = false; }
+
+    public float GetVelocidad() { return velocidad; }
+
     public void setEnemigoObjetivo(GameObject enemigoObjetivo) { this.enemigoObjetivo = enemigoObjetivo; }
     public GameObject getEnemigoObjetivo() { return enemigoObjetivo; }
     // METODOS
@@ -33,5 +43,26 @@ public class PersonajeController : MonoBehaviour
     private void Awake()
     {
         this.personaje = new Mele();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(cargarEspecial());
+    }
+
+    IEnumerator cargarEspecial()
+    {
+        if (!especialCargado)
+        {
+            yield return new WaitForSeconds(5);
+            especialCargado = true;
+        }
+        else
+        {
+
+        }
+
+        yield return new WaitForSeconds(2);
+        StartCoroutine(cargarEspecial());
     }
 }

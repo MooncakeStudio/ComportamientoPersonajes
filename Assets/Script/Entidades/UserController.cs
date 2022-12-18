@@ -10,13 +10,19 @@ public class UserController : MonoBehaviour
     [SerializeField] public List<GameObject> ejercito;
     [SerializeField] public bool esMiTurno;
     [SerializeField] private List<GameObject> ejercitoEnemigo;
+    int aliadoPidiendoAuxilio = 0;
+    GameObject aliadoProblemas;
 
     // GETTERS & SETTERS
 
     private void Update()
     {
+
+        
+
         foreach(var personaje in ejercito)
         {
+
             float distance = Mathf.Infinity;
             GameObject posibleObjetivo = null;
             foreach(var enemigo in ejercitoEnemigo)
@@ -30,6 +36,8 @@ public class UserController : MonoBehaviour
 
             personaje.GetComponent<PersonajeController>().setEnemigoObjetivo(posibleObjetivo);
         }
+
+
     }
 
 
