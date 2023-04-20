@@ -96,23 +96,23 @@ public class MovimientoPersonaje : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Objeto"))
-        {
-            var personaje = GetComponent<PersonajeController>().GetPersonaje();
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Objeto"))
+    //    {
+    //        var personaje = GetComponent<PersonajeController>().GetPersonaje();
 
-            personaje.SetVida(personaje.GetVida() + 5);
+    //        personaje.SetVida(personaje.GetVida() + 5);
 
-            GetComponent<PersonajeController>().SetPersonaje(personaje);
+    //        GetComponent<PersonajeController>().SetPersonaje(personaje);
 
-            if(personaje.GetVida() > 20)
-            {
-                GetComponent<PersonajeController>().noMasAuxilio();
-            }
-            Debug.Log("Mira mi vida: " + personaje.GetVida());
+    //        if(personaje.GetVida() > 20)
+    //        {
+    //            GetComponent<PersonajeController>().noMasAuxilio();
+    //        }
+    //        Debug.Log("Mira mi vida: " + personaje.GetVida());
 
-            Destroy(collision.gameObject);
-        }
-    }
+    //        Destroy(collision.gameObject);
+    //    }
+    //}
 }

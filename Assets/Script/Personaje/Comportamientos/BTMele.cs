@@ -287,7 +287,7 @@ public class BTMele : BTAbstracto
 
     private ReturnValues VidaGeneradaSuccessCheck()
     {
-        if (FindObjectOfType<ObjectController>())
+        if (GameManager.hayObj)
         {
             return ReturnValues.Succeed;
         }

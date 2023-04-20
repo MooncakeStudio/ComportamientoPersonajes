@@ -10,10 +10,10 @@ public class Celda
 
     public bool transitable;
 
-    public Celda padre;
-
     private PersonajeController personaje = null;
+    private ObjectController objeto = null;
 
+    public Celda padre;
     public int costeG;
     public int costeH;
     public int costeF 
@@ -27,10 +27,21 @@ public class Celda
     // GETTERS & SETTERS
 
     public PersonajeController GetPersonaje() { return this.personaje; }
+    public ObjectController GetObjeto() { return this.objeto; }
 
-    public void SetPersonaje(PersonajeController prsonaje) { this.personaje = prsonaje; }
+    public void SetPersonaje(PersonajeController prsonaje) 
+    { 
+        this.personaje = prsonaje;
+        this.transitable = (this.personaje != null) ? false : true;
+    }
 
-    
+    public void SetObjeto(ObjectController objeto)
+    {
+        this.objeto = objeto;
+        this.transitable = (this.objeto != null) ? false : true;
+    }
+
+
     // CONSTRUCTOR
 
     public Celda(int xGrid = 0, int yGrid = 0, bool transitable = true, int costeG = 0, int costeH = 0)

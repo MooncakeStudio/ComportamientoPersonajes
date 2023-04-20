@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
 
         var instance = Instantiate(objeto, posicion, Quaternion.identity);
 
+        grid.GetGrid()[x, z].SetObjeto(instance.GetComponent<ObjectController>());
+
         objetivo = posicion;
     }
 }

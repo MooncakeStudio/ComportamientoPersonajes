@@ -9,6 +9,8 @@ TagManager:
   - Goal
   - Floor
   - Objeto
+  - Equipo1
+  - Equipo2
   layers:
   - Default
   - TransparentFX

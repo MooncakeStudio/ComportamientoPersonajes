@@ -26,9 +26,6 @@ public class Mele : Personaje
                 if(i == 0 && j == 0)
                 {
                     continue;
-                }else if (!GameManager.GetGrid().GetGrid()[xAux, yAux].transitable)
-                {
-                    continue;
                 }
                 else if (xAux >= 0 && xAux < GameManager.GetGrid().GetGrid().GetLength(0) && yAux >= 0 && yAux < GameManager.GetGrid().GetGrid().GetLength(1) && GameManager.GetGrid().GetGrid()[xAux, yAux].isOccupied() && !GameManager.GetGrid().GetGrid()[xAux, yAux].GetPersonaje().CompareTag(faccion))
                 {
