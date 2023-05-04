@@ -11,9 +11,7 @@ public class MovimientoPersonaje : MonoBehaviour
     [SerializeField] int y;
 
     [Header("Tablero")]
-    Grid grid;
 
-    [SerializeField] PathFinding pf;
     BTMele arbol;
     List<Celda> camino;
 
@@ -37,8 +35,6 @@ public class MovimientoPersonaje : MonoBehaviour
 
     private void Start()
     {
-        grid = GameManager.GetGrid();
-
         //do
         //{
         //    x = Random.Range(0, this.grid.GetGrid().GetLength(0));
@@ -48,9 +44,9 @@ public class MovimientoPersonaje : MonoBehaviour
         GetComponent<PersonajeController>().GetPersonaje().SetX(x);
         GetComponent<PersonajeController>().GetPersonaje().SetY(y);
 
-        grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
+        GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
-        transform.position = grid.GetPosicionGlobal(this.x, this.y);
+        transform.position = GameManager.grid.GetPosicionGlobal(this.x, this.y);
 
     }
 
@@ -60,11 +56,11 @@ public class MovimientoPersonaje : MonoBehaviour
 
         if(objet != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, grid.GetPosicionGlobal(objet.xGrid, objet.yGrid), 1 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(objet.xGrid, objet.yGrid), 1 * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, grid.GetPosicionGlobal(objet.xGrid, objet.yGrid)) < 0.05f)
+            if (Vector3.Distance(transform.position, GameManager.grid.GetPosicionGlobal(objet.xGrid, objet.yGrid)) < 0.05f)
             {
-                grid.GetGrid()[x, y].SetPersonaje(null);
+                GameManager.grid.GetGrid()[x, y].SetPersonaje(null);
 
                 x = objet.xGrid;
                 y = objet.yGrid;
@@ -74,26 +70,11 @@ public class MovimientoPersonaje : MonoBehaviour
                 GetComponent<PersonajeController>().GetPersonaje().SetY(y);
 
 
-                grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
+                GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
                 objet = null;
             }
         }
-    }
-
-    public void Moverse(Vector3 objetivo)
-    {
-        pf.EncuentraCamino(transform.position, objetivo);
-        this.camino = pf.ObtenerCamino(transform.position, objetivo);
-
-        if(camino.Count > 0)
-        {
-            camino.Reverse();
-
-            objet = camino[0];
-        }
-        
-        
     }
 
     //private void OnCollisionEnter(Collision collision)

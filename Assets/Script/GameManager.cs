@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject user2;
 
     [SerializeField] Grid worldGrid;
-    static Grid grid;
+    public static Grid grid;
+
+    [SerializeField] PathFinding a_est;
+    public static PathFinding pf;
 
     [SerializeField] GameObject objeto;
 
@@ -30,6 +33,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         grid = worldGrid;
+        pf = a_est;
     }
 
     private void Update()
@@ -75,6 +79,8 @@ public class GameManager : MonoBehaviour
         posicion.y = 0.02f;
 
         var instance = Instantiate(objeto, posicion, Quaternion.identity);
+
+        instance.GetComponent<ObjectController>().SetObjeto(new Objeto());
 
         grid.GetGrid()[x, z].SetObjeto(instance.GetComponent<ObjectController>());
 

@@ -144,7 +144,7 @@ public class BTMele : BTAbstracto
     private void MoverseEnemigoAction() 
     {
         var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
-        GetComponent<MovimientoPersonaje>().Moverse(enemigo.transform.position);
+        GetComponent<PersonajeController>().Moverse(enemigo.transform.position);
 
         Debug.Log(gameObject.name + "Me muevo al enemigo");
     }
@@ -301,7 +301,7 @@ public class BTMele : BTAbstracto
     //moverse vida
     private void IrAVidaAction()
     {
-        var movimientoManager = GetComponent<MovimientoPersonaje>();
+        var movimientoManager = GetComponent<PersonajeController>();
 
         movimientoManager.Moverse(GameManager.objetivo);
     }
@@ -315,7 +315,7 @@ public class BTMele : BTAbstracto
     private void PedirAuxilioAction() 
     {
         var aliado = GetComponent<PersonajeController>().getAliadoCercano();
-        GetComponent<MovimientoPersonaje>().Moverse(aliado.transform.position);
+        GetComponent<PersonajeController>().Moverse(aliado.transform.position);
         GetComponent<PersonajeController>().pidiendoAuxilio();
 
         Debug.Log(gameObject.name + "Estoy Pidiendo auxilio");
