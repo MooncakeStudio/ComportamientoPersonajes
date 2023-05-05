@@ -27,6 +27,6 @@ public class MeleeController : PersonajeController
 
     public void Provocar()
     {
-        provocando= true;
+        provocando = true;
     }
 }

@@ -20,7 +20,9 @@ public class ObjectController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Equipo1") || collision.gameObject.CompareTag("Equipo2"))
         {
-            var personaje = collision.gameObject.GetComponent<PersonajeController>().GetPersonaje();
+            var personaje = collision.gameObject.GetComponent<PersonajeController>().GetPersonaje(); // as PersonajeController;
+
+            //var personaje = personajeController.GetPersonaje();
 
             personaje.SetVida(personaje.GetVida() + objeto.GetVida());
 

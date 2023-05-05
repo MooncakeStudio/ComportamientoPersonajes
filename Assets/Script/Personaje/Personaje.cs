@@ -6,7 +6,7 @@ public class Personaje
 {
     // ATRIBUTOS
 
-    protected int vida = 20;
+    protected int vida = 10;
     protected int ataque = 10;
     protected string faccion;
 

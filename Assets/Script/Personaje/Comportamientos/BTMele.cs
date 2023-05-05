@@ -144,6 +144,7 @@ public class BTMele : BTAbstracto
     private void MoverseEnemigoAction() 
     {
         var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+
         GetComponent<PersonajeController>().Moverse(enemigo.transform.position);
 
         Debug.Log(gameObject.name + "Me muevo al enemigo");
