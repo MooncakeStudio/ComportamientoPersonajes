@@ -13,18 +13,18 @@ public class PersonajeController : MonoBehaviour
     protected GameObject aliadoCercano;
     protected Celda objetivo;
 
-    bool provocado = false;
-    bool aliadoAuxilio = false;
-    bool especialCargado = false;
-    bool necesitoAuxilio = false;
+    protected bool provocado = false;
+    protected bool aliadoAuxilio = false;
+    protected bool especialCargado = false;
+    protected bool necesitoAuxilio = false;
 
 
-    [SerializeField] float velocidad;
+    [SerializeField] protected float velocidad;
 
 
     // GETTERS & SETTERS
 
-    public Personaje GetPersonaje() { return this.personaje; }
+    public Personaje GetPersonaje() { return personaje; }
 
     public void SetPersonaje(Personaje personaje) { this.personaje = personaje; }
 
@@ -73,42 +73,46 @@ public class PersonajeController : MonoBehaviour
             y = Random.Range(0, GameManager.grid.GetAlto());
         }
 
-        this.personaje.x = x;
-        this.personaje.y = y;
+        personaje.x = x;
+        personaje.y = y;
 
-        this.gameObject.transform.position = GameManager.grid.GetPosicionGlobal(x, y);
+        gameObject.transform.position = GameManager.grid.GetPosicionGlobal(x, y);
 
 
-        GameManager.grid.GetGrid()[this.personaje.GetX(), this.personaje.GetY()].SetPersonaje(GetComponent<PersonajeController>());
+        GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(GetComponent<PersonajeController>());
     }
 
     virtual protected void FixedUpdate()
     {
-        if (this.objetivo != null)
+        if (objetivo != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid), 1 * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid)) < 0.05f)
+            transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(objetivo.xGrid, objetivo.yGrid), 1 * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, GameManager.grid.GetPosicionGlobal(objetivo.xGrid, objetivo.yGrid)) < 0.05f)
             {
-                GameManager.grid.GetGrid()[this.personaje.GetX(), this.personaje.GetY()].SetPersonaje(null);
+                GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
 
-                int x = this.objetivo.xGrid;
-                int y = this.objetivo.yGrid;
+                
+
+                int x = objetivo.xGrid;
+                int y = objetivo.yGrid;
 
 
-                this.personaje.SetX(x);
-                this.personaje.SetY(y);
+                personaje.SetX(x);
+                personaje.SetY(y);
 
 
                 GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
-                this.objetivo = null;
+                objetivo = null;
             }
         }
     }
 
     public void Moverse(Vector3 objetivo)
     {
+        Debug.Log(objetivo);
         GameManager.pf.EncuentraCamino(transform.position, objetivo);
         List<Celda> camino = GameManager.pf.ObtenerCamino(transform.position, objetivo);
 

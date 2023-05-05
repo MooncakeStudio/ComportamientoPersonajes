@@ -145,14 +145,14 @@ public class BTMele : BTAbstracto
     {
         var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
 
-        GetComponent<PersonajeController>().Moverse(enemigo.transform.position);
+        GetComponent<MeleeController>().Moverse(enemigo.transform.position);
 
         Debug.Log(gameObject.name + "Me muevo al enemigo");
     }
 
     private ReturnValues MoverseEnemigoSuccessCheck() 
     {
-        enemigo = GetComponent<PersonajeController>().GetPersonaje().EnemigoARango();
+        /*enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
 
         if (enemigo != null)
         {
@@ -161,8 +161,11 @@ public class BTMele : BTAbstracto
         }
         else
         {
+            Debug.Log("Enemigo no a rango, me muevo");
             return ReturnValues.Succeed;
-        }
+        }*/
+
+        return ReturnValues.Succeed;
     }
 
     //Enemigo a rango
@@ -170,7 +173,7 @@ public class BTMele : BTAbstracto
 
     private ReturnValues EnemigoARangoSuccessCheck()
     {
-        enemigo = GetComponent<PersonajeController>().GetPersonaje().EnemigoARango();
+        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
 
         if(enemigo != null)
         {
@@ -219,7 +222,7 @@ public class BTMele : BTAbstracto
 
     private ReturnValues SuficienteVidaSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().GetPersonaje().GetVida() > 20)
+        if (GetComponent<MeleeController>().GetPersonaje().GetVida() > 20)
         {
             return ReturnValues.Succeed;
         }
@@ -242,7 +245,7 @@ public class BTMele : BTAbstracto
     private void AtacarAction()
     {
         Debug.Log(gameObject.name + "Lo agarro a putasos");
-        GetComponent<PersonajeController>().GetPersonaje().Atacar(enemigo);
+        GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
     }
 
     private ReturnValues AtacarSuccessCheck()
@@ -256,7 +259,8 @@ public class BTMele : BTAbstracto
 
     private ReturnValues EnemigoPocaVidaSuccessCheck()
     {
-        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() < GetComponent<PersonajeController>().GetPersonaje().GetVida())
+        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() < 
+            GetComponent<MeleeController>().GetPersonaje().GetVida())
         {
             return ReturnValues.Succeed;
         }
@@ -272,7 +276,7 @@ public class BTMele : BTAbstracto
 
     private ReturnValues PocaVidaSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().GetPersonaje().GetVida() <= 20)
+        if (GetComponent<MeleeController>().GetPersonaje().GetVida() <= 20)
         {
             return ReturnValues.Succeed;
         }
@@ -302,7 +306,7 @@ public class BTMele : BTAbstracto
     //moverse vida
     private void IrAVidaAction()
     {
-        var movimientoManager = GetComponent<PersonajeController>();
+        var movimientoManager = GetComponent<MeleeController>();
 
         movimientoManager.Moverse(GameManager.objetivo);
     }
@@ -316,7 +320,7 @@ public class BTMele : BTAbstracto
     private void PedirAuxilioAction() 
     {
         var aliado = GetComponent<PersonajeController>().getAliadoCercano();
-        GetComponent<PersonajeController>().Moverse(aliado.transform.position);
+        GetComponent<MeleeController>().Moverse(aliado.transform.position);
         GetComponent<PersonajeController>().pidiendoAuxilio();
 
         Debug.Log(gameObject.name + "Estoy Pidiendo auxilio");

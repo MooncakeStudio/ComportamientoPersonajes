@@ -1993,7 +1993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_TagString
-      value: Equipo1
+      value: Equipo2
       objectReference: {fileID: 0}
     - target: {fileID: 4569352278750082756, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_Layer
@@ -2999,8 +2999,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75637d31eace1f644a1cc5a7fd27d013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  user2: {fileID: 0}
+  user: {fileID: 127213605}
+  user2: {fileID: 181928701}
   worldGrid: {fileID: 1948502661}
   a_est: {fileID: 2019278634}
   objeto: {fileID: 8881863970567463873, guid: 6f7106b036a211b4fb776e275a03e56f, type: 3}
@@ -3299,7 +3299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_TagString
-      value: Equipo2
+      value: Equipo1
       objectReference: {fileID: 0}
     - target: {fileID: 4569352278750082756, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_Layer

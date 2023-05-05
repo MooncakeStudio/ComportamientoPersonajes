@@ -53,7 +53,8 @@ public class PathFinding : MonoBehaviour
 
             foreach (Celda vecino in grid.GetVecinos(celdaActual))
             {
-                if ((!vecino.transitable && !(vecino.xGrid == celdaFin.xGrid && vecino.yGrid == celdaFin.yGrid)) || listaCerrada.Contains(vecino))
+                if ((!vecino.transitable && !(vecino.xGrid == celdaFin.xGrid && vecino.yGrid == celdaFin.yGrid)) || 
+                    listaCerrada.Contains(vecino))
                 {
                     continue;
                 }

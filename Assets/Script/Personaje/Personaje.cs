@@ -6,12 +6,25 @@ public class Personaje
 {
     // ATRIBUTOS
 
-    protected int vida = 10;
-    protected int ataque = 10;
+    protected int vida;
+    protected int ataque;
     protected string faccion;
 
     public int x;
     public int y;
+
+    //Constructor
+    public Personaje(int vida, int ataque, string faccion) { this.vida = vida; this.ataque = ataque; this.faccion = faccion; }
+    public Personaje() { vida = 10; ataque = 10; faccion = ""; x = 0; y = 0; }
+    public Personaje(int vida, int ataque, string faccion, int x, int y)
+    {
+        this.vida = vida;
+        this.ataque = ataque;
+        this.faccion = faccion;
+        this.x = x;
+        this.y = y;
+    }
+
 
     // GETTERS & SETTERS
 

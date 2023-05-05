@@ -10,7 +10,7 @@ public class MeleeController : PersonajeController
 
     protected override void Awake()
     {
-        this.personaje = new Mele();
+        this.personaje = new Mele(10,10,"");
     }
 
     protected override void Start()
@@ -24,6 +24,7 @@ public class MeleeController : PersonajeController
     }
 
     public bool aliadoEstaProvocando() { return aliadoProvocando; }
+
 
     public void Provocar()
     {
