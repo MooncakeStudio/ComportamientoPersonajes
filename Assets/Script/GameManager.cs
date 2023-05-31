@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject objeto;
 
     bool esTurnoUno = true;
-    public static bool hayObj = false;
+    public static bool hayObj = true;
 
     public static Vector3 objetivo;
 

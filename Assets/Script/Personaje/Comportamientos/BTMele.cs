@@ -106,7 +106,7 @@ public class BTMele : BTAbstracto
         secAtaque1.AddChild(suficienteVidaAtaque);
         secAtaque1.AddChild(atacarAtaque);
         selecAtaque2.AddChild(secAtaque2);
-        selecAtaque2.AddChild(pedirAuxilioAccion);
+        //selecAtaque2.AddChild(pedirAuxilioAccion);
         secAtaque2.AddChild(EnemigoPocaVida);
         secAtaque2.AddChild(atacarEnemigo);
 
@@ -116,7 +116,7 @@ public class BTMele : BTAbstracto
         secMoverse1.AddChild(PocaVida);
         secMoverse1.AddChild(selecMoverse);
         selecMoverse.AddChild(vidaGenerado);
-        selecMoverse.AddChild(auxilio);
+        //elecMoverse.AddChild(auxilio);
         vidaGenerado.AddChild(VidaGenerada);
         vidaGenerado.AddChild(IrAVida);
 
@@ -282,6 +282,7 @@ public class BTMele : BTAbstracto
         }
         else
         {
+            Debug.Log("voy sobrao");
             return ReturnValues.Failed;
         }
     }

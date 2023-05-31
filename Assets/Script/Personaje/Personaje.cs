@@ -15,7 +15,7 @@ public class Personaje
 
     //Constructor
     public Personaje(int vida, int ataque, string faccion) { this.vida = vida; this.ataque = ataque; this.faccion = faccion; }
-    public Personaje() { vida = 10; ataque = 10; faccion = ""; x = 0; y = 0; }
+    public Personaje() { vida = 30; ataque = 10; faccion = ""; x = 0; y = 0; }
     public Personaje(int vida, int ataque, string faccion, int x, int y)
     {
         this.vida = vida;
