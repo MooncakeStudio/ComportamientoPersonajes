@@ -11,6 +11,8 @@ public class MeleeController : PersonajeController
     protected override void Awake()
     {
         this.personaje = new Mele(10,10,"");
+
+        GetComponent<BTMele>().GetBT().Active = false;
     }
 
     protected override void Start()

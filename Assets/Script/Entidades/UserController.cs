@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,11 +19,13 @@ public class UserController : MonoBehaviour
 
     // GETTERS & SETTERS
 
-    private void Update()
+
+
+
+    // METODOS
+
+    public void CkeckObjetivos()
     {
-
-        
-
         foreach(var personaje in ejercito)
         {
 
@@ -51,27 +54,27 @@ public class UserController : MonoBehaviour
 
             personaje.GetComponent<PersonajeController>().setAliadoCercano(posibleObjetivo);*/
         }
-
-
-    }
-
-
-    // METODOS
-
-    public void MoverEjercito()
-    {
-         
     }
 
     public IEnumerator MoverSoldados(int contador, int maxSoldados)
     {
-        contador++;
+        //contador++;
 
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
 
-        if(contador < maxSoldados)
+        //if(contador < maxSoldados)
+        //{
+        //    MoverSoldados(contador, maxSoldados);
+        //}
+
+        foreach(var personaje in this.ejercito)
         {
-            MoverSoldados(contador, maxSoldados);
+            personaje.GetComponent<BTMele>().GetBT().Active = true;
+
+            /* ALGUN TIPO DE ESPERA */
+            
         }
+        yield return new WaitForSeconds(1);
+        GameManager.turnoActivo = false;
     }
 }

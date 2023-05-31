@@ -84,30 +84,7 @@ public class PersonajeController : MonoBehaviour
 
     virtual protected void FixedUpdate()
     {
-        if (objetivo != null)
-        {
-
-            transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(objetivo.xGrid, objetivo.yGrid), 1 * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, GameManager.grid.GetPosicionGlobal(objetivo.xGrid, objetivo.yGrid)) < 0.05f)
-            {
-                GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
-
-                
-
-                int x = objetivo.xGrid;
-                int y = objetivo.yGrid;
-
-
-                personaje.SetX(x);
-                personaje.SetY(y);
-
-
-                GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
-
-                objetivo = null;
-            }
-        }
+        
     }
 
     public void Moverse(Vector3 objetivo)
@@ -121,6 +98,30 @@ public class PersonajeController : MonoBehaviour
             camino.Reverse();
 
             this.objetivo = camino[0];
+        }
+
+        if (objetivo != null)
+        {
+            while (Vector3.Distance(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid)) > 0.05f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid), 1 * Time.deltaTime);
+            }
+
+            GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
+
+
+
+            int x = this.objetivo.xGrid;
+            int y = this.objetivo.yGrid;
+
+
+            personaje.SetX(x);
+            personaje.SetY(y);
+
+
+            GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
+
+            this.objetivo = null;
         }
     }
 

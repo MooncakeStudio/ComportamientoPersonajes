@@ -148,6 +148,8 @@ public class BTMele : BTAbstracto
         GetComponent<MeleeController>().Moverse(enemigo.transform.position);
 
         Debug.Log(gameObject.name + "Me muevo al enemigo");
+
+        this.GetBT().Active = false;
     }
 
     private ReturnValues MoverseEnemigoSuccessCheck() 
@@ -235,8 +237,9 @@ public class BTMele : BTAbstracto
     //Provocar
     private void ProvocarAction() 
     {
-        
         GetComponent<MeleeController>().Provocar();
+
+        this.GetBT().Active = false;
     }
 
     private ReturnValues ProvocarSuccessCheck() { return ReturnValues.Succeed; }
@@ -246,6 +249,8 @@ public class BTMele : BTAbstracto
     {
         Debug.Log(gameObject.name + "Lo agarro a putasos");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
+
+        this.GetBT().Active = false;
     }
 
     private ReturnValues AtacarSuccessCheck()
@@ -282,7 +287,6 @@ public class BTMele : BTAbstracto
         }
         else
         {
-            Debug.Log("voy sobrao");
             return ReturnValues.Failed;
         }
     }
@@ -307,9 +311,13 @@ public class BTMele : BTAbstracto
     //moverse vida
     private void IrAVidaAction()
     {
+        Debug.Log("Devuelveme la vida");
+
         var movimientoManager = GetComponent<MeleeController>();
 
         movimientoManager.Moverse(GameManager.objetivo);
+
+        this.GetBT().Active = false;
     }
 
     private ReturnValues IrAVidaSuccessCheck()
@@ -325,6 +333,8 @@ public class BTMele : BTAbstracto
         GetComponent<PersonajeController>().pidiendoAuxilio();
 
         Debug.Log(gameObject.name + "Estoy Pidiendo auxilio");
+
+        this.GetBT().Active = false;
     }
 
     private ReturnValues PedirAuxilioSuccessCheck() 

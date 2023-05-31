@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject objeto;
 
     bool esTurnoUno = true;
-    public static bool hayObj = true;
+    public static bool turnoActivo = false;
+    public static bool hayObj = false;
 
     public static Vector3 objetivo;
 
@@ -43,24 +44,33 @@ public class GameManager : MonoBehaviour
             hayObj = true;
             Invoke("CrearObjeto", 3);
         }
+
+        Actuar();
     }
 
-    IEnumerator Actuar()
+    public void Actuar()
     {
-        if (esTurnoUno)
+        if (!turnoActivo)
         {
-            user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
-            yield return new WaitForSeconds(1);
-            esTurnoUno = false;
+            if (esTurnoUno)
+            {
+                Debug.Log("El primero");
+                turnoActivo = true;
+                user.GetComponent<UserController>().CkeckObjetivos();
+                StartCoroutine(user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count));
+                //yield return new WaitForSeconds(1);
+                esTurnoUno = false;
+            }
+            else
+            {
+                Debug.Log("El segundo");
+                turnoActivo = true;
+                user.GetComponent<UserController>().CkeckObjetivos();
+                StartCoroutine(user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count));
+                //yield return new WaitForSeconds(1);
+                esTurnoUno = true;
+            }
         }
-        else
-        {
-            user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
-            yield return new WaitForSeconds(1);
-            esTurnoUno = true;
-        }
-
-        StartCoroutine(Actuar());
     }
 
     public void CrearObjeto()
