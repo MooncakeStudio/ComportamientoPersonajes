@@ -20,6 +20,7 @@ public class PersonajeController : MonoBehaviour
 
 
     [SerializeField] protected float velocidad;
+    private UserController usuarioControlador;
 
 
     // GETTERS & SETTERS
@@ -49,7 +50,9 @@ public class PersonajeController : MonoBehaviour
     public GameObject getAliadoCercano() { return aliadoCercano; }
     public GameObject getEnemigoObjetivo() { return enemigoObjetivo; }
 
+    public void FinTurno() { usuarioControlador.turnoFinalizado(); }
 
+    public void Usuario(UserController usuario) { usuarioControlador = usuario; }
     // METODOS
 
     virtual protected void Awake()

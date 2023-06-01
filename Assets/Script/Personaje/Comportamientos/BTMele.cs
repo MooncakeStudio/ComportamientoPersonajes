@@ -149,6 +149,7 @@ public class BTMele : BTAbstracto
 
         Debug.Log(gameObject.name + "Me muevo al enemigo");
 
+        GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
 
@@ -239,7 +240,9 @@ public class BTMele : BTAbstracto
     {
         GetComponent<MeleeController>().Provocar();
 
+        GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
+        //GetComponent<PersonajeController>().FinTurno();
     }
 
     private ReturnValues ProvocarSuccessCheck() { return ReturnValues.Succeed; }
@@ -250,7 +253,9 @@ public class BTMele : BTAbstracto
         Debug.Log(gameObject.name + "Lo agarro a putasos");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
 
+        GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
+        //GetComponent<PersonajeController>().FinTurno();
     }
 
     private ReturnValues AtacarSuccessCheck()
@@ -317,6 +322,7 @@ public class BTMele : BTAbstracto
 
         movimientoManager.Moverse(GameManager.objetivo);
 
+        GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
 
@@ -334,6 +340,7 @@ public class BTMele : BTAbstracto
 
         Debug.Log(gameObject.name + "Estoy Pidiendo auxilio");
 
+        GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
 

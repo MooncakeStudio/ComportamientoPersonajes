@@ -16,11 +16,28 @@ public class UserController : MonoBehaviour
     GameObject aliadoProblemas;
 
     public UnityEvent aliadoPideAuxilio = new UnityEvent();
+    int turnosUsados = 0;
 
     // GETTERS & SETTERS
 
+    private void Start()
+    {
+        foreach(var personaje in ejercito)
+        {
+            personaje.GetComponent<PersonajeController>().Usuario(this);
+        }
+    }
 
+    private void Update()
+    {
+        if(turnosUsados >= ejercito.Count)
+        {
+            GameManager.turnoActivo = false;
+            turnosUsados = 0;
+        }
+    }
 
+    public void turnoFinalizado() { turnosUsados++; }
 
     // METODOS
 
@@ -56,7 +73,7 @@ public class UserController : MonoBehaviour
         }
     }
 
-    public IEnumerator MoverSoldados(int contador, int maxSoldados)
+    public void MoverSoldados(int contador, int maxSoldados)
     {
         //contador++;
 
@@ -69,12 +86,14 @@ public class UserController : MonoBehaviour
 
         foreach(var personaje in this.ejercito)
         {
-            personaje.GetComponent<BTMele>().GetBT().Active = true;
-
-            /* ALGUN TIPO DE ESPERA */
-            
+            personaje.GetComponent<BTAbstracto>().GetBT().Active = true;
         }
-        yield return new WaitForSeconds(1);
-        GameManager.turnoActivo = false;
+        
+        /*while(personajesTurno < ejercito.Count)
+        {
+            yield return null;
+        }*/
+       // yield return new WaitForSeconds(0.5f);
+        //GameManager.turnoActivo = false;
     }
 }

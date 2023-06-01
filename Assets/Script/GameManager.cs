@@ -57,7 +57,8 @@ public class GameManager : MonoBehaviour
                 Debug.Log("El primero");
                 turnoActivo = true;
                 user.GetComponent<UserController>().CkeckObjetivos();
-                StartCoroutine(user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count));
+                //StartCoroutine(user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count));
+                user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count);
                 //yield return new WaitForSeconds(1);
                 esTurnoUno = false;
             }
@@ -65,8 +66,9 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("El segundo");
                 turnoActivo = true;
-                user.GetComponent<UserController>().CkeckObjetivos();
-                StartCoroutine(user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count));
+                user2.GetComponent<UserController>().CkeckObjetivos();
+                //StartCoroutine(user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count));
+                user2.GetComponent<UserController>().MoverSoldados(0, user2.GetComponent<UserController>().ejercito.Count);
                 //yield return new WaitForSeconds(1);
                 esTurnoUno = true;
             }
