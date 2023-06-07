@@ -8,9 +8,14 @@ public class MeleeController : PersonajeController
     bool provocando = false;
     bool aliadoProvocando = false;
 
+    //Delegados
+    public delegate void Provocando(GameObject sender);
+    public static event Provocando provocandoEvent;
+    [SerializeField] private int VidaPoner;
+
     protected override void Awake()
     {
-        this.personaje = new Mele(50,10,"");
+        this.personaje = new Mele(VidaPoner,10,"");
 
         GetComponent<BTMele>().GetBT().Active = false;
     }
@@ -31,5 +36,7 @@ public class MeleeController : PersonajeController
     public void Provocar()
     {
         provocando = true;
+
+        provocandoEvent?.Invoke(gameObject);
     }
 }

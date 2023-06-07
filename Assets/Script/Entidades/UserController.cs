@@ -12,13 +12,30 @@ public class UserController : MonoBehaviour
     [SerializeField] public List<GameObject> ejercito;
     [SerializeField] public bool esMiTurno;
     [SerializeField] private List<GameObject> ejercitoEnemigo;
+    [SerializeField] private List<GameObject> enemigosProvocando = new List<GameObject>();
+    private List<GameObject> aliadosAuxilio = new List<GameObject>();
     int aliadoPidiendoAuxilio = 0;
     GameObject aliadoProblemas;
 
     public UnityEvent aliadoPideAuxilio = new UnityEvent();
     int turnosUsados = 0;
 
+
     // GETTERS & SETTERS
+
+    private void OnEnable()
+    {
+        MeleeController.provocandoEvent += PercepcionPersonajeProvocando;
+        PersonajeController.PidiendoAuxilioEvent += PercepcionPersonajeAuxilio;
+        PersonajeController.NoPidiendoAxuilioEvent -= PercepcionPersonajeNoAuxilio;
+    }
+
+    private void OnDisable()
+    {
+        MeleeController.provocandoEvent -= PercepcionPersonajeProvocando;
+        PersonajeController.PidiendoAuxilioEvent -= PercepcionPersonajeAuxilio;
+        PersonajeController.NoPidiendoAxuilioEvent -= PercepcionPersonajeNoAuxilio;
+    }
 
     private void Start()
     {
@@ -26,18 +43,27 @@ public class UserController : MonoBehaviour
         {
             personaje.GetComponent<PersonajeController>().Usuario(this);
         }
+
+        
+
     }
 
     private void Update()
     {
         if(turnosUsados >= ejercito.Count)
         {
+            enemigosProvocando.Clear();
             GameManager.turnoActivo = false;
             turnosUsados = 0;
         }
     }
 
-    public void turnoFinalizado() { turnosUsados++; }
+    public void turnoFinalizado() 
+    { 
+        turnosUsados++;
+        if(turnosUsados < ejercito.Count)
+            ejercito[turnosUsados].GetComponent<BTAbstracto>().GetBT().Active = true;
+    }
 
     // METODOS
 
@@ -48,52 +74,126 @@ public class UserController : MonoBehaviour
 
             float distance = Mathf.Infinity;
             GameObject posibleObjetivo = null;
-            foreach(var enemigo in ejercitoEnemigo)
+            if(enemigosProvocando.Count > 0)
             {
-                if(Vector3.Distance(enemigo.transform.position, personaje.transform.position) < distance)
+                personaje.GetComponent<PersonajeController>().SetEnemigoProvocando(true);
+
+                foreach (var enemigo in enemigosProvocando)
                 {
-                    posibleObjetivo = enemigo;
-                    distance = Vector3.Distance(enemigo.transform.position, personaje.transform.position);
+                    if (Vector3.Distance(enemigo.transform.position, personaje.transform.position) < distance)
+                    {
+                        posibleObjetivo = enemigo;
+                        distance = Vector3.Distance(enemigo.transform.position, personaje.transform.position);
+                    }
+                }
+                //enemigosProvocando.Remove(posibleObjetivo);
+            }
+            else
+            {
+                personaje.GetComponent<PersonajeController>().SetEnemigoProvocando(false);
+                foreach (var enemigo in ejercitoEnemigo)
+                {
+                    if (Vector3.Distance(enemigo.transform.position, personaje.transform.position) < distance)
+                    {
+                        posibleObjetivo = enemigo;
+                        distance = Vector3.Distance(enemigo.transform.position, personaje.transform.position);
+                    }
                 }
             }
-
             personaje.GetComponent<PersonajeController>().setEnemigoObjetivo(posibleObjetivo);
 
-            /*distance = Mathf.Infinity;
-            foreach(var aliado in ejercito)
+            distance = Mathf.Infinity;
+            if(aliadosAuxilio.Count > 0)
             {
-                if (Vector3.Distance(aliado.transform.position, personaje.transform.position) < distance)
+                foreach (var aliado in aliadosAuxilio)
                 {
-                    posibleObjetivo = aliado;
-                    distance = Vector3.Distance(aliado.transform.position, personaje.transform.position);
+                    if (!aliado.name.Equals(personaje.name))
+                    {
+                        if (Vector3.Distance(aliado.transform.position, personaje.transform.position) < distance)
+                        {
+                            posibleObjetivo = aliado;
+                            distance = Vector3.Distance(aliado.transform.position, personaje.transform.position);
+                        }
+                    }
                 }
             }
+            else
+            {
+                foreach (var aliado in ejercito)
+                {
+                    if (!aliado.name.Equals(personaje.name))
+                    {
+                        if (Vector3.Distance(aliado.transform.position, personaje.transform.position) < distance)
+                        {
+                            posibleObjetivo = aliado;
+                            distance = Vector3.Distance(aliado.transform.position, personaje.transform.position);
+                        }
+                    }
+                    
+                }
+            }
+            
 
-            personaje.GetComponent<PersonajeController>().setAliadoCercano(posibleObjetivo);*/
+            personaje.GetComponent<PersonajeController>().setAliadoCercano(posibleObjetivo);
         }
     }
 
     public void MoverSoldados(int contador, int maxSoldados)
     {
-        //contador++;
+        ejercito[turnosUsados].GetComponent<BTAbstracto>().GetBT().Active = true;
+    }
 
-        //yield return new WaitForSeconds(1);
-
-        //if(contador < maxSoldados)
-        //{
-        //    MoverSoldados(contador, maxSoldados);
-        //}
-
-        foreach(var personaje in this.ejercito)
+    private void PercepcionPersonajeProvocando(GameObject sender)
+    {
+        if (!sender.CompareTag(gameObject.tag))
         {
-            personaje.GetComponent<BTAbstracto>().GetBT().Active = true;
+            enemigosProvocando.Add(sender);
         }
-        
-        /*while(personajesTurno < ejercito.Count)
+    }
+
+    private void PercepcionPersonajeAuxilio(GameObject sender)
+    {
+        if(sender.CompareTag(gameObject.tag)) 
         {
-            yield return null;
-        }*/
-       // yield return new WaitForSeconds(0.5f);
-        //GameManager.turnoActivo = false;
+            var paraAdd = true;
+            if(aliadosAuxilio.Count > 0)
+            {
+                foreach(var personaje in aliadosAuxilio)
+                {
+                    if (personaje.name.Equals(sender.name))
+                        paraAdd = false;
+                }
+            }
+
+            if(paraAdd)
+                aliadosAuxilio.Add(sender);
+
+            foreach (var personaje in ejercito)
+                personaje.GetComponent<PersonajeController>().SetAliadoPidiendoAuxilio(true);
+        }
+    }
+
+    private void PercepcionPersonajeNoAuxilio(GameObject sender)
+    {
+        GameObject personajeEliminar = null;
+        if (sender.CompareTag(gameObject.tag))
+        {
+            if(aliadosAuxilio.Count > 0)
+            {
+                foreach(var personaje in aliadosAuxilio)
+                {
+                    if (sender.name.Equals(personaje.name))
+                        personajeEliminar = personaje;
+                }
+
+                aliadosAuxilio.Remove(personajeEliminar);
+                if(aliadosAuxilio.Count < 0)
+                {
+                    foreach (var personaje in ejercito)
+                        personaje.GetComponent<PersonajeController>().SetAliadoPidiendoAuxilio(false);
+                }
+            }
+
+        }
     }
 }

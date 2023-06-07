@@ -36,7 +36,6 @@ public class Mele : Personaje
                     !GameManager.GetGrid().GetGrid()[xAux, yAux].GetPersonaje().CompareTag(faccion))
                 {
                     var enemigo = GameManager.GetGrid().GetGrid()[xAux, yAux].GetPersonaje();
-                    Debug.Log(enemigo);
                     return enemigo;
                 }
             }

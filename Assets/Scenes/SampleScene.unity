@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 127213606}
   m_Layer: 0
   m_Name: User1
-  m_TagString: Untagged
+  m_TagString: Equipo1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,6 +159,7 @@ MonoBehaviour:
   ejercitoEnemigo:
   - {fileID: 707072544}
   - {fileID: 710708954}
+  enemigosProvocando: []
   aliadoPideAuxilio:
     m_PersistentCalls:
       m_Calls: []
@@ -188,7 +189,7 @@ GameObject:
   - component: {fileID: 181928702}
   m_Layer: 0
   m_Name: User2
-  m_TagString: Untagged
+  m_TagString: Equipo2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -212,6 +213,7 @@ MonoBehaviour:
   ejercitoEnemigo:
   - {fileID: 604286766}
   - {fileID: 910385176}
+  enemigosProvocando: []
   aliadoPideAuxilio:
     m_PersistentCalls:
       m_Calls: []
@@ -1575,6 +1577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fab203fca4a1924c9d12c2670b6e5ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
   velocidad: 0.15
 --- !u!136 &604286771
 CapsuleCollider:
@@ -1618,7 +1622,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4258949e2a219743aaf85779f7a3bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 0.07
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
+  velocidad: 0.5
+  VidaPoner: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,6 +2286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fab203fca4a1924c9d12c2670b6e5ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
   velocidad: 0.15
 --- !u!114 &707072552
 MonoBehaviour:
@@ -2292,7 +2301,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4258949e2a219743aaf85779f7a3bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 0.07
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
+  velocidad: 0.5
+  VidaPoner: 50
 --- !u!1 &710708954 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
@@ -2310,6 +2322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fab203fca4a1924c9d12c2670b6e5ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
   velocidad: 0.15
 --- !u!114 &710708956
 MonoBehaviour:
@@ -2380,7 +2394,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4258949e2a219743aaf85779f7a3bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 0.07
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
+  velocidad: 0.5
+  VidaPoner: 50
 --- !u!1 &880296871
 GameObject:
   m_ObjectHideFlags: 0
@@ -2493,6 +2510,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fab203fca4a1924c9d12c2670b6e5ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
   velocidad: 0.15
 --- !u!114 &910385178
 MonoBehaviour:
@@ -2563,7 +2582,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4258949e2a219743aaf85779f7a3bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 0.07
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
+  velocidad: 0.5
+  VidaPoner: 50
 --- !u!1 &955769703
 GameObject:
   m_ObjectHideFlags: 0

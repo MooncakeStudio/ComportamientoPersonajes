@@ -39,11 +39,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!hayObj)
+        /*if (!hayObj)
         {
             hayObj = true;
             Invoke("CrearObjeto", 3);
-        }
+        }*/
 
         Actuar();
     }

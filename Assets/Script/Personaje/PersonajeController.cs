@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class PersonajeController : MonoBehaviour
 {
@@ -13,35 +15,39 @@ public class PersonajeController : MonoBehaviour
     protected GameObject aliadoCercano;
     protected Celda objetivo;
 
-    protected bool provocado = false;
-    protected bool aliadoAuxilio = false;
+    [SerializeField] protected bool aliadoAuxilio = false;
     protected bool especialCargado = false;
     protected bool necesitoAuxilio = false;
+    [SerializeField] protected bool enemigoProvocando = false;
 
 
     [SerializeField] protected float velocidad;
     private UserController usuarioControlador;
 
+    //Delegado para auxilio
+    public delegate void PidiendoAuxilio(GameObject sender);
+    public static event PidiendoAuxilio PidiendoAuxilioEvent;
 
+    public delegate void NoPidiendoAxuilio(GameObject sender);
+    public static event NoPidiendoAxuilio NoPidiendoAxuilioEvent;   
     // GETTERS & SETTERS
 
     public Personaje GetPersonaje() { return personaje; }
 
     public void SetPersonaje(Personaje personaje) { this.personaje = personaje; }
 
-    public bool siendoProvocado() { return provocado; }
-
     public bool alguienPidiendoAuxilio() { return aliadoAuxilio; }
+    public bool AlguienProvocando() { return enemigoProvocando; }
 
     public bool tengoAtaqueEspecial() { return especialCargado; }
 
     public bool pidoAuxilio() { return necesitoAuxilio; }
 
-    public void pidiendoAuxilio() { necesitoAuxilio = true; }
-    public void noMasAuxilio() { necesitoAuxilio = false; }
+    public void pidiendoAuxilio() { Debug.Log(gameObject.name + " Estoy Pidiendo auxilio");  necesitoAuxilio = true;  FinTurno(); PidiendoAuxilioEvent?.Invoke(gameObject); }
+    public void noMasAuxilio() { necesitoAuxilio = false; NoPidiendoAxuilioEvent?.Invoke(gameObject); }
 
-   
-
+    public void SetEnemigoProvocando(bool enemigoProvocando) { this.enemigoProvocando = enemigoProvocando; }
+    public void SetAliadoPidiendoAuxilio(bool aliadoAuxilio) { this.aliadoAuxilio = aliadoAuxilio; }
     public float GetVelocidad() { return velocidad; }
 
     public void setEnemigoObjetivo(GameObject enemigoObjetivo) { this.enemigoObjetivo = enemigoObjetivo; }
@@ -50,7 +56,7 @@ public class PersonajeController : MonoBehaviour
     public GameObject getAliadoCercano() { return aliadoCercano; }
     public GameObject getEnemigoObjetivo() { return enemigoObjetivo; }
 
-    public void FinTurno() { usuarioControlador.turnoFinalizado(); }
+    public void FinTurno() { usuarioControlador.turnoFinalizado();}
 
     public void Usuario(UserController usuario) { usuarioControlador = usuario; }
     // METODOS
@@ -63,7 +69,6 @@ public class PersonajeController : MonoBehaviour
     virtual protected void Start()
     {
         personaje.SetFaccion(gameObject.tag);
-        Debug.Log(personaje.GetFaccion());
         StartCoroutine(cargarEspecial());
 
 
@@ -92,7 +97,6 @@ public class PersonajeController : MonoBehaviour
 
     public void Moverse(Vector3 objetivo)
     {
-        Debug.Log(objetivo);
         GameManager.pf.EncuentraCamino(transform.position, objetivo);
         List<Celda> camino = GameManager.pf.ObtenerCamino(transform.position, objetivo);
 
