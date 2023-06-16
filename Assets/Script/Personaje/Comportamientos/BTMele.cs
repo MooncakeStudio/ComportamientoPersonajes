@@ -21,7 +21,12 @@ public class BTMele : BTAbstracto
     private void Start()
     {
         this.BT.Active = false;
-        StartCoroutine(ejecutarArbol());
+        //StartCoroutine(ejecutarArbol());
+    }
+
+    private void FixedUpdate()
+    {
+        BT.Update();
     }
 
     public override IEnumerator ejecutarArbol()
@@ -126,7 +131,8 @@ public class BTMele : BTAbstracto
         nodoRoot.AddChild(moverseSelector);
 
         // Establecer Raíz
-        BT.SetRootNode(nodoRoot);
+        BT.SetRootNode(mainLoop);
+
     }
 
     /* ACCIONES */
@@ -192,6 +198,7 @@ public class BTMele : BTAbstracto
 
     private void AtaqueProvocando()
     {
+        Debug.Log(gameObject.name + " ataca");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
 
         GetComponent<PersonajeController>().FinTurno();
@@ -294,7 +301,9 @@ public class BTMele : BTAbstracto
 
     private void AtacarAction()
     {
+        Debug.Log(gameObject.name + " ataca");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
+        Debug.Log(enemigo.name + " tiene vida: " + enemigo.GetPersonaje().GetVida());
 
         GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;

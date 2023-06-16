@@ -60,7 +60,7 @@ public class PersonajeController : MonoBehaviour
     public GameObject getAliadoCercano() { return aliadoCercano; }
     public GameObject getEnemigoObjetivo() { return enemigoObjetivo; }
 
-    public void FinTurno() { usuarioControlador.turnoFinalizado();}
+    public void FinTurno() { usuarioControlador.turnoFinalizado(); }
 
     public void Usuario(UserController usuario) { usuarioControlador = usuario; }
     // METODOS
@@ -99,11 +99,13 @@ public class PersonajeController : MonoBehaviour
     {
         if (personaje.GetVida() <= 0)
         {
+            Debug.Log("Toy muerto " + gameObject.name);
             if (!muertoInvocado)
             {
                 muertoInvocado = true;
                 MuertoEvent?.Invoke(gameObject);
                 Destroy(gameObject);
+                
             }
         }
     }

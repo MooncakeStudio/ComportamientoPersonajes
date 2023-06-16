@@ -12,11 +12,13 @@ public class MeleeController : PersonajeController
     public delegate void Provocando(GameObject sender);
     public static event Provocando provocandoEvent;
     [SerializeField] private int VidaPoner;
+    [SerializeField] private int ataque;
 
     protected override void Awake()
     {
-        this.personaje = new Mele(VidaPoner,10,"");
+        this.personaje = new Mele(VidaPoner,ataque,"");
         this.personaje.SetVida(VidaPoner);
+        personaje.SetAtaque(ataque);
 
         GetComponent<BTMele>().GetBT().Active = false;
     }

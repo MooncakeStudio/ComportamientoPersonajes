@@ -46,8 +46,6 @@ public class UserController : MonoBehaviour
             personaje.GetComponent<PersonajeController>().Usuario(this);
         }
 
-        
-
     }
 
     private void Update()
@@ -70,7 +68,6 @@ public class UserController : MonoBehaviour
             CkeckObjetivos();
             ejercito[turnosUsados].GetComponent<BTAbstracto>().GetBT().Active = true;
         }
-            
     }
 
     // METODOS
@@ -223,37 +220,43 @@ public class UserController : MonoBehaviour
 
     public void ElminiarPersonaje(GameObject sender)
     {
-        GameObject personajeEliminar = null;
-        if (sender.CompareTag(gameObject.tag))
+        if (sender != null)
         {
-            if (ejercito.Count > 0)
+            GameObject personajeEliminar = null;
+            if (sender.CompareTag(gameObject.tag))
             {
-                foreach (var personaje in ejercito)
+                if (ejercito.Count > 0)
                 {
-                    if (sender.name.Equals(personaje.name))
-                        personajeEliminar = personaje;
+                    foreach (var personaje in ejercito)
+                    {
+                        if (sender.name.Equals(personaje.name))
+                            personajeEliminar = personaje;
+                    }
+
+                    aliadosAuxilio.Clear();
+
+                    GameManager.grid.GetGrid()[personajeEliminar.GetComponent<PersonajeController>().GetPersonaje().GetX(),
+                        personajeEliminar.GetComponent<PersonajeController>().GetPersonaje().GetY()].SetPersonaje(null);
+
+                    if (turnosUsados > 0) turnoFinalizado();
+                    ejercito.Remove(personajeEliminar);
+                    if (ejercito.Count <= 0)
+                        GameManager.finPartida = true;
+                    //ejercito[0].GetComponent<BTAbstracto>().GetBT().Active = true;
                 }
-
-                GameManager.grid.GetGrid()[personajeEliminar.GetComponent<PersonajeController>().GetPersonaje().GetX(), 
-                    personajeEliminar.GetComponent<PersonajeController>().GetPersonaje().GetY()].SetPersonaje(null);
-
-                if (turnosUsados > 0) turnosUsados--;
-                ejercito.Remove(personajeEliminar);
-                if (ejercito.Count <= 0)
-                    GameManager.finPartida = true;
             }
-        }
-        else
-        {
-            if(ejercitoEnemigo.Count > 0)
+            else
             {
-                foreach (var personaje in ejercitoEnemigo)
+                if (ejercitoEnemigo.Count > 0)
                 {
-                    if (sender.name.Equals(personaje.name))
-                        personajeEliminar = personaje;
-                }
+                    foreach (var personaje in ejercitoEnemigo)
+                    {
+                        if (sender.name.Equals(personaje.name))
+                            personajeEliminar = personaje;
+                    }
 
-                ejercitoEnemigo.Remove(personajeEliminar);
+                    ejercitoEnemigo.Remove(personajeEliminar);
+                }
             }
         }
         //CkeckObjetivos();
