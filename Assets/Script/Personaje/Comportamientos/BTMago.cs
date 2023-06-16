@@ -66,12 +66,54 @@ public class BTMago : BTAbstracto
         LeafNode suficienteVidaPerception = BT.CreateLeafNode("SuficienteVida", SuficienteVidaAction, SuficienteVidaSuccessCheck);
         LeafNode atacarAccion1 = BT.CreateLeafNode("AtaqueAtacar1", AtacarAction, AtacarSuccessCheck);
         SequenceNode secuenciaAtaque2 = BT.CreateSequenceNode("SecuenciaAtaque2", false);
-        LeafNode pedirAuxilioAtaque = BT.CreateLeafNode("AuxilioAtaque", PedirAxuilioAction, PedirAuxilioSuccessCheck);
+        LeafNode pedirAuxilioAtaque = BT.CreateLeafNode("AuxilioAtaque", PedirAuxilioAction, PedirAuxilioSuccessCheck);
         LeafNode enemigoPocaVida = BT.CreateLeafNode("EnemigoPocaVida", EnemigoPocaVidaAction, EnemigoPocaVidaSuccessCheck);
         LeafNode atacarAccion2 = BT.CreateLeafNode("AtaqueAtacar2", AtacarAction, AtacarSuccessCheck);
 
         //Secuencia Moverse
         SequenceNode secuenciaMoverse1 = BT.CreateSequenceNode("SecuenciaMoverse1", false);
+        LeafNode noSuficienteVidaPerception = BT.CreateLeafNode("NoSuficienteVida", NoSuficienteVidaAction, NoSuficienteVidaSuccessCheck);
+        LeafNode moverrseMoverseAccion = BT.CreateLeafNode("MoverseMoverse", MoverseEnemigoAction, MoverseEnemigoSuccessCheck);
+        SelectorNode selectorMoverse = BT.CreateSelectorNode("SelectorMoverse");
+        SequenceNode secuenciaMoverse2 = BT.CreateSequenceNode("SecuenciaMoverse2", false);
+        LeafNode pedirAuxilioMoverse = BT.CreateLeafNode("AuxilioMoverse", PedirAuxilioAction, PedirAuxilioSuccessCheck);
+        LeafNode vidaGeneradaPerception = BT.CreateLeafNode("VidaGenerada", VidaGeneradaAction, VidaGeneradaSuccessCheck);
+        LeafNode moverseVidaAccion = BT.CreateLeafNode("MoverseVida", MoverseVidaAction, MoverseVidaSuccessCheck);
+
+        provocandoSecuencia.AddChild(enemigoProvocandoPerception);
+        provocandoSecuencia.AddChild(decisionProvocando);
+        decisionProvocando.AddChild(secuenciaProvocando);
+        decisionProvocando.AddChild(moverseAccion);
+        secuenciaProvocando.AddChild(enemigoRangoPercepcion);
+        secuenciaProvocando.AddChild(atacarAccion);
+
+        curarSecuencia.AddChild(aliadoAuxilioPerception);
+        curarSecuencia.AddChild(selectorCurar);
+        selectorCurar.AddChild(secuenciaCura);
+        selectorCurar.AddChild(moverseAliadoAccion);
+        secuenciaCura.AddChild(aliadoRangoPerception);
+        secuenciaCura.AddChild(especialCargadoPerception);
+        secuenciaCura.AddChild(curarAccion);
+
+        ataqueSecuencia.AddChild(enemigoRangoAtacarPerception);
+        ataqueSecuencia.AddChild(selectorAtaque1);
+        selectorAtaque1.AddChild(secuenciaAtacque1);
+        selectorAtaque1.AddChild(selectorAtaque2);
+        secuenciaAtacque1.AddChild(suficienteVidaPerception);
+        secuenciaAtacque1.AddChild(atacarAccion1);
+        selectorAtaque2.AddChild(secuenciaAtaque2);
+        selectorAtaque2.AddChild(pedirAuxilioAtaque);
+        secuenciaAtaque2.AddChild(enemigoPocaVida);
+        secuenciaAtaque2.AddChild(atacarAccion2);
+
+        moverseSelector.AddChild(secuenciaMoverse1);
+        moverseSelector.AddChild(moverrseMoverseAccion);
+        secuenciaMoverse1.AddChild(noSuficienteVidaPerception);
+        secuenciaMoverse1.AddChild(selectorMoverse);
+        selectorMoverse.AddChild(secuenciaMoverse2);
+        selectorMoverse.AddChild(pedirAuxilioMoverse);
+        secuenciaMoverse2.AddChild(vidaGeneradaPerception);
+        secuenciaMoverse2.AddChild(moverseVidaAccion);
 
         nodoRoot.AddChild(provocandoSecuencia);
         nodoRoot.AddChild(curarSecuencia);
@@ -120,7 +162,7 @@ public class BTMago : BTAbstracto
     private void EnemigoPocaVidaAction() { }
     private ReturnValues EnemigoPocaVidaSuccessCheck() { return ReturnValues.Failed; }
 
-    private void PedirAxuilioAction() { }
+    private void PedirAuxilioAction() { }
     private ReturnValues PedirAuxilioSuccessCheck() { return ReturnValues.Failed; }
     #endregion
 
@@ -130,6 +172,9 @@ public class BTMago : BTAbstracto
 
     private void VidaGeneradaAction() { }
     private ReturnValues VidaGeneradaSuccessCheck() { return ReturnValues.Failed; }
+
+    private void MoverseVidaAction() { }
+    private ReturnValues MoverseVidaSuccessCheck() { return ReturnValues.Failed; }
 
     #endregion
 }
