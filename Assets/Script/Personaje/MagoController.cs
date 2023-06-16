@@ -6,14 +6,11 @@ public class MagoController : PersonajeController
 {
     bool aliadoProvocando = false;
 
-    //Delegados
-    public delegate void Provocando(GameObject sender);
-    public static event Provocando provocandoEvent;
     [SerializeField] private int VidaPoner;
 
     protected override void Awake()
     {
-        this.personaje = new Mago(VidaPoner, 10, "");
+        this.personaje = new Mago(VidaPoner, 10, "",5);
 
         GetComponent<BTMago>().GetBT().Active = false;
     }
@@ -29,4 +26,10 @@ public class MagoController : PersonajeController
     }
 
     public bool aliadoEstaProvocando() { return aliadoProvocando; }
+
+    public void Curar(PersonajeController aliado)
+    {
+        var mago = personaje as Mago;
+        aliado.GetPersonaje().CurarVida(mago.GetCuracion());
+    }
 }

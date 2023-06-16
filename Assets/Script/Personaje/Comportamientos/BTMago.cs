@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BTMago : BTAbstracto
 {
+
+    PersonajeController aliadoCercano;
     public BTMago() : base()
     {
         this.BT = new BehaviourTreeEngine(false);
@@ -126,55 +128,205 @@ public class BTMago : BTAbstracto
 
     #region Provocado Secuencia
     private void EnemigoProvocandoAction() { }
-    private ReturnValues EnemigoProvocandoSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues EnemigoProvocandoSuccessCheck() 
+    {
+        if (GetComponent<PersonajeController>().AlguienProvocando())
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 
     private void EnemigoARangoAction() { }
-    private ReturnValues EnemigoARangoSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues EnemigoARangoSuccessCheck() 
+    {
+        enemigo = GetComponent<MagoController>().GetPersonaje().EnemigoARango();
 
-    private void AtacarAction() { }
-    private ReturnValues AtacarSuccessCheck() { return ReturnValues.Failed; }
+        if (enemigo != null)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 
-    private void MoverseEnemigoAction() { }
-    private ReturnValues MoverseEnemigoSuccessCheck() { return ReturnValues.Failed; }
+    private void AtacarAction() 
+    {
+        GetComponent<MagoController>().GetPersonaje().Atacar(enemigo);
+
+        GetComponent<PersonajeController>().FinTurno();
+        this.GetBT().Active = false;
+    }
+    private ReturnValues AtacarSuccessCheck() { return ReturnValues.Succeed; }
+
+    private void MoverseEnemigoAction() 
+    {
+        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+
+        GetComponent<MagoController>().Moverse(enemigo.transform.position);
+
+        GetComponent<PersonajeController>().FinTurno();
+        this.GetBT().Active = false;
+    }
+    private ReturnValues MoverseEnemigoSuccessCheck() 
+    {
+        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
+
+        if (enemigo != null)
+        {
+            return ReturnValues.Failed;
+        }
+        else
+        {
+            return ReturnValues.Succeed;
+        }
+    }
     #endregion
 
     #region Curar Secuencia
     private void AliadoAuxilioAction() { }
-    private ReturnValues AliadoAuxilioSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues AliadoAuxilioSuccessCheck() 
+    {
+        if (GetComponent<PersonajeController>().alguienPidiendoAuxilio())
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
     
     private void AliadoARangoAction() { }
-    private ReturnValues AliadoARangoSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues AliadoARangoSuccessCheck() 
+    {
+        var aliado = GetComponent<MagoController>().GetPersonaje() as Mago;
+        this.aliadoCercano = aliado.AliadoARango();
+        if(aliadoCercano != null)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 
     private void EspecialCargadoAction() { }
-    private ReturnValues EspecialCargadoSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues EspecialCargadoSuccessCheck() { return ReturnValues.Succeed; }
 
-    private void CurarAction() { }
-    private ReturnValues CurarSuccessCheck() { return ReturnValues.Failed; }
+    private void CurarAction() 
+    {
+        GetComponent<MagoController>().Curar(aliadoCercano);
 
-    private void MoverseAliadoAction() { }
-    private ReturnValues MoverseAliadoSuccessCheck() { return ReturnValues.Failed; }
+        GetComponent<PersonajeController>().FinTurno();
+        GetBT().Active = false;
+    }
+    private ReturnValues CurarSuccessCheck() { return ReturnValues.Succeed; }
+
+    private void MoverseAliadoAction() 
+    {
+        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        GetComponent<MagoController>().Moverse(aliado.transform.position);
+
+        GetComponent<PersonajeController>().FinTurno();
+        GetBT().Active = false;
+    }
+    private ReturnValues MoverseAliadoSuccessCheck() 
+    {
+        var aliado = GetComponent<MagoController>().GetPersonaje() as Mago;
+        this.aliadoCercano = aliado.AliadoARango();
+        if (aliadoCercano != null)
+        {
+            return ReturnValues.Failed;
+        }
+        else
+        {
+            return ReturnValues.Succeed;
+        }
+    }
     #endregion
 
     #region Atacar Secuencia
     private void SuficienteVidaAction() { }
-    private ReturnValues SuficienteVidaSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues SuficienteVidaSuccessCheck() 
+    {
+        if (GetComponent<MagoController>().GetPersonaje().GetVida() > 20)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 
     private void EnemigoPocaVidaAction() { }
-    private ReturnValues EnemigoPocaVidaSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues EnemigoPocaVidaSuccessCheck() 
+    {
+        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <
+            GetComponent<MagoController>().GetPersonaje().GetVida())
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 
-    private void PedirAuxilioAction() { }
-    private ReturnValues PedirAuxilioSuccessCheck() { return ReturnValues.Failed; }
+    private void PedirAuxilioAction() 
+    {
+        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        GetComponent<MeleeController>().Moverse(aliado.transform.position);
+        GetComponent<PersonajeController>().pidiendoAuxilio();
+        this.GetBT().Active = false;
+    }
+    private ReturnValues PedirAuxilioSuccessCheck() { return ReturnValues.Succeed; }
     #endregion
 
     #region Moverse Secuencia
     private void NoSuficienteVidaAction() { }
-    private ReturnValues NoSuficienteVidaSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues NoSuficienteVidaSuccessCheck() 
+    {
+        if (GetComponent<MagoController>().GetPersonaje().GetVida() <= 20)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 
     private void VidaGeneradaAction() { }
-    private ReturnValues VidaGeneradaSuccessCheck() { return ReturnValues.Failed; }
+    private ReturnValues VidaGeneradaSuccessCheck() 
+    {
+        if (GameManager.hayObj)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 
-    private void MoverseVidaAction() { }
-    private ReturnValues MoverseVidaSuccessCheck() { return ReturnValues.Failed; }
+    private void MoverseVidaAction() 
+    {
+        var movimientoManager = GetComponent<MagoController>();
+
+        movimientoManager.Moverse(GameManager.objetivo);
+
+        GetComponent<PersonajeController>().FinTurno();
+        this.GetBT().Active = false;
+    }
+    private ReturnValues MoverseVidaSuccessCheck() { return ReturnValues.Succeed; }
 
     #endregion
 }

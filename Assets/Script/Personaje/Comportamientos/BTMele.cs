@@ -157,19 +157,16 @@ public class BTMele : BTAbstracto
 
         if (enemigo != null)
         {
-            Debug.Log(gameObject.name + " Enemigo a rango");
             return ReturnValues.Succeed;
         }
         else
         {
-            Debug.Log(gameObject.name + " no tiene enemigo a rango");
             return ReturnValues.Failed;
         }
     }
 
     private void MoviendoAEnemigo()
     {
-        Debug.Log(gameObject.name + " Me muevo al enemigo");
         var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
 
         GetComponent<MeleeController>().Moverse(enemigo.transform.position);
@@ -182,13 +179,20 @@ public class BTMele : BTAbstracto
 
     private ReturnValues MoviendoAEnemigoSuccessCheck()
     {
-        Debug.Log("Enemigo no a rango, me muevo");
-        return ReturnValues.Succeed;
+        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
+
+        if (enemigo != null)
+        {
+            return ReturnValues.Failed;
+        }
+        else
+        {
+            return ReturnValues.Succeed;
+        }
     }
 
     private void AtaqueProvocando()
     {
-        Debug.Log(gameObject.name + " Lo agarro a putasos");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
 
         GetComponent<PersonajeController>().FinTurno();
@@ -197,7 +201,6 @@ public class BTMele : BTAbstracto
 
     private ReturnValues AtaqueProvocandoSuccessCheck()
     {
-        Debug.Log("Evalúo atacar");
         return ReturnValues.Succeed;
     }
     #endregion
@@ -208,7 +211,6 @@ public class BTMele : BTAbstracto
     {
         if (GetComponent<PersonajeController>().alguienPidiendoAuxilio())
         {
-            Debug.Log(gameObject.name + " Alguien pide auxilio");
             return ReturnValues.Succeed;
         }
         else
@@ -251,7 +253,6 @@ public class BTMele : BTAbstracto
     private void ProvocarAction()
     {
         GetComponent<MeleeController>().Provocar();
-        Debug.Log(gameObject.name + " Provoco");
         var aliado = GetComponent<PersonajeController>().getAliadoCercano();
         GetComponent<MeleeController>().Moverse(aliado.transform.position);
 
@@ -352,7 +353,6 @@ public class BTMele : BTAbstracto
     #region Moverse Secuencia
     private void MoverseEnemigoAction()
     {
-        Debug.Log(gameObject.name + " Me muevo al enemigo");
         var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
 
         GetComponent<MeleeController>().Moverse(enemigo.transform.position);
@@ -364,17 +364,14 @@ public class BTMele : BTAbstracto
     }
     private ReturnValues MoverseEnemigoSuccessCheck()
     {
-        Debug.Log(gameObject.name + " se intenta mover");
         enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
 
         if (enemigo != null)
         {
-            Debug.Log(gameObject.name + "Enemigo a rango");
             return ReturnValues.Failed;
         }
         else
         {
-            Debug.Log("Enemigo no a rango, me muevo");
             return ReturnValues.Succeed;
         }
 

@@ -7,6 +7,7 @@ public class Personaje
     // ATRIBUTOS
 
     protected int vida;
+    protected int vidaMax;
     protected int ataque;
     protected string faccion;
 
@@ -19,6 +20,7 @@ public class Personaje
     public Personaje(int vida, int ataque, string faccion, int x, int y)
     {
         this.vida = vida;
+        this.vidaMax = vida;
         this.ataque = ataque;
         this.faccion = faccion;
         this.x = x;
@@ -39,6 +41,8 @@ public class Personaje
     public void SetX(int x) { this.x = x; }
     public void SetY(int y) { this.y = y; }
     public void SetFaccion(string faccion) { this.faccion = faccion; }  
+
+    public void CurarVida(int vida) { this.vida += vida;  if (this.vida >= vidaMax) this.vida = this.vidaMax; }
 
     // METODOS
 
