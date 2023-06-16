@@ -11,10 +11,8 @@ public class Mele : Personaje
     public override void Atacar(PersonajeController enemigo)
     {
         var enemigoAux = enemigo.GetPersonaje();
+        enemigoAux.Herida(ataque);
 
-        enemigoAux.SetVida(enemigoAux.GetVida() - ataque);
-
-        Debug.Log("Le he dejao a : " + enemigoAux.GetVida());
     }
 
     public override PersonajeController EnemigoARango()

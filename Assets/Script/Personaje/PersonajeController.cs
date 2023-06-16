@@ -29,7 +29,11 @@ public class PersonajeController : MonoBehaviour
     public static event PidiendoAuxilio PidiendoAuxilioEvent;
 
     public delegate void NoPidiendoAxuilio(GameObject sender);
-    public static event NoPidiendoAxuilio NoPidiendoAxuilioEvent;   
+    public static event NoPidiendoAxuilio NoPidiendoAxuilioEvent;
+
+    public delegate void Muerto(GameObject sender);
+    public static event Muerto MuertoEvent;
+    bool muertoInvocado = false;
     // GETTERS & SETTERS
 
     public Personaje GetPersonaje() { return personaje; }
@@ -43,7 +47,7 @@ public class PersonajeController : MonoBehaviour
 
     public bool pidoAuxilio() { return necesitoAuxilio; }
 
-    public void pidiendoAuxilio() { Debug.Log(gameObject.name + " Estoy Pidiendo auxilio");  necesitoAuxilio = true;  FinTurno(); PidiendoAuxilioEvent?.Invoke(gameObject); }
+    public void pidiendoAuxilio() {   necesitoAuxilio = true;  FinTurno(); PidiendoAuxilioEvent?.Invoke(gameObject); }
     public void noMasAuxilio() { necesitoAuxilio = false; NoPidiendoAxuilioEvent?.Invoke(gameObject); }
 
     public void SetEnemigoProvocando(bool enemigoProvocando) { this.enemigoProvocando = enemigoProvocando; }
@@ -90,6 +94,20 @@ public class PersonajeController : MonoBehaviour
         GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(GetComponent<PersonajeController>());
     }
 
+
+    private void Update()
+    {
+        if (personaje.GetVida() <= 0)
+        {
+            if (!muertoInvocado)
+            {
+                muertoInvocado = true;
+                MuertoEvent?.Invoke(gameObject);
+                Destroy(gameObject);
+            }
+        }
+    }
+
     virtual protected void FixedUpdate()
     {
         
@@ -109,10 +127,11 @@ public class PersonajeController : MonoBehaviour
 
         if (objetivo != null)
         {
-            while (Vector3.Distance(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid)) > 0.05f)
+            /*while (Vector3.Distance(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid)) > 0.05f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid), 1 * Time.deltaTime);
-            }
+            }*/
+            transform.position = GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid);
 
             GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
 

@@ -32,7 +32,6 @@ public class ObjectController : MonoBehaviour
             {
                 collision.gameObject.GetComponent<PersonajeController>().noMasAuxilio();
             }
-            Debug.Log("Mira mi vida: " + personaje.GetVida());
 
             Destroy(this.gameObject);
         }

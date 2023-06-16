@@ -11,6 +11,7 @@ public class MagoController : PersonajeController
     protected override void Awake()
     {
         this.personaje = new Mago(VidaPoner, 10, "",5);
+        this.personaje.SetVida(VidaPoner);
 
         GetComponent<BTMago>().GetBT().Active = false;
     }
@@ -29,7 +30,10 @@ public class MagoController : PersonajeController
 
     public void Curar(PersonajeController aliado)
     {
+        Debug.Log(aliado.gameObject.name + " está siendo curado");
+        Debug.Log("Vida de :" + aliado.gameObject.name + " es: " + aliado.GetPersonaje().GetVida());
         var mago = personaje as Mago;
-        aliado.GetPersonaje().CurarVida(mago.GetCuracion());
+        aliado.GetPersonaje().SetVida(aliado.GetPersonaje().GetVida() + mago.GetCuracion());
+        Debug.Log("Vida de :" + aliado.gameObject.name + " tras curar es: " + aliado.GetPersonaje().GetVida());
     }
 }

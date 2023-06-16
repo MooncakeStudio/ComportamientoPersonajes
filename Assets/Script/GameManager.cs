@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public static Vector3 objetivo;
 
+    public static bool finPartida;
+
 
     // GETTERS & SETTERS
 
@@ -50,11 +52,10 @@ public class GameManager : MonoBehaviour
 
     public void Actuar()
     {
-        if (!turnoActivo)
+        if (!turnoActivo && !finPartida)
         {
             if (esTurnoUno)
             {
-                Debug.Log("El primero");
                 turnoActivo = true;
                 user.GetComponent<UserController>().CkeckObjetivos();
                 //StartCoroutine(user.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count));
@@ -64,13 +65,21 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("El segundo");
                 turnoActivo = true;
                 user2.GetComponent<UserController>().CkeckObjetivos();
                 //StartCoroutine(user2.GetComponent<UserController>().MoverSoldados(0, user.GetComponent<UserController>().ejercito.Count));
                 user2.GetComponent<UserController>().MoverSoldados(0, user2.GetComponent<UserController>().ejercito.Count);
                 //yield return new WaitForSeconds(1);
                 esTurnoUno = true;
+            }
+        }
+        else
+        {
+            if (finPartida)
+            {
+                var ganador = user.GetComponent<UserController>().GetPersonajes() <= 0 ? "Jugador 2" : "Jugador 1";
+                Debug.Log("Winner is: "+ganador);
+
             }
         }
     }

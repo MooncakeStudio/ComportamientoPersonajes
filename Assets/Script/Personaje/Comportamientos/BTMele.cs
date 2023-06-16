@@ -138,7 +138,6 @@ public class BTMele : BTAbstracto
     {
         if (GetComponent<PersonajeController>().AlguienProvocando())
         {
-            Debug.Log(gameObject.name + " Siendo provocado");
             return ReturnValues.Succeed;
         }
         else
@@ -253,8 +252,8 @@ public class BTMele : BTAbstracto
     private void ProvocarAction()
     {
         GetComponent<MeleeController>().Provocar();
-        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
-        GetComponent<MeleeController>().Moverse(aliado.transform.position);
+        //var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        //GetComponent<MeleeController>().Moverse(aliado.transform.position);
 
         GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
@@ -271,12 +270,10 @@ public class BTMele : BTAbstracto
 
         if (enemigo != null)
         {
-            Debug.Log(gameObject.name + " Enemigo a rango");
             return ReturnValues.Succeed;
         }
         else
         {
-            Debug.Log(gameObject.name + " no tiene enemigo a rango");
             return ReturnValues.Failed;
         }
         //return ReturnValues.Succeed;
@@ -297,7 +294,6 @@ public class BTMele : BTAbstracto
 
     private void AtacarAction()
     {
-        Debug.Log(gameObject.name + " Lo agarro a putasos");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
 
         GetComponent<PersonajeController>().FinTurno();
@@ -306,7 +302,6 @@ public class BTMele : BTAbstracto
     }
     private ReturnValues AtacarSuccessCheck()
     {
-        Debug.Log("Evalúo atacar");
         return ReturnValues.Succeed;
     }
 
@@ -418,7 +413,6 @@ public class BTMele : BTAbstracto
     //moverse vida
     private void IrAVidaAction()
     {
-        Debug.Log(gameObject.name + " Devuelveme la vida");
 
         var movimientoManager = GetComponent<MeleeController>();
 

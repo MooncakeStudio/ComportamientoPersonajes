@@ -14,6 +14,8 @@ public class Personaje
     public int x;
     public int y;
 
+    
+
     //Constructor
     public Personaje(int vida, int ataque, string faccion) { this.vida = vida; this.ataque = ataque; this.faccion = faccion; }
     public Personaje() { vida = 30; ataque = 10; faccion = ""; x = 0; y = 0; }
@@ -43,6 +45,13 @@ public class Personaje
     public void SetFaccion(string faccion) { this.faccion = faccion; }  
 
     public void CurarVida(int vida) { this.vida += vida;  if (this.vida >= vidaMax) this.vida = this.vidaMax; }
+
+    public void Herida(int damage) 
+    {
+        this.vida -= damage;
+        if (vida <= 0)
+            vida = 0;
+    }
 
     // METODOS
 

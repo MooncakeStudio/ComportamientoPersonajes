@@ -27,7 +27,8 @@ public class UserController : MonoBehaviour
     {
         MeleeController.provocandoEvent += PercepcionPersonajeProvocando;
         PersonajeController.PidiendoAuxilioEvent += PercepcionPersonajeAuxilio;
-        PersonajeController.NoPidiendoAxuilioEvent -= PercepcionPersonajeNoAuxilio;
+        PersonajeController.NoPidiendoAxuilioEvent += PercepcionPersonajeNoAuxilio;
+        PersonajeController.MuertoEvent += ElminiarPersonaje;
     }
 
     private void OnDisable()
@@ -35,6 +36,7 @@ public class UserController : MonoBehaviour
         MeleeController.provocandoEvent -= PercepcionPersonajeProvocando;
         PersonajeController.PidiendoAuxilioEvent -= PercepcionPersonajeAuxilio;
         PersonajeController.NoPidiendoAxuilioEvent -= PercepcionPersonajeNoAuxilio;
+        PersonajeController.MuertoEvent -= ElminiarPersonaje;
     }
 
     private void Start()
@@ -57,6 +59,8 @@ public class UserController : MonoBehaviour
             turnosUsados = 0;
         }
     }
+
+    public int GetPersonajes() { return ejercito.Count; }
 
     public void turnoFinalizado() 
     { 
@@ -136,6 +140,22 @@ public class UserController : MonoBehaviour
                     
                 }
             }
+
+            if (posibleObjetivo.tag.Equals(ejercitoEnemigo[0].tag))
+            {
+                foreach (var aliado in ejercito)
+                {
+                    if (!aliado.name.Equals(personaje.name))
+                    {
+                        if (Vector3.Distance(aliado.transform.position, personaje.transform.position) < distance)
+                        {
+                            posibleObjetivo = aliado;
+                            distance = Vector3.Distance(aliado.transform.position, personaje.transform.position);
+                        }
+                    }
+
+                }
+            }
             
 
             personaje.GetComponent<PersonajeController>().setAliadoCercano(posibleObjetivo);
@@ -199,5 +219,43 @@ public class UserController : MonoBehaviour
             }
 
         }
+    }
+
+    public void ElminiarPersonaje(GameObject sender)
+    {
+        GameObject personajeEliminar = null;
+        if (sender.CompareTag(gameObject.tag))
+        {
+            if (ejercito.Count > 0)
+            {
+                foreach (var personaje in ejercito)
+                {
+                    if (sender.name.Equals(personaje.name))
+                        personajeEliminar = personaje;
+                }
+
+                GameManager.grid.GetGrid()[personajeEliminar.GetComponent<PersonajeController>().GetPersonaje().GetX(), 
+                    personajeEliminar.GetComponent<PersonajeController>().GetPersonaje().GetY()].SetPersonaje(null);
+
+                if (turnosUsados > 0) turnosUsados--;
+                ejercito.Remove(personajeEliminar);
+                if (ejercito.Count <= 0)
+                    GameManager.finPartida = true;
+            }
+        }
+        else
+        {
+            if(ejercitoEnemigo.Count > 0)
+            {
+                foreach (var personaje in ejercitoEnemigo)
+                {
+                    if (sender.name.Equals(personaje.name))
+                        personajeEliminar = personaje;
+                }
+
+                ejercitoEnemigo.Remove(personajeEliminar);
+            }
+        }
+        //CkeckObjetivos();
     }
 }

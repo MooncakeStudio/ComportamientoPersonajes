@@ -82,6 +82,8 @@ public class BTMago : BTAbstracto
         LeafNode vidaGeneradaPerception = BT.CreateLeafNode("VidaGenerada", VidaGeneradaAction, VidaGeneradaSuccessCheck);
         LeafNode moverseVidaAccion = BT.CreateLeafNode("MoverseVida", MoverseVidaAction, MoverseVidaSuccessCheck);
 
+        LoopDecoratorNode mainLoop = BT.CreateLoopNode("loop", nodoRoot);
+
         provocandoSecuencia.AddChild(enemigoProvocandoPerception);
         provocandoSecuencia.AddChild(decisionProvocando);
         decisionProvocando.AddChild(secuenciaProvocando);
@@ -175,7 +177,7 @@ public class BTMago : BTAbstracto
     }
     private ReturnValues MoverseEnemigoSuccessCheck() 
     {
-        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
+        enemigo = GetComponent<MagoController>().GetPersonaje().EnemigoARango();
 
         if (enemigo != null)
         {
