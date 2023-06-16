@@ -2049,6 +2049,7 @@ MonoBehaviour:
   enemigoProvocando: 0
   velocidad: 0.5
   VidaPoner: 50
+  ataque: 100
 --- !u!114 &548923264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2158,6 +2159,7 @@ MonoBehaviour:
   enemigoProvocando: 0
   velocidad: 0.3
   VidaPoner: 50
+  ataque: 15
 --- !u!114 &698205496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2895,6 +2897,7 @@ MonoBehaviour:
   enemigoProvocando: 0
   velocidad: 0.5
   VidaPoner: 50
+  ataque: 15
 --- !u!1 &710708954 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
@@ -2988,6 +2991,7 @@ MonoBehaviour:
   enemigoProvocando: 0
   velocidad: 0.5
   VidaPoner: 50
+  ataque: 15
 --- !u!1 &880296871
 GameObject:
   m_ObjectHideFlags: 0
