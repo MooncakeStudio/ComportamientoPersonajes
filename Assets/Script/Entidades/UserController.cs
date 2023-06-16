@@ -62,7 +62,11 @@ public class UserController : MonoBehaviour
     { 
         turnosUsados++;
         if(turnosUsados < ejercito.Count)
+        {
+            CkeckObjetivos();
             ejercito[turnosUsados].GetComponent<BTAbstracto>().GetBT().Active = true;
+        }
+            
     }
 
     // METODOS

@@ -13,6 +13,7 @@ public class BTAbstracto : MonoBehaviour
     public Vector3 objetivo;
     protected PersonajeController enemigo;
 
+    public State ActiveArbol;
 
     public BTAbstracto() 
     { 
