@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // ATRIBUTOS
-
+    #region Atributos y Getters-setters
     [SerializeField] GameObject user;
     [SerializeField] GameObject user2;
 
@@ -23,20 +22,16 @@ public class GameManager : MonoBehaviour
 
     public static Vector3 objetivo;
 
-
-    // GETTERS & SETTERS
-
     public static Grid GetGrid() { return grid; }
+    #endregion
 
-
-    // METODOS
+    #region Metodos
 
     private void Awake()
     {
         grid = worldGrid;
         pf = a_est;
     }
-
     private void Update()
     {
         /*if (!hayObj)
@@ -47,7 +42,6 @@ public class GameManager : MonoBehaviour
 
         Actuar();
     }
-
     public void Actuar()
     {
         if (!turnoActivo)
@@ -74,7 +68,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
     public void CrearObjeto()
     {
         var x = 0;
@@ -84,18 +77,16 @@ public class GameManager : MonoBehaviour
             x = UnityEngine.Random.Range(0, grid.GetGrid().GetLength(0));
             z = UnityEngine.Random.Range(0, grid.GetGrid().GetLength(1));
         } while (!grid.GetGrid()[x, z].transitable);
-        
+
 
         Vector3 posicion = grid.GetPosicionGlobal(x, z);
-
         posicion.y = 0.02f;
 
         var instance = Instantiate(objeto, posicion, Quaternion.identity);
-
         instance.GetComponent<ObjectController>().SetObjeto(new Objeto());
-
         grid.GetGrid()[x, z].SetObjeto(instance.GetComponent<ObjectController>());
-
         objetivo = posicion;
     }
+
+    #endregion
 }

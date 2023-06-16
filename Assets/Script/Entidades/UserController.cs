@@ -7,8 +7,7 @@ using UnityEngine.Events;
 
 public class UserController : MonoBehaviour
 {
-    // ATRIBUTOS
-
+    #region Atributos
     [SerializeField] public List<GameObject> ejercito;
     [SerializeField] public bool esMiTurno;
     [SerializeField] private List<GameObject> ejercitoEnemigo;
@@ -19,10 +18,9 @@ public class UserController : MonoBehaviour
 
     public UnityEvent aliadoPideAuxilio = new UnityEvent();
     int turnosUsados = 0;
+    #endregion
 
-
-    // GETTERS & SETTERS
-
+    #region Delegados percepciones
     private void OnEnable()
     {
         MeleeController.provocandoEvent += PercepcionPersonajeProvocando;
@@ -36,21 +34,21 @@ public class UserController : MonoBehaviour
         PersonajeController.PidiendoAuxilioEvent -= PercepcionPersonajeAuxilio;
         PersonajeController.NoPidiendoAxuilioEvent -= PercepcionPersonajeNoAuxilio;
     }
+    #endregion
 
+    #region Metodos
     private void Start()
     {
-        foreach(var personaje in ejercito)
+        foreach (var personaje in ejercito)
         {
             personaje.GetComponent<PersonajeController>().Usuario(this);
         }
 
-        
-
     }
-
+    #region Turnos
     private void Update()
     {
-        if(turnosUsados >= ejercito.Count)
+        if (turnosUsados >= ejercito.Count)
         {
             enemigosProvocando.Clear();
             GameManager.turnoActivo = false;
@@ -58,23 +56,22 @@ public class UserController : MonoBehaviour
         }
     }
 
-    public void turnoFinalizado() 
-    { 
+    public void turnoFinalizado()
+    {
         turnosUsados++;
-        if(turnosUsados < ejercito.Count)
+        if (turnosUsados < ejercito.Count)
             ejercito[turnosUsados].GetComponent<BTAbstracto>().GetBT().Active = true;
     }
 
-    // METODOS
+    #endregion
 
     public void CkeckObjetivos()
     {
-        foreach(var personaje in ejercito)
+        foreach (var personaje in ejercito)
         {
-
             float distance = Mathf.Infinity;
             GameObject posibleObjetivo = null;
-            if(enemigosProvocando.Count > 0)
+            if (enemigosProvocando.Count > 0)
             {
                 personaje.GetComponent<PersonajeController>().SetEnemigoProvocando(true);
 
@@ -100,10 +97,11 @@ public class UserController : MonoBehaviour
                     }
                 }
             }
+
             personaje.GetComponent<PersonajeController>().setEnemigoObjetivo(posibleObjetivo);
 
             distance = Mathf.Infinity;
-            if(aliadosAuxilio.Count > 0)
+            if (aliadosAuxilio.Count > 0)
             {
                 foreach (var aliado in aliadosAuxilio)
                 {
@@ -129,10 +127,10 @@ public class UserController : MonoBehaviour
                             distance = Vector3.Distance(aliado.transform.position, personaje.transform.position);
                         }
                     }
-                    
+
                 }
             }
-            
+
 
             personaje.GetComponent<PersonajeController>().setAliadoCercano(posibleObjetivo);
         }
@@ -143,6 +141,7 @@ public class UserController : MonoBehaviour
         ejercito[turnosUsados].GetComponent<BTAbstracto>().GetBT().Active = true;
     }
 
+    #region Percepciones
     private void PercepcionPersonajeProvocando(GameObject sender)
     {
         if (!sender.CompareTag(gameObject.tag))
@@ -153,19 +152,19 @@ public class UserController : MonoBehaviour
 
     private void PercepcionPersonajeAuxilio(GameObject sender)
     {
-        if(sender.CompareTag(gameObject.tag)) 
+        if (sender.CompareTag(gameObject.tag))
         {
             var paraAdd = true;
-            if(aliadosAuxilio.Count > 0)
+            if (aliadosAuxilio.Count > 0)
             {
-                foreach(var personaje in aliadosAuxilio)
+                foreach (var personaje in aliadosAuxilio)
                 {
                     if (personaje.name.Equals(sender.name))
                         paraAdd = false;
                 }
             }
 
-            if(paraAdd)
+            if (paraAdd)
                 aliadosAuxilio.Add(sender);
 
             foreach (var personaje in ejercito)
@@ -178,16 +177,16 @@ public class UserController : MonoBehaviour
         GameObject personajeEliminar = null;
         if (sender.CompareTag(gameObject.tag))
         {
-            if(aliadosAuxilio.Count > 0)
+            if (aliadosAuxilio.Count > 0)
             {
-                foreach(var personaje in aliadosAuxilio)
+                foreach (var personaje in aliadosAuxilio)
                 {
                     if (sender.name.Equals(personaje.name))
                         personajeEliminar = personaje;
                 }
 
                 aliadosAuxilio.Remove(personajeEliminar);
-                if(aliadosAuxilio.Count < 0)
+                if (aliadosAuxilio.Count < 0)
                 {
                     foreach (var personaje in ejercito)
                         personaje.GetComponent<PersonajeController>().SetAliadoPidiendoAuxilio(false);
@@ -196,4 +195,6 @@ public class UserController : MonoBehaviour
 
         }
     }
+    #endregion
+    #endregion
 }

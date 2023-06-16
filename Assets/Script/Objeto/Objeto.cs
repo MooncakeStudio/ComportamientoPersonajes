@@ -5,13 +5,10 @@ using UnityEngine.Video;
 
 public class Objeto
 {
-    // ATRIBUTOS
+    #region Atributos y Getters-Setters
 
     int vida;
     int posX, posY;
-
-
-    // GETTER Y SETTERS
 
     public int GetVida() { return this.vida; }
     public int GetPosX() { return this.posX; }
@@ -21,13 +18,14 @@ public class Objeto
     public void SetPosX(int x) { this.posX = x; }
     public void SetPosY(int y) { this.posY = y; }
 
+    #endregion
 
-    // CONTRUCTOR
-
+    #region Constructor
     public Objeto(int vida = 5, int posX = 0, int posY = 0)
     { 
         this.vida = vida;
         this.posX = posX;
         this.posY = posY;
     }
+    #endregion
 }

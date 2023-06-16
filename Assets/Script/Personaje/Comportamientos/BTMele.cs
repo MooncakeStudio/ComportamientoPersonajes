@@ -16,24 +16,22 @@ public class BTMele : BTAbstracto
     }
 
 
-    // METODOS
+    
+    #region Metodos
 
     private void Start()
     {
         StartCoroutine(ejecutarArbol());
     }
 
-
     public override IEnumerator ejecutarArbol()
     {
         BT.Update();
-
         yield return new WaitForSeconds(GetComponent<PersonajeController>().GetVelocidad());
 
         //BT.Reset();
         StartCoroutine(ejecutarArbol());
     }
-
     public override void CrearIA()
     {
         //Nodo root
@@ -129,11 +127,11 @@ public class BTMele : BTAbstracto
         BT.SetRootNode(nodoRoot);
     }
 
-    /* ACCIONES */
+    
+    #region Acciones
 
     //Enemgio provocando
     private void EnemigoProvocandoAction() { }
-
     private ReturnValues EnemigoProvocandoSuccessCheck()
     {
         if (GetComponent<PersonajeController>().AlguienProvocando())
@@ -150,6 +148,8 @@ public class BTMele : BTAbstracto
 
     }
 
+
+
     //Moverse enemigo
     private void MoverseEnemigoAction() 
     {
@@ -163,7 +163,6 @@ public class BTMele : BTAbstracto
         GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
-
     private ReturnValues MoverseEnemigoSuccessCheck() 
     {
         Debug.Log(gameObject.name + " se intenta mover");
@@ -182,6 +181,8 @@ public class BTMele : BTAbstracto
 
         return ReturnValues.Succeed;
     }
+
+
 
     //Enemigo a rango
     private void EnemigoARangoAction() { }
@@ -202,9 +203,10 @@ public class BTMele : BTAbstracto
         }
     }
 
+
+
     //Aliado auxilio
     private void AliadoAuxilioAction() { }
-
     private ReturnValues AliadoAuxilioSuccessCheck() 
     {
         if (GetComponent<PersonajeController>().alguienPidiendoAuxilio())
@@ -219,9 +221,10 @@ public class BTMele : BTAbstracto
     
     }
 
+
+
     //Especial cargado
     private void EspecialCargadoAction() { }
-
     private ReturnValues EspecialCargadoSuccessCheck()
     {
         /*if (GetComponent<PersonajeController>().tengoAtaqueEspecial())
@@ -237,9 +240,10 @@ public class BTMele : BTAbstracto
         return ReturnValues.Succeed;
     }
 
+
+
     //Suficiente vida
     private void SuficienteVidaAction() { }
-
     private ReturnValues SuficienteVidaSuccessCheck()
     {
         if (GetComponent<MeleeController>().GetPersonaje().GetVida() > 20)
@@ -251,6 +255,8 @@ public class BTMele : BTAbstracto
             return ReturnValues.Failed;
         }
     }
+
+
 
     //Provocar
     private void ProvocarAction() 
@@ -264,8 +270,9 @@ public class BTMele : BTAbstracto
         this.GetBT().Active = false;
         //GetComponent<PersonajeController>().FinTurno();
     }
-
     private ReturnValues ProvocarSuccessCheck() { return ReturnValues.Succeed; }
+
+
 
     //Atacar
     private void AtacarAction()
@@ -277,16 +284,15 @@ public class BTMele : BTAbstracto
         this.GetBT().Active = false;
         //GetComponent<PersonajeController>().FinTurno();
     }
-
     private ReturnValues AtacarSuccessCheck()
     {
         return ReturnValues.Succeed;
     }
 
 
+
     //enemigo poca vida
     private void EnemigoPocaVidaAction() { }
-
     private ReturnValues EnemigoPocaVidaSuccessCheck()
     {
         if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() < 
@@ -301,9 +307,9 @@ public class BTMele : BTAbstracto
     }
 
 
+
     //No suficiente vida
     private void PocaVidaAction() { }
-
     private ReturnValues PocaVidaSuccessCheck()
     {
         if (GetComponent<MeleeController>().GetPersonaje().GetVida() <= 20)
@@ -317,9 +323,9 @@ public class BTMele : BTAbstracto
     }
 
 
+
     //vida generada
     private void VidaGeneradaAction() { }
-
     private ReturnValues VidaGeneradaSuccessCheck()
     {
         if (GameManager.hayObj)
@@ -331,6 +337,7 @@ public class BTMele : BTAbstracto
             return ReturnValues.Failed;
         }
     }
+
 
 
     //moverse vida
@@ -345,11 +352,12 @@ public class BTMele : BTAbstracto
         GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
-
     private ReturnValues IrAVidaSuccessCheck()
     {
         return ReturnValues.Succeed;
     }
+
+
 
     //Pedir auxilio
     private void PedirAuxilioAction() 
@@ -361,7 +369,6 @@ public class BTMele : BTAbstracto
         //GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
-
     private ReturnValues PedirAuxilioSuccessCheck() 
     {
         /*if (!GetComponent<PersonajeController>().pidoAuxilio())
@@ -376,4 +383,8 @@ public class BTMele : BTAbstracto
 
         return ReturnValues.Succeed;
     }
+
+
+    #endregion
+    #endregion
 }

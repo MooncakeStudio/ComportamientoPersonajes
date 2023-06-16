@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class MeleeController : PersonajeController
 {
-
+    #region Atributos
     bool provocando = false;
     bool aliadoProvocando = false;
+    #endregion
 
-    //Delegados
+    #region Delegados
     public delegate void Provocando(GameObject sender);
     public static event Provocando provocandoEvent;
     [SerializeField] private int VidaPoner;
+    #endregion
 
+    #region Metodos
     protected override void Awake()
     {
-        this.personaje = new Mele(VidaPoner,10,"");
-
+        this.personaje = new Mele(VidaPoner, 10, "");
         GetComponent<BTMele>().GetBT().Active = false;
     }
 
-    protected override void Start()
-    {
-        base.Start();
-    }
+    protected override void Start() { base.Start(); }
 
     protected override void FixedUpdate()
     {
@@ -36,7 +35,7 @@ public class MeleeController : PersonajeController
     public void Provocar()
     {
         provocando = true;
-
         provocandoEvent?.Invoke(gameObject);
     }
+    #endregion
 }

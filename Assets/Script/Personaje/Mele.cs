@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Mele : Personaje
 {
-    public Mele():base() { }
-    public Mele(int vida, int ataque, string faccion):base(vida, ataque, faccion) { }
-    public Mele(int vida, int ataque, string faccion, int x, int y):base(vida,ataque,faccion, x, y) { }
+    #region Constructores
+    public Mele() : base() { }
+    public Mele(int vida, int ataque, string faccion) : base(vida, ataque, faccion) { }
+    public Mele(int vida, int ataque, string faccion, int x, int y) : base(vida, ataque, faccion, x, y) { }
+    #endregion
 
+    #region Metodos
     public override void Atacar(PersonajeController enemigo)
     {
         var enemigoAux = enemigo.GetPersonaje();
-
         enemigoAux.SetVida(enemigoAux.GetVida() - ataque);
-
         Debug.Log("Le he dejao a : " + enemigoAux.GetVida());
     }
 
@@ -26,13 +27,13 @@ public class Mele : Personaje
                 int xAux = x + i;
                 int yAux = y + j;
 
-                if(i == 0 && j == 0)
+                if (i == 0 && j == 0)
                 {
                     continue;
                 }
-                else if (xAux >= 0 && xAux < GameManager.GetGrid().GetGrid().GetLength(0) && 
-                    yAux >= 0 && yAux < GameManager.GetGrid().GetGrid().GetLength(1) && 
-                    GameManager.GetGrid().GetGrid()[xAux, yAux].isOccupied() && 
+                else if (xAux >= 0 && xAux < GameManager.GetGrid().GetGrid().GetLength(0) &&
+                    yAux >= 0 && yAux < GameManager.GetGrid().GetGrid().GetLength(1) &&
+                    GameManager.GetGrid().GetGrid()[xAux, yAux].isOccupied() &&
                     !GameManager.GetGrid().GetGrid()[xAux, yAux].GetPersonaje().CompareTag(faccion))
                 {
                     var enemigo = GameManager.GetGrid().GetGrid()[xAux, yAux].GetPersonaje();
@@ -43,4 +44,5 @@ public class Mele : Personaje
 
         return null;
     }
+    #endregion
 }

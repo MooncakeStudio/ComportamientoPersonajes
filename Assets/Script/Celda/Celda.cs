@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Celda
 {
-    // ATRIBUTOS
 
+    #region Atributos y constructor
     public int xGrid, yGrid;
 
     public bool transitable;
@@ -16,33 +16,10 @@ public class Celda
     public Celda padre;
     public int costeG;
     public int costeH;
-    public int costeF 
-    { 
-        get {
-            return costeG + costeH;
-        }
-    }
-
-
-    // GETTERS & SETTERS
-
-    public PersonajeController GetPersonaje() { return this.personaje; }
-    public ObjectController GetObjeto() { return this.objeto; }
-
-    public void SetPersonaje(PersonajeController prsonaje) 
-    { 
-        this.personaje = prsonaje;
-        this.transitable = (this.personaje != null) ? false : true;
-    }
-
-    public void SetObjeto(ObjectController objeto)
+    public int costeF
     {
-        this.objeto = objeto;
-        this.transitable = (this.objeto != null) ? false : true;
+        get { return costeG + costeH; }
     }
-
-
-    // CONSTRUCTOR
 
     public Celda(int xGrid = 0, int yGrid = 0, bool transitable = true, int costeG = 0, int costeH = 0)
     {
@@ -52,12 +29,26 @@ public class Celda
         this.costeG = costeG;
         this.costeH = costeH;
     }
+    #endregion
 
+    #region Getters y Setters
+    public PersonajeController GetPersonaje() { return this.personaje; }
+    public ObjectController GetObjeto() { return this.objeto; }
 
-    // METODOS
-
-    public bool isOccupied()
+    public void SetPersonaje(PersonajeController prsonaje)
     {
-        return (personaje != null) ? true : false;
+        this.personaje = prsonaje;
+        this.transitable = (this.personaje != null) ? false : true;
     }
+
+    public void SetObjeto(ObjectController objeto)
+    {
+        this.objeto = objeto;
+        this.transitable = (this.objeto != null) ? false : true;
+    }
+    #endregion
+
+    #region Metodos
+    public bool isOccupied() { return (personaje != null) ? true : false; }
+    #endregion
 }

@@ -9,18 +9,11 @@ using UnityEngine;
 
 public class PathFinding : MonoBehaviour
 {
-    // ATRIBUTOS
-
+    #region Atributos
     [SerializeField] Grid grid;
+    #endregion
 
-
-    // GETTERS & SETTERS
-
-
-
-
-    // METODOS
-
+    #region Metodos
     public void EncuentraCamino(Vector3 posicion, Vector3 objetivo)
     {
         Celda celdaIni = grid.GetCelda(posicion);
@@ -37,7 +30,9 @@ public class PathFinding : MonoBehaviour
 
             for (int i = 1; i < listaAbierta.Count; i++)
             {
-                if (listaAbierta[i].costeF < celdaActual.costeF || listaAbierta[i].costeF == celdaActual.costeF && listaAbierta[i].costeH < celdaActual.costeH)
+                if (listaAbierta[i].costeF < celdaActual.costeF
+                    || listaAbierta[i].costeF == celdaActual.costeF 
+                    && listaAbierta[i].costeH < celdaActual.costeH)
                 {
                     celdaActual = listaAbierta[i];
                 }
@@ -96,7 +91,7 @@ public class PathFinding : MonoBehaviour
     int DistManhattan(Celda ini, Celda fin)
     {
         int dist = Mathf.Abs(fin.xGrid - ini.xGrid) + Mathf.Abs(fin.yGrid - ini.yGrid);
-
         return dist;
     }
+    #endregion
 }

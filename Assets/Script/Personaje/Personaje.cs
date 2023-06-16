@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class Personaje
 {
-    // ATRIBUTOS
 
+    #region Atributos
     protected int vida;
     protected int ataque;
     protected string faccion;
 
     public int x;
     public int y;
+    #endregion
 
-    //Constructor
-    public Personaje(int vida, int ataque, string faccion) { this.vida = vida; this.ataque = ataque; this.faccion = faccion; }
-    public Personaje() { vida = 30; ataque = 10; faccion = ""; x = 0; y = 0; }
+    #region Constructores
+    public Personaje(int vida, int ataque, string faccion)
+    {
+        this.vida = vida;
+        this.ataque = ataque;
+        this.faccion = faccion;
+    }
+    public Personaje()
+    {
+        vida = 30;
+        ataque = 10;
+        faccion = "";
+        x = 0;
+        y = 0;
+    }
     public Personaje(int vida, int ataque, string faccion, int x, int y)
     {
         this.vida = vida;
@@ -24,10 +37,9 @@ public class Personaje
         this.x = x;
         this.y = y;
     }
+    #endregion
 
-
-    // GETTERS & SETTERS
-
+    #region Getters-Setters
     public int GetVida() { return vida; }
     public int GetAtaque() { return ataque; }
     public int GetX() { return x; }
@@ -38,13 +50,15 @@ public class Personaje
     public void SetAtaque(int ataque) { this.ataque = ataque; }
     public void SetX(int x) { this.x = x; }
     public void SetY(int y) { this.y = y; }
-    public void SetFaccion(string faccion) { this.faccion = faccion; }  
+    public void SetFaccion(string faccion) { this.faccion = faccion; }
+    #endregion
 
-    // METODOS
-
+    #region Metodos
     virtual public void Atacar(PersonajeController enemigo) { }
 
     virtual public void UsarEspecial() { }
 
     virtual public PersonajeController EnemigoARango() { return null; }
+
+    #endregion
 }

@@ -4,38 +4,83 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    // ATRIBUTOS
-
+    #region Atributos
     Celda[,] grid;
 
     [Header("Dimensiones")]
     [SerializeField] int alto = 25;
     [SerializeField] int ancho = 25;
 
-    [SerializeField]float tamanyoCelda = 1f;
+    [SerializeField] float tamanyoCelda = 1f;
 
     [Header("Máscara de Obstáculos")]
     [SerializeField] LayerMask mascaraObstaculos;
+    #endregion
 
-
-    // GETTERS & SETTERS
-
+    #region Getters - Setters
     public int GetAncho() { return this.ancho; }
     public int GetAlto() { return this.alto; }
 
     public float GetTamCelda() { return tamanyoCelda; }
     public Celda[,] GetGrid() { return this.grid; }
 
-    
-    // METODOS
+    #endregion
+
+    #region Metodos
 
     void Awake()
     {
         this.grid = new Celda[alto, ancho];
-
         CompruebaTransitable();
     }
+    public void CompruebaTransitable()
+    {
+        for (int i = 0; i < this.alto; i++)
+        {
+            for (int j = 0; j < this.ancho; j++)
+            {
+                Vector3 posicion = GetPosicionGlobal(i, j);
+                bool transitable = !Physics.CheckBox
+                    (posicion,
+                    Vector3.one / 2 * this.tamanyoCelda, //tamano
+                    Quaternion.identity, //rotacion
+                    mascaraObstaculos); //capa de los colliders
 
+                if (i == 0 || i == this.alto - 1 || j == 0 || j == this.ancho - 1)
+                {
+                    transitable = false;
+                }
+
+                grid[i, j] = new Celda(i, j);
+                grid[i, j].transitable = transitable;
+            }
+        }
+    }
+
+    public Vector3 GetPosicionGlobal(int x, int z)
+    {
+        return new Vector3
+            (transform.position.x + x * this.tamanyoCelda,
+            0f,
+            transform.position.z + z * this.tamanyoCelda);
+
+    }
+
+
+
+    public Celda GetCelda(Vector3 posicion)
+    {
+        float porcentajeX = (posicion.x + ancho / 2) / ancho;
+        float porcentajeZ = (posicion.z + alto / 2) / alto;
+
+        porcentajeX = Mathf.Clamp01(porcentajeX);
+        porcentajeZ = Mathf.Clamp01(porcentajeZ);
+
+        var x = Mathf.RoundToInt(porcentajeX * (grid.GetLength(0) - 1));
+        var z = Mathf.RoundToInt(porcentajeZ * (grid.GetLength(1) - 1));
+
+        return grid[x, z];
+    }
 
     public List<Celda> GetVecinos(Celda celda)
     {
@@ -45,7 +90,7 @@ public class Grid : MonoBehaviour
         {
             for (int j = -1; j <= 1; j++)
             {
-                if (i == 0 && j == 0 || i != 0 && j != 0)
+                if (i == 0 && j == 0 || i != 0 && j != 0) //Celda y sus diagonales?
                 {
                     continue;
                 }
@@ -67,63 +112,21 @@ public class Grid : MonoBehaviour
     {
         if (grid == null) { return; }
 
-        for(int i = 0; i < this.alto; i++)
-        {
-            for(int j = 0; j < this.ancho; j++)
-            {
-                Vector3 posicion = new Vector3(transform.position.x + i * this.tamanyoCelda, 0f, transform.position.z + j * this.tamanyoCelda);
-
-                if (grid[i, j].transitable)
-                {
-                    Gizmos.color = Color.green;
-                } else
-                {
-                    Gizmos.color = Color.red;
-                }
-
-                Gizmos.DrawCube(posicion, Vector3.one/4);
-            }
-        }
-    }
-
-    public void CompruebaTransitable()
-    {
         for (int i = 0; i < this.alto; i++)
         {
             for (int j = 0; j < this.ancho; j++)
             {
-                Vector3 posicion = GetPosicionGlobal(i, j);
-                
-                bool transitable = !Physics.CheckBox(posicion, Vector3.one / 2 * this.tamanyoCelda, Quaternion.identity, mascaraObstaculos);
+                Vector3 posicion = new Vector3
+                    (transform.position.x + i * this.tamanyoCelda,
+                    0f,
+                    transform.position.z + j * this.tamanyoCelda);
 
-                if (i == 0 || i == this.alto - 1 || j == 0 ||j == this.ancho - 1){
-                    transitable = false;
-                }
+                if (grid[i, j].transitable) { Gizmos.color = Color.green; }
+                else { Gizmos.color = Color.red; }
 
-                grid[i, j] = new Celda(i,j);
-                grid[i, j].transitable = transitable;
+                Gizmos.DrawCube(posicion, Vector3.one / 4);
             }
         }
     }
-
-    public Vector3 GetPosicionGlobal(int x, int z)
-    {
-        Vector3 posicion = new Vector3(transform.position.x + x * this.tamanyoCelda, 0f, transform.position.z + z * this.tamanyoCelda);
-
-        return posicion;
-    }
-
-    public Celda GetCelda(Vector3 posicion)
-    {
-        float porcentajeX = (posicion.x + ancho / 2) / ancho;
-        float porcentajeZ = (posicion.z + alto / 2) / alto;
-
-        porcentajeX = Mathf.Clamp01(porcentajeX);
-        porcentajeZ = Mathf.Clamp01(porcentajeZ);
-
-        var x = Mathf.RoundToInt(porcentajeX * (grid.GetLength(0) - 1));
-        var z = Mathf.RoundToInt(porcentajeZ * (grid.GetLength(1) - 1));
-
-        return grid[x, z];
-    }
+    #endregion
 }

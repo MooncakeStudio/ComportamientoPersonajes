@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BTAbstracto : MonoBehaviour
 {
-    // ATRIBUTOS
-
+    
+    #region Atributos, getters-setters y constructor
     protected BehaviourTreeEngine BT = new BehaviourTreeEngine();
 
     Grid grid;
@@ -13,22 +13,19 @@ public class BTAbstracto : MonoBehaviour
     public Vector3 objetivo;
     protected PersonajeController enemigo;
 
-
     public BTAbstracto() 
     { 
         this.grid = GameManager.GetGrid();
     }
 
-    // GETTERS & SETTERS
-
     public BehaviourTreeEngine GetBT() { return this.BT; }
+    #endregion
 
-
-    // METODOS
-
+    
+    #region Metodos
     virtual public void CrearIA(){}
 
-    /* ACCIONES */
+    #region Acciones
 
     virtual public IEnumerator ejecutarArbol()
     {
@@ -39,4 +36,7 @@ public class BTAbstracto : MonoBehaviour
     {
         StartCoroutine(ejecutarArbol());
     }
+    #endregion
+
+    #endregion
 }

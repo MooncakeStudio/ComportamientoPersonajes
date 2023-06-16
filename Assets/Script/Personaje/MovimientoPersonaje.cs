@@ -4,34 +4,29 @@ using UnityEngine;
 
 public class MovimientoPersonaje : MonoBehaviour
 {
-    // ATRIBUTOS
-
+    #region Atributos
     [Header("Posición")]
     [SerializeField] int x;
     [SerializeField] int y;
 
     [Header("Tablero")]
-
     BTMele arbol;
     List<Celda> camino;
 
     Celda objet;
 
-    // GETTERS & SETTERS
+    #endregion
 
+    #region Getters-Setters
     public int GetX() { return x; }
     public int GetY() { return y; }
 
     public void SetX(int x) { this.x = x; }
     public void SetY(int y) { this.y = y; }
+    #endregion
 
-
-    // METODOS
-
-    private void Awake()
-    {
-        arbol = GetComponent<BTMele>();
-    }
+    #region Metodos
+    private void Awake() { arbol = GetComponent<BTMele>(); }
 
     private void Start()
     {
@@ -54,7 +49,7 @@ public class MovimientoPersonaje : MonoBehaviour
     {
         //arbol.GetBT().Update();
 
-        if(objet != null)
+        if (objet != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(objet.xGrid, objet.yGrid), 1 * Time.deltaTime);
 
