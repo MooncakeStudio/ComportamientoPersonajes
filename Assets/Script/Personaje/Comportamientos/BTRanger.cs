@@ -178,7 +178,7 @@ public class BTRanger : BTAbstracto
     private void EnemigoARangoProvocandoAction(){ }
     private ReturnValues EnemigoARangoProvocandoSuccessCheck()
     {
-        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
+        enemigo = GetComponent<RangerController>().GetPersonaje().EnemigoARango();
 
         if (enemigo != null)
         {
@@ -189,5 +189,192 @@ public class BTRanger : BTAbstracto
             return ReturnValues.Failed;
         }
     }
+    #endregion
 
+    #region Especial Secuencia
+    private void EspecialCargadoAction() { }
+
+    private ReturnValues EspecialCargadoSuccessCheck()
+    {
+        /*if (GetComponent<PersonajeController>().tengoAtaqueEspecial())
+        {
+            Debug.Log(gameObject.name + " Especial cargado");
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }*/
+
+        return ReturnValues.Succeed;
+    }
+
+    private void InspirarAction() { }
+    private ReturnValues InspirarSuccessCheck() { return ReturnValues.Succeed; }
+    #endregion
+
+    #region Atacar Secuencia
+    private void EnemigoARangoAction() { }
+    private ReturnValues EnemigoARangoSuccessCheck()
+    {
+        enemigo = GetComponent<RangerController>().GetPersonaje().EnemigoARango();
+
+        if (enemigo != null)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+        //return ReturnValues.Succeed;
+    }
+
+    private void SuficienteVidaAction() { }
+    private ReturnValues SuficienteVidaSuccessCheck()
+    {
+        if (GetComponent<RangerController>().GetPersonaje().GetVida() > 20)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
+
+    private void AtacarAction()
+    {
+        Debug.Log(gameObject.name + " ataca");
+        GetComponent<RangerController>().GetPersonaje().Atacar(enemigo);
+        Debug.Log(enemigo.name + " tiene vida: " + enemigo.GetPersonaje().GetVida());
+
+        GetComponent<PersonajeController>().FinTurno();
+        this.GetBT().Active = false;
+        //GetComponent<PersonajeController>().FinTurno();
+    }
+    private ReturnValues AtacarSuccessCheck()
+    {
+        return ReturnValues.Succeed;
+    }
+
+    private void EnemigoPocaVidaAction() { }
+
+    private ReturnValues EnemigoPocaVidaSuccessCheck()
+    {
+        if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <
+            GetComponent<RangerController>().GetPersonaje().GetVida())
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
+
+    private void PedirAuxilioAction()
+    {
+
+        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        GetComponent<RangerController>().Moverse(aliado.transform.position);
+        GetComponent<PersonajeController>().pidiendoAuxilio();
+        //GetComponent<PersonajeController>().FinTurno();
+        this.GetBT().Active = false;
+    }
+    private ReturnValues PedirAuxilioSuccessCheck()
+    {
+        /*if (!GetComponent<PersonajeController>().pidoAuxilio())
+        {
+            Debug.Log(gameObject.name+ " Pido auxilio");
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }*/
+
+        return ReturnValues.Succeed;
+    }
+    #endregion
+
+    #region Moverse Secuencia
+    private void MoverseEnemigoAction()
+    {
+        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+
+        GetComponent<RangerController>().Moverse(enemigo.transform.position);
+
+
+
+        GetComponent<PersonajeController>().FinTurno();
+        this.GetBT().Active = false;
+    }
+    private ReturnValues MoverseEnemigoSuccessCheck()
+    {
+        enemigo = GetComponent<RangerController>().GetPersonaje().EnemigoARango();
+
+        if (enemigo != null)
+        {
+            return ReturnValues.Failed;
+        }
+        else
+        {
+            return ReturnValues.Succeed;
+        }
+
+        //return ReturnValues.Succeed;
+    }
+
+    private void NoSuficienteVidaAction() { }
+    private ReturnValues NoSuficienteVidaSuccessCheck()
+    {
+        if (GetComponent<RangerController>().GetPersonaje().GetVida() <= 20)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
+
+    private void VidaGeneradaAction() { }
+    private ReturnValues VidaGeneradaSuccessCheck()
+    {
+        if (GameManager.hayObj)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
+
+    private void MoverseVidaAction()
+    {
+
+        var movimientoManager = GetComponent<RangerController>();
+
+        movimientoManager.Moverse(GameManager.objetivo);
+
+        GetComponent<PersonajeController>().FinTurno();
+        this.GetBT().Active = false;
+    }
+    private ReturnValues MoverseVidaSuccessCheck()
+    {
+        return ReturnValues.Succeed;
+    }
+
+    private void TorreAsequibleAction() { }
+    private ReturnValues TorreAsequibleSuccessCheck() { return ReturnValues.Succeed; }
+
+    private void TorreVaciaAction() { }
+    private ReturnValues TorreVaciaSuccessCheck() { return ReturnValues.Succeed; }
+
+    private void SubirTorreAction() { }
+
+    private ReturnValues SubirTorreSuccessCheck() { return ReturnValues.Succeed; }
+    #endregion
 }
