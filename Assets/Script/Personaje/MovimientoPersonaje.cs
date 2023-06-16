@@ -60,10 +60,8 @@ public class MovimientoPersonaje : MonoBehaviour
                 x = objet.xGrid;
                 y = objet.yGrid;
 
-
                 GetComponent<PersonajeController>().GetPersonaje().SetX(x);
                 GetComponent<PersonajeController>().GetPersonaje().SetY(y);
-
 
                 GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
@@ -91,4 +89,5 @@ public class MovimientoPersonaje : MonoBehaviour
     //        Destroy(collision.gameObject);
     //    }
     //}
+    #endregion
 }
