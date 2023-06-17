@@ -8,11 +8,12 @@ public class Ranger : Personaje
     public Ranger(int vida, int ataque, string faccion) : base(vida, ataque, faccion) { }
     public Ranger(int vida, int ataque, string faccion, int x, int y) : base(vida, ataque, faccion, x, y) { }
 
-    public override void Atacar(PersonajeController enemigo)
+    public override int Atacar(PersonajeController enemigo)
     {
         var enemigoAux = enemigo.GetPersonaje();
         enemigoAux.Herida(ataque);
 
+        return 0;
     }
 
     public override PersonajeController EnemigoARango()

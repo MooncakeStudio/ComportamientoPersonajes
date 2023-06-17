@@ -26,7 +26,7 @@ public class BTMago : BTAbstracto
     {
         BT.Update();
 
-        yield return new WaitForSeconds(GetComponent<PersonajeController>().GetVelocidad());
+        yield return new WaitForSeconds(GetComponent<MagoController>().GetVelocidad());
 
         //BT.Reset();
         StartCoroutine(ejecutarArbol());
@@ -132,7 +132,7 @@ public class BTMago : BTAbstracto
     private void EnemigoProvocandoAction() { }
     private ReturnValues EnemigoProvocandoSuccessCheck() 
     {
-        if (GetComponent<PersonajeController>().AlguienProvocando())
+        if (GetComponent<MagoController>().AlguienProvocando())
         {
             return ReturnValues.Succeed;
         }
@@ -159,20 +159,27 @@ public class BTMago : BTAbstracto
 
     private void AtacarAction() 
     {
-        GetComponent<MagoController>().GetPersonaje().Atacar(enemigo);
+        Debug.Log(gameObject.name + " ataca");
+        int vidaEnemigo = GetComponent<MagoController>().GetPersonaje().Atacar(enemigo);
+        Debug.Log(enemigo.name + " tiene vida: " + enemigo.GetPersonaje().GetVida());
 
-        GetComponent<PersonajeController>().FinTurno();
+        if (vidaEnemigo == 0)
+        {
+            enemigo.GetComponent<PersonajeController>().EstoyMuerto();
+        }
+
+        GetComponent<MagoController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues AtacarSuccessCheck() { return ReturnValues.Succeed; }
 
     private void MoverseEnemigoAction() 
     {
-        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+        var enemigo = GetComponent<MagoController>().getEnemigoObjetivo();
 
         GetComponent<MagoController>().Moverse(enemigo.transform.position);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MagoController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues MoverseEnemigoSuccessCheck() 
@@ -194,7 +201,7 @@ public class BTMago : BTAbstracto
     private void AliadoAuxilioAction() { }
     private ReturnValues AliadoAuxilioSuccessCheck() 
     {
-        if (GetComponent<PersonajeController>().alguienPidiendoAuxilio())
+        if (GetComponent<MagoController>().alguienPidiendoAuxilio())
         {
             return ReturnValues.Succeed;
         }
@@ -226,17 +233,17 @@ public class BTMago : BTAbstracto
     {
         GetComponent<MagoController>().Curar(aliadoCercano);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MagoController>().FinTurno();
         GetBT().Active = false;
     }
     private ReturnValues CurarSuccessCheck() { return ReturnValues.Succeed; }
 
     private void MoverseAliadoAction() 
     {
-        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        var aliado = GetComponent<MagoController>().getAliadoCercano();
         GetComponent<MagoController>().Moverse(aliado.transform.position);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MagoController>().FinTurno();
         GetBT().Active = false;
     }
     private ReturnValues MoverseAliadoSuccessCheck() 
@@ -284,9 +291,9 @@ public class BTMago : BTAbstracto
 
     private void PedirAuxilioAction() 
     {
-        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
-        GetComponent<MeleeController>().Moverse(aliado.transform.position);
-        GetComponent<PersonajeController>().pidiendoAuxilio();
+        var aliado = GetComponent<MagoController>().getAliadoCercano();
+        GetComponent<MagoController>().Moverse(aliado.transform.position);
+        GetComponent<MagoController>().pidiendoAuxilio();
         this.GetBT().Active = false;
     }
     private ReturnValues PedirAuxilioSuccessCheck() { return ReturnValues.Succeed; }
@@ -325,7 +332,7 @@ public class BTMago : BTAbstracto
 
         movimientoManager.Moverse(GameManager.objetivo);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MagoController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues MoverseVidaSuccessCheck() { return ReturnValues.Succeed; }

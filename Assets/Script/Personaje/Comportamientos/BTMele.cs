@@ -33,7 +33,7 @@ public class BTMele : BTAbstracto
     {
         BT.Update();
 
-        yield return new WaitForSeconds(GetComponent<PersonajeController>().GetVelocidad());
+        yield return new WaitForSeconds(GetComponent<MeleeController>().GetVelocidad());
 
         //BT.Reset();
         StartCoroutine(ejecutarArbol());
@@ -142,7 +142,7 @@ public class BTMele : BTAbstracto
 
     private ReturnValues EnemigoProvocandoSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().AlguienProvocando())
+        if (GetComponent<MeleeController>().AlguienProvocando())
         {
             return ReturnValues.Succeed;
         }
@@ -172,13 +172,13 @@ public class BTMele : BTAbstracto
 
     private void MoviendoAEnemigo()
     {
-        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+        var enemigo = GetComponent<MeleeController>().getEnemigoObjetivo();
 
         GetComponent<MeleeController>().Moverse(enemigo.transform.position);
 
 
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
     }
 
@@ -201,7 +201,7 @@ public class BTMele : BTAbstracto
         Debug.Log(gameObject.name + " ataca");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
     }
 
@@ -215,7 +215,7 @@ public class BTMele : BTAbstracto
     private void AliadoAuxilioAction() { }
     private ReturnValues AliadoAuxilioSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().alguienPidiendoAuxilio())
+        if (GetComponent<MeleeController>().alguienPidiendoAuxilio())
         {
             return ReturnValues.Succeed;
         }
@@ -223,7 +223,6 @@ public class BTMele : BTAbstracto
         {
             return ReturnValues.Failed;
         }
-
     }
 
     private void EspecialCargadoAction() { }
@@ -240,7 +239,7 @@ public class BTMele : BTAbstracto
             return ReturnValues.Failed;
         }*/
 
-        return ReturnValues.Succeed;
+        return ReturnValues.Failed;
     }
 
     private void SuficienteVidaAction() { }
@@ -262,7 +261,7 @@ public class BTMele : BTAbstracto
         //var aliado = GetComponent<PersonajeController>().getAliadoCercano();
         //GetComponent<MeleeController>().Moverse(aliado.transform.position);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
         //GetComponent<PersonajeController>().FinTurno();
     }
@@ -302,10 +301,15 @@ public class BTMele : BTAbstracto
     private void AtacarAction()
     {
         Debug.Log(gameObject.name + " ataca");
-        GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
+        int vidaEnemigo = GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
         Debug.Log(enemigo.name + " tiene vida: " + enemigo.GetPersonaje().GetVida());
 
-        GetComponent<PersonajeController>().FinTurno();
+        if (vidaEnemigo == 0)
+        {
+            enemigo.GetComponent<PersonajeController>().EstoyMuerto();
+        }
+
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
         //GetComponent<PersonajeController>().FinTurno();
     }
@@ -331,39 +335,40 @@ public class BTMele : BTAbstracto
 
     private void PedirAuxilioAction()
     {
+        Debug.Log("Socorro, que me pegan"); 
 
-        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        var aliado = GetComponent<MeleeController>().getAliadoCercano();
         GetComponent<MeleeController>().Moverse(aliado.transform.position);
-        GetComponent<PersonajeController>().pidiendoAuxilio();
+        GetComponent<MeleeController>().pidiendoAuxilio();
         //GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues PedirAuxilioSuccessCheck()
     {
-        /*if (!GetComponent<PersonajeController>().pidoAuxilio())
+        if (!GetComponent<MeleeController>().pidoAuxilio())
         {
-            Debug.Log(gameObject.name+ " Pido auxilio");
+            Debug.Log(gameObject.name + " Pido auxilio");
             return ReturnValues.Succeed;
         }
         else
         {
             return ReturnValues.Failed;
-        }*/
+        }
 
-        return ReturnValues.Succeed;
+        //return ReturnValues.Succeed;
     }
     #endregion
 
     #region Moverse Secuencia
     private void MoverseEnemigoAction()
     {
-        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+        var enemigo = GetComponent<MeleeController>().getEnemigoObjetivo();
 
         GetComponent<MeleeController>().Moverse(enemigo.transform.position);
 
 
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues MoverseEnemigoSuccessCheck()
@@ -397,9 +402,9 @@ public class BTMele : BTAbstracto
 
     private void PedirAuxilioMoverseAction() 
     {
-        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        var aliado = GetComponent<MeleeController>().getAliadoCercano();
         GetComponent<MeleeController>().Moverse(aliado.transform.position);
-        GetComponent<PersonajeController>().pidiendoAuxilio();
+        GetComponent<MeleeController>().pidiendoAuxilio();
         //GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
@@ -427,7 +432,7 @@ public class BTMele : BTAbstracto
 
         movimientoManager.Moverse(GameManager.objetivo);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues IrAVidaSuccessCheck()

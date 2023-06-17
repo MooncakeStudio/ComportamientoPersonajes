@@ -55,7 +55,7 @@ public class Personaje
 
     // METODOS
 
-    virtual public void Atacar(PersonajeController enemigo) { }
+    virtual public int Atacar(PersonajeController enemigo) { return 0; }
 
     virtual public void UsarEspecial() { }
 

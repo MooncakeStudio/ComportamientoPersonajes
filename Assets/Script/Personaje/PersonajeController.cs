@@ -47,7 +47,7 @@ public class PersonajeController : MonoBehaviour
 
     public bool pidoAuxilio() { return necesitoAuxilio; }
 
-    public void pidiendoAuxilio() {   necesitoAuxilio = true;  FinTurno(); PidiendoAuxilioEvent?.Invoke(gameObject); }
+    public void pidiendoAuxilio() { necesitoAuxilio = true; FinTurno(); PidiendoAuxilioEvent?.Invoke(gameObject); }
     public void noMasAuxilio() { necesitoAuxilio = false; NoPidiendoAxuilioEvent?.Invoke(gameObject); }
 
     public void SetEnemigoProvocando(bool enemigoProvocando) { this.enemigoProvocando = enemigoProvocando; }
@@ -56,7 +56,7 @@ public class PersonajeController : MonoBehaviour
 
     public void setEnemigoObjetivo(GameObject enemigoObjetivo) { this.enemigoObjetivo = enemigoObjetivo; }
 
-    public void setAliadoCercano(GameObject aliadoCercano) { this.aliadoCercano= aliadoCercano; }
+    public void setAliadoCercano(GameObject aliadoCercano) { this.aliadoCercano = aliadoCercano; }
     public GameObject getAliadoCercano() { return aliadoCercano; }
     public GameObject getEnemigoObjetivo() { return enemigoObjetivo; }
 
@@ -97,22 +97,34 @@ public class PersonajeController : MonoBehaviour
 
     private void Update()
     {
-        if (personaje.GetVida() <= 0)
-        {
-            Debug.Log("Toy muerto " + gameObject.name);
-            if (!muertoInvocado)
-            {
-                muertoInvocado = true;
-                MuertoEvent?.Invoke(gameObject);
-                Destroy(gameObject);
-                
-            }
-        }
+        //if (personaje.GetVida() <= 0)
+        //{
+        //    Debug.Log("Toy muerto " + gameObject.name);
+        //    if (!muertoInvocado)
+        //    {
+        //        muertoInvocado = true;
+        //        MuertoEvent?.Invoke(gameObject);
+        //        Destroy(gameObject);
+
+        //    }
+        //}
     }
 
     virtual protected void FixedUpdate()
     {
-        
+
+    }
+
+    public void EstoyMuerto()
+    {
+        Debug.Log("Toy muerto " + gameObject.name);
+        if (!muertoInvocado)
+        {
+            muertoInvocado = true;
+            MuertoEvent?.Invoke(gameObject);
+            Destroy(gameObject);
+
+        }
     }
 
     public void Moverse(Vector3 objetivo)
@@ -145,7 +157,6 @@ public class PersonajeController : MonoBehaviour
 
             personaje.SetX(x);
             personaje.SetY(y);
-
 
             GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
