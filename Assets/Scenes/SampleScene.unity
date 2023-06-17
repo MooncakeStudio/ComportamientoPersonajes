@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -541,6 +541,10 @@ PrefabInstance:
     - target: {fileID: 6880901488789346670, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6880901488789346670, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6880901488789346670, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
       propertyPath: m_TagString
@@ -1112,7 +1116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_TagString
@@ -1939,6 +1943,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6880901488789346670, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6880901488789346670, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
       propertyPath: m_TagString
       value: Equipo1
       objectReference: {fileID: 0}
@@ -2048,6 +2056,8 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0.5
+  percepcionImage: {fileID: 0}
+  accionImage: {fileID: 0}
   VidaPoner: 50
   ataque: 100
 --- !u!114 &548923264
@@ -2108,6 +2118,8 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
+  percepcionImage: {fileID: 0}
+  accionImage: {fileID: 0}
 --- !u!1 &568232533
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,6 +2170,8 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0.3
+  percepcionImage: {fileID: 0}
+  accionImage: {fileID: 0}
   VidaPoner: 50
   ataque: 15
 --- !u!114 &698205496
@@ -2218,6 +2232,8 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
+  percepcionImage: {fileID: 0}
+  accionImage: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2588,7 +2604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4453082654697664102, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_TagString
@@ -2881,6 +2897,8 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0.15
+  percepcionImage: {fileID: 0}
+  accionImage: {fileID: 0}
 --- !u!114 &707072552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2896,6 +2914,8 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0.5
+  percepcionImage: {fileID: 0}
+  accionImage: {fileID: 0}
   VidaPoner: 50
   ataque: 15
 --- !u!1 &710708954 stripped
@@ -2918,6 +2938,8 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0.15
+  percepcionImage: {fileID: 0}
+  accionImage: {fileID: 0}
 --- !u!114 &710708956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2990,6 +3012,8 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0.5
+  percepcionImage: {fileID: 0}
+  accionImage: {fileID: 0}
   VidaPoner: 50
   ataque: 15
 --- !u!1 &880296871
