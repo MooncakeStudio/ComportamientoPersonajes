@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class PersonajeController : MonoBehaviour
@@ -20,7 +22,6 @@ public class PersonajeController : MonoBehaviour
     protected bool necesitoAuxilio = false;
     [SerializeField] protected bool enemigoProvocando = false;
 
-
     [SerializeField] protected float velocidad;
     private UserController usuarioControlador;
 
@@ -34,6 +35,11 @@ public class PersonajeController : MonoBehaviour
     public delegate void Muerto(GameObject sender);
     public static event Muerto MuertoEvent;
     bool muertoInvocado = false;
+
+
+    public Sprite percepcionImage;
+    public Sprite accionImage;
+
     // GETTERS & SETTERS
 
     public Personaje GetPersonaje() { return personaje; }
@@ -47,7 +53,7 @@ public class PersonajeController : MonoBehaviour
 
     public bool pidoAuxilio() { return necesitoAuxilio; }
 
-    public void pidiendoAuxilio() {   necesitoAuxilio = true;  FinTurno(); PidiendoAuxilioEvent?.Invoke(gameObject); }
+    public void pidiendoAuxilio() { necesitoAuxilio = true; FinTurno(); PidiendoAuxilioEvent?.Invoke(gameObject); }
     public void noMasAuxilio() { necesitoAuxilio = false; NoPidiendoAxuilioEvent?.Invoke(gameObject); }
 
     public void SetEnemigoProvocando(bool enemigoProvocando) { this.enemigoProvocando = enemigoProvocando; }
@@ -56,7 +62,7 @@ public class PersonajeController : MonoBehaviour
 
     public void setEnemigoObjetivo(GameObject enemigoObjetivo) { this.enemigoObjetivo = enemigoObjetivo; }
 
-    public void setAliadoCercano(GameObject aliadoCercano) { this.aliadoCercano= aliadoCercano; }
+    public void setAliadoCercano(GameObject aliadoCercano) { this.aliadoCercano = aliadoCercano; }
     public GameObject getAliadoCercano() { return aliadoCercano; }
     public GameObject getEnemigoObjetivo() { return enemigoObjetivo; }
 
@@ -105,14 +111,14 @@ public class PersonajeController : MonoBehaviour
                 muertoInvocado = true;
                 MuertoEvent?.Invoke(gameObject);
                 Destroy(gameObject);
-                
+
             }
         }
     }
 
     virtual protected void FixedUpdate()
     {
-        
+
     }
 
     public void Moverse(Vector3 objetivo)
@@ -168,4 +174,24 @@ public class PersonajeController : MonoBehaviour
         yield return new WaitForSeconds(2);
         StartCoroutine(cargarEspecial());
     }
+
+
+    public void BocadilloOn(bool accion, string texto)
+    {
+        transform.Find("Canvas").transform.Find("TextoBocadillo").GetComponent<TextMeshProUGUI>().text = texto;
+
+        Sprite selectedSprite = accion ? accionImage : percepcionImage;
+        transform.Find("Canvas").transform.Find("ImagenBocadillo").GetComponent<Image>().sprite = selectedSprite;
+
+        transform.Find("Canvas").transform.Find("TextoBocadillo").gameObject.SetActive(true);
+        transform.Find("Canvas").transform.Find("ImagenBocadillo").gameObject.SetActive(true);
+    }
+
+    public void BocadilloOff()
+    {
+        transform.Find("Canvas").transform.Find("TextoBocadillo").gameObject.SetActive(false);
+        transform.Find("Canvas").transform.Find("ImagenBocadillo").gameObject.SetActive(false);
+    }
+
+
 }
