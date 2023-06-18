@@ -145,22 +145,25 @@ public class PersonajeController : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid), 1 * Time.deltaTime);
             }*/
-            transform.position = GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid);
 
-            GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
+            if(GameManager.grid.GetGrid()[this.objetivo.xGrid, this.objetivo.yGrid].transitable){
+                transform.position = GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid);
 
-
-
-            int x = this.objetivo.xGrid;
-            int y = this.objetivo.yGrid;
+                GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
 
 
-            personaje.SetX(x);
-            personaje.SetY(y);
 
-            GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
+                int x = this.objetivo.xGrid;
+                int y = this.objetivo.yGrid;
 
-            this.objetivo = null;
+
+                personaje.SetX(x);
+                personaje.SetY(y);
+
+                GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
+
+                this.objetivo = null;
+            }
         }
     }
 
