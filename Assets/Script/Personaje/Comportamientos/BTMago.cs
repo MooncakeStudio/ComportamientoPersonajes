@@ -162,6 +162,7 @@ public class BTMago : BTAbstracto
     private void AtacarAction()
     {
         GetComponent<MagoController>().GetPersonaje().Atacar(enemigo);
+        GetComponent<Animator>().SetTrigger("Ataque");
 
         GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;

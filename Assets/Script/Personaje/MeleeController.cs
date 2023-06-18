@@ -39,7 +39,7 @@ public class MeleeController : PersonajeController
     public void Provocar()
     {
         provocando = true;
-
+        GetComponent<Animator>().SetTrigger("Especial");
         provocandoEvent?.Invoke(gameObject);
     }
 }

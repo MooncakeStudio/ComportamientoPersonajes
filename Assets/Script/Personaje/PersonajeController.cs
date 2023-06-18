@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -125,7 +123,7 @@ public class PersonajeController : MonoBehaviour
     {
         GameManager.pf.EncuentraCamino(transform.position, objetivo);
         List<Celda> camino = GameManager.pf.ObtenerCamino(transform.position, objetivo);
-
+        GetComponent<Animator>().SetTrigger("Andar");
         if (camino.Count > 0)
         {
             camino.Reverse();

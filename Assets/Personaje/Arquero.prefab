@@ -1739,7 +1739,7 @@ Animator:
   m_GameObject: {fileID: 8975388156444118591}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: aca9f7096f6290f4881369ed3c262465, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5489b5c82b022da48af843dd3da4ad9b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1756,7 +1756,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8975388156444118591}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5389753
   m_Height: 1.640448

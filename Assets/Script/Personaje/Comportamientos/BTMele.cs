@@ -204,6 +204,7 @@ public class BTMele : BTAbstracto
     {
         Debug.Log(gameObject.name + " ataca");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
+        GetComponent<Animator>().SetTrigger("Ataque");
         GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
@@ -315,6 +316,7 @@ public class BTMele : BTAbstracto
     {
         Debug.Log(gameObject.name + " ataca");
         GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
+        GetComponent<Animator>().SetTrigger("Ataque");
         Debug.Log(enemigo.name + " tiene vida: " + enemigo.GetPersonaje().GetVida());
 
         GetComponent<PersonajeController>().FinTurno();
