@@ -21,19 +21,19 @@ public class BTMele : BTAbstracto
     private void Start()
     {
         this.BT.Active = false;
-        //StartCoroutine(ejecutarArbol());
+        StartCoroutine(ejecutarArbol());
     }
 
     private void FixedUpdate()
     {
-        BT.Update();
+        //BT.Update();
     }
 
     public override IEnumerator ejecutarArbol()
     {
         BT.Update();
 
-        yield return new WaitForSeconds(GetComponent<PersonajeController>().GetVelocidad());
+        yield return new WaitForSeconds(GetComponent<MeleeController>().GetVelocidad()/100);
 
         //BT.Reset();
         StartCoroutine(ejecutarArbol());
@@ -54,9 +54,9 @@ public class BTMele : BTAbstracto
         LeafNode enemigoProvocandoPerception = BT.CreateLeafNode("EnemigoProvocando", EnemigoProvocandoAction, EnemigoProvocandoSuccessCheck);
         SelectorNode decisionProvocando = BT.CreateSelectorNode("DecisionProvocando");
         SequenceNode secuenciaProvocando = BT.CreateSequenceNode("SecuenciaProvocando", false);
-        LeafNode enemigoRangoPercepcion = BT.CreateLeafNode("EnemigoRango", EnemigoARangoProvocandoAction, EnemigoARangoProvocandoSuccessCheck);
-        LeafNode atacarAccion = BT.CreateLeafNode("Atacar", AtaqueProvocando, AtaqueProvocandoSuccessCheck);
-        LeafNode moverseAccion = BT.CreateLeafNode("Moverse", MoviendoAEnemigo, MoviendoAEnemigoSuccessCheck);
+        LeafNode enemigoRangoPercepcion = BT.CreateLeafNode("EnemigoRango", EnemigoARangoAction, EnemigoARangoSuccessCheck);
+        LeafNode atacarAccion = BT.CreateLeafNode("Atacar", AtacarAction, AtacarSuccessCheck);
+        LeafNode moverseAccion = BT.CreateLeafNode("Moverse", MoverseEnemigoAction, MoverseEnemigoSuccessCheck);
 
         //Nodos Provocar
         LeafNode aliadoAuxilio = BT.CreateLeafNode("AliadoAuxilio", AliadoAuxilioAction, AliadoAuxilioSuccessCheck);
@@ -82,14 +82,14 @@ public class BTMele : BTAbstracto
         SequenceNode secMoverse1 = BT.CreateSequenceNode("SecMoverse1", false);
         LeafNode PocaVida = BT.CreateLeafNode("PocaVida", PocaVidaAction, PocaVidaSuccessCheck);
         SelectorNode selecMoverse = BT.CreateSelectorNode("SelecMoverse");
-        LeafNode auxilio = BT.CreateLeafNode("AuxilioPedir", PedirAuxilioMoverseAction, PedirAuxilioMoverseSuccessCheck);
+        LeafNode auxilio = BT.CreateLeafNode("AuxilioPedir", PedirAuxilioAction, PedirAuxilioSuccessCheck);
         SequenceNode vidaGenerado = BT.CreateSequenceNode("VidaGeneradaSec", false);
         LeafNode VidaGenerada = BT.CreateLeafNode("VidaGenerada", VidaGeneradaAction, VidaGeneradaSuccessCheck);
         LeafNode IrAVida = BT.CreateLeafNode("IrAVida", IrAVidaAction, IrAVidaSuccessCheck);
 
         LoopDecoratorNode mainLoop = BT.CreateLoopNode("loop", nodoRoot);
 
-        // Añadir hijos Provocando
+        // Aï¿½adir hijos Provocando
         provocandoSecuencia.AddChild(enemigoProvocandoPerception);
         provocandoSecuencia.AddChild(decisionProvocando);
         decisionProvocando.AddChild(secuenciaProvocando);
@@ -97,13 +97,13 @@ public class BTMele : BTAbstracto
         secuenciaProvocando.AddChild(enemigoRangoPercepcion);
         secuenciaProvocando.AddChild(atacarAccion);
 
-        //Añadir hijos Provocar
+        //Aï¿½adir hijos Provocar
         provocarSecuencia.AddChild(aliadoAuxilio);
         provocarSecuencia.AddChild(especialCargado);
         provocarSecuencia.AddChild(SuficienteVida);
         provocarSecuencia.AddChild(provocarAccion);
 
-        //Añadir hijos Ataque
+        //Aï¿½adir hijos Ataque
         ataqueSecuencia.AddChild(EnemigoARango);
         ataqueSecuencia.AddChild(selecAtaque1);
         selecAtaque1.AddChild(secAtaque1);
@@ -115,7 +115,7 @@ public class BTMele : BTAbstracto
         secAtaque2.AddChild(EnemigoPocaVida);
         secAtaque2.AddChild(atacarEnemigo);
 
-        //Añadir hijos moverse
+        //Aï¿½adir hijos moverse
         moverseSelector.AddChild(secMoverse1);
         moverseSelector.AddChild(moverse);
         secMoverse1.AddChild(PocaVida);
@@ -130,7 +130,7 @@ public class BTMele : BTAbstracto
         nodoRoot.AddChild(ataqueSecuencia);
         nodoRoot.AddChild(moverseSelector);
 
-        // Establecer Raíz
+        // Establecer Raï¿½z
         BT.SetRootNode(mainLoop);
 
     }
@@ -142,11 +142,9 @@ public class BTMele : BTAbstracto
 
     private ReturnValues EnemigoProvocandoSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().AlguienProvocando())
+        if (GetComponent<MeleeController>().AlguienProvocando())
         {
-            //StartCoroutine(muestraBocadillo(false, "Provocando"));
             return ReturnValues.Succeed;
-
         }
         else
         {
@@ -156,87 +154,27 @@ public class BTMele : BTAbstracto
         //return ReturnValues.Failed;
 
     }
-
-    private void EnemigoARangoProvocandoAction() { }
-    private ReturnValues EnemigoARangoProvocandoSuccessCheck()
-    {
-        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
-
-        if (enemigo != null)
-        {
-            //StartCoroutine(muestraBocadillo(false, "Enemigo a rango"));
-            return ReturnValues.Succeed;
-        }
-        else
-        {
-            return ReturnValues.Failed;
-        }
-    }
-
-    private void MoviendoAEnemigo()
-    {
-        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
-
-        GetComponent<MeleeController>().Moverse(enemigo.transform.position);
-
-        StartCoroutine(muestraBocadillo(true, "Me muevo"));
-
-        GetComponent<PersonajeController>().FinTurno();
-        this.GetBT().Active = false;
-    }
-
-    private ReturnValues MoviendoAEnemigoSuccessCheck()
-    {
-        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
-
-        if (enemigo != null)
-        {
-            StartCoroutine(muestraBocadillo(true, "Me muevo a enemigo"));
-            return ReturnValues.Failed;
-        }
-        else
-        {
-            return ReturnValues.Succeed;
-        }
-    }
-
-    private void AtaqueProvocando()
-    {
-        Debug.Log(gameObject.name + " ataca");
-        GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
-        GetComponent<Animator>().SetTrigger("Ataque");
-        GetComponent<PersonajeController>().FinTurno();
-        this.GetBT().Active = false;
-    }
-
-    private ReturnValues AtaqueProvocandoSuccessCheck()
-    {
-        StartCoroutine(muestraBocadillo(true, "He atacado"));
-        return ReturnValues.Succeed;
-    }
     #endregion
 
     #region Provocar Secuencia
     private void AliadoAuxilioAction() { }
     private ReturnValues AliadoAuxilioSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().alguienPidiendoAuxilio())
+        if (GetComponent<MeleeController>().alguienPidiendoAuxilio())
         {
-            //StartCoroutine(muestraBocadillo(false, "Ayudo"));
             return ReturnValues.Succeed;
         }
         else
         {
             return ReturnValues.Failed;
         }
-
     }
 
     private void EspecialCargadoAction() { }
 
     private ReturnValues EspecialCargadoSuccessCheck()
     {
-        /*if (GetComponent<PersonajeController>().tengoAtaqueEspecial())
+        if (GetComponent<PersonajeController>().tengoAtaqueEspecial())
         {
             Debug.Log(gameObject.name + " Especial cargado");
             return ReturnValues.Succeed;
@@ -244,17 +182,16 @@ public class BTMele : BTAbstracto
         else
         {
             return ReturnValues.Failed;
-        }*/
-        //StartCoroutine(muestraBocadillo(false, "Especial cargado"));
-        return ReturnValues.Succeed;
+        }
+
+        //return ReturnValues.Failed;
     }
 
     private void SuficienteVidaAction() { }
     private ReturnValues SuficienteVidaSuccessCheck()
     {
-        if (GetComponent<MeleeController>().GetPersonaje().GetVida() > 20)
+        if (GetComponent<MeleeController>().GetPersonaje().GetVida() > 40)
         {
-            //StartCoroutine(muestraBocadillo(false, "Suficiente Vida"));
             return ReturnValues.Succeed;
         }
         else
@@ -269,14 +206,13 @@ public class BTMele : BTAbstracto
         //var aliado = GetComponent<PersonajeController>().getAliadoCercano();
         //GetComponent<MeleeController>().Moverse(aliado.transform.position);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
         //GetComponent<PersonajeController>().FinTurno();
     }
-    private ReturnValues ProvocarSuccessCheck()
-    {
+    private ReturnValues ProvocarSuccessCheck() {
         StartCoroutine(muestraBocadillo(true, "Provoco"));
-        return ReturnValues.Succeed;
+        return ReturnValues.Succeed; 
     }
     #endregion
 
@@ -288,7 +224,6 @@ public class BTMele : BTAbstracto
 
         if (enemigo != null)
         {
-            //StartCoroutine(muestraBocadillo(false, "Enemigo a rango"));
             return ReturnValues.Succeed;
         }
         else
@@ -299,11 +234,10 @@ public class BTMele : BTAbstracto
     }
 
     private void SuficienteVidaAtaqueAction() { }
-    private ReturnValues SuficienteVidaAtaqueSuccessCheck()
+    private ReturnValues SuficienteVidaAtaqueSuccessCheck() 
     {
-        if (GetComponent<MeleeController>().GetPersonaje().GetVida() > 20)
+        if (GetComponent<MeleeController>().GetPersonaje().GetVida() > 40)
         {
-            //StartCoroutine(muestraBocadillo(false, "Suficiente vida"));
             return ReturnValues.Succeed;
         }
         else
@@ -315,17 +249,23 @@ public class BTMele : BTAbstracto
     private void AtacarAction()
     {
         Debug.Log(gameObject.name + " ataca");
-        GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
+
         GetComponent<Animator>().SetTrigger("Ataque");
+        int vidaEnemigo = GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
         Debug.Log(enemigo.name + " tiene vida: " + enemigo.GetPersonaje().GetVida());
 
-        GetComponent<PersonajeController>().FinTurno();
+        if (vidaEnemigo == 0)
+        {
+            enemigo.GetComponent<PersonajeController>().EstoyMuerto();
+        }
+
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
         //GetComponent<PersonajeController>().FinTurno();
     }
     private ReturnValues AtacarSuccessCheck()
     {
-        StartCoroutine(muestraBocadillo(true, "Ataco"));
+        StartCoroutine(muestraBocadillo(true, "Ataque"));
         return ReturnValues.Succeed;
     }
 
@@ -336,7 +276,6 @@ public class BTMele : BTAbstracto
         if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <
             GetComponent<MeleeController>().GetPersonaje().GetVida())
         {
-            //StartCoroutine(muestraBocadillo(false, "Enemigo tiene poca vida"));
             return ReturnValues.Succeed;
         }
         else
@@ -347,39 +286,41 @@ public class BTMele : BTAbstracto
 
     private void PedirAuxilioAction()
     {
+        Debug.Log("Socorro, que me pegan"); 
 
-        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        var aliado = GetComponent<MeleeController>().getAliadoCercano();
         GetComponent<MeleeController>().Moverse(aliado.transform.position);
-        GetComponent<PersonajeController>().pidiendoAuxilio();
+        GetComponent<MeleeController>().pidiendoAuxilio();
         //GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues PedirAuxilioSuccessCheck()
     {
-        /*if (!GetComponent<PersonajeController>().pidoAuxilio())
+        if (!GetComponent<MeleeController>().pidoAuxilio())
         {
-            Debug.Log(gameObject.name+ " Pido auxilio");
+            StartCoroutine(muestraBocadillo(true, "Auxilio"));
+            Debug.Log(gameObject.name + " Pido auxilio");
             return ReturnValues.Succeed;
         }
         else
         {
             return ReturnValues.Failed;
-        }*/
-        StartCoroutine(muestraBocadillo(true, "¡AUXILIO!"));
-        return ReturnValues.Succeed;
+        }
+
+        //return ReturnValues.Succeed;
     }
     #endregion
 
     #region Moverse Secuencia
     private void MoverseEnemigoAction()
     {
-        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+        var enemigo = GetComponent<MeleeController>().getEnemigoObjetivo();
 
         GetComponent<MeleeController>().Moverse(enemigo.transform.position);
 
 
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues MoverseEnemigoSuccessCheck()
@@ -392,7 +333,7 @@ public class BTMele : BTAbstracto
         }
         else
         {
-            StartCoroutine(muestraBocadillo(true, "Me muevo hacia el enemigo"));
+            StartCoroutine(muestraBocadillo(true, "Voy a Enemigo"));
             return ReturnValues.Succeed;
         }
 
@@ -402,9 +343,8 @@ public class BTMele : BTAbstracto
     private void PocaVidaAction() { }
     private ReturnValues PocaVidaSuccessCheck()
     {
-        if (GetComponent<MeleeController>().GetPersonaje().GetVida() <= 20)
+        if (GetComponent<MeleeController>().GetPersonaje().GetVida() <= 40)
         {
-            //StartCoroutine(muestraBocadillo(false, "Tengo poca vida"));
             return ReturnValues.Succeed;
         }
         else
@@ -413,26 +353,11 @@ public class BTMele : BTAbstracto
         }
     }
 
-    private void PedirAuxilioMoverseAction()
-    {
-        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
-        GetComponent<MeleeController>().Moverse(aliado.transform.position);
-        GetComponent<PersonajeController>().pidiendoAuxilio();
-        //GetComponent<PersonajeController>().FinTurno();
-        this.GetBT().Active = false;
-    }
-    private ReturnValues PedirAuxilioMoverseSuccessCheck()
-    {
-        StartCoroutine(muestraBocadillo(true, "¡AUXILIO!"));
-        return ReturnValues.Succeed;
-    }
-
     private void VidaGeneradaAction() { }
     private ReturnValues VidaGeneradaSuccessCheck()
     {
         if (GameManager.hayObj)
         {
-            //StartCoroutine(muestraBocadillo(false, "Vida generada"));
             return ReturnValues.Succeed;
         }
         else
@@ -450,15 +375,14 @@ public class BTMele : BTAbstracto
 
         movimientoManager.Moverse(GameManager.objetivo);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<MeleeController>().FinTurno();
         this.GetBT().Active = false;
     }
     private ReturnValues IrAVidaSuccessCheck()
     {
-        StartCoroutine(muestraBocadillo(true, "Me muevo a vida"));
+        StartCoroutine(muestraBocadillo(true, "Voy a Vida"));
         return ReturnValues.Succeed;
     }
     #endregion
-
 
 }

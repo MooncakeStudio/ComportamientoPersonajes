@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mago : Personaje
+public class Ranger : Personaje
 {
-    private int VidaCurar;
-    public Mago() : base() { }
-    public Mago(int vida, int ataque, string faccion, int VidaCurar) : base(vida, ataque, faccion) { this.VidaCurar = VidaCurar; }
-    public Mago(int vida, int ataque, string faccion, int VidaCurar, int x, int y) : base(vida, ataque, faccion, x, y) { this.VidaCurar = VidaCurar; }
-
-    public int GetCuracion() { return this.VidaCurar; }
-    public void SetCuracion(int VidaCurar) { this.VidaCurar = VidaCurar; }
+    public Ranger() : base() { }
+    public Ranger(int vida, int ataque, string faccion) : base(vida, ataque, faccion) { }
+    public Ranger(int vida, int ataque, string faccion, int x, int y) : base(vida, ataque, faccion, x, y) { }
 
     public override PersonajeController EnemigoARango()
     {
-        for (int i = -3; i <= 3; i++)
+        for (int i = -5; i <= 5; i++)
         {
-            for (int j = -3; j <= 3; j++)
+            for (int j = -5; j <= 5; j++)
             {
                 int xAux = x + i;
                 int yAux = y + j;
@@ -39,7 +35,7 @@ public class Mago : Personaje
         return null;
     }
 
-    public PersonajeController AliadoARango()
+    public bool AliadoARango()
     {
         for (int i = -3; i <= 3; i++)
         {
@@ -57,12 +53,11 @@ public class Mago : Personaje
                     GameManager.GetGrid().GetGrid()[xAux, yAux].isOccupied() &&
                     GameManager.GetGrid().GetGrid()[xAux, yAux].GetPersonaje().CompareTag(faccion))
                 {
-                    var aliado = GameManager.GetGrid().GetGrid()[xAux, yAux].GetPersonaje();
-                    return aliado;
+                    return true;
                 }
             }
         }
 
-        return null;
+        return false;
     }
 }

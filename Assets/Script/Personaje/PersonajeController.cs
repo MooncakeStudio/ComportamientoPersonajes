@@ -20,8 +20,12 @@ public class PersonajeController : MonoBehaviour
     protected bool necesitoAuxilio = false;
     [SerializeField] protected bool enemigoProvocando = false;
 
+
     [SerializeField] protected float velocidad;
     private UserController usuarioControlador;
+
+    [SerializeField] public Sprite accionImage;
+    [SerializeField] public Sprite percepcionImage;
 
     //Delegado para auxilio
     public delegate void PidiendoAuxilio(GameObject sender);
@@ -33,11 +37,6 @@ public class PersonajeController : MonoBehaviour
     public delegate void Muerto(GameObject sender);
     public static event Muerto MuertoEvent;
     bool muertoInvocado = false;
-
-
-    public Sprite percepcionImage;
-    public Sprite accionImage;
-
     // GETTERS & SETTERS
 
     public Personaje GetPersonaje() { return personaje; }
@@ -101,22 +100,34 @@ public class PersonajeController : MonoBehaviour
 
     private void Update()
     {
-        if (personaje.GetVida() <= 0)
-        {
-            Debug.Log("Toy muerto " + gameObject.name);
-            if (!muertoInvocado)
-            {
-                muertoInvocado = true;
-                MuertoEvent?.Invoke(gameObject);
-                Destroy(gameObject);
+        //if (personaje.GetVida() <= 0)
+        //{
+        //    Debug.Log("Toy muerto " + gameObject.name);
+        //    if (!muertoInvocado)
+        //    {
+        //        muertoInvocado = true;
+        //        MuertoEvent?.Invoke(gameObject);
+        //        Destroy(gameObject);
 
-            }
-        }
+        //    }
+        //}
     }
 
     virtual protected void FixedUpdate()
     {
 
+    }
+
+    public void EstoyMuerto()
+    {
+        Debug.Log("Toy muerto " + gameObject.name);
+        if (!muertoInvocado)
+        {
+            muertoInvocado = true;
+            MuertoEvent?.Invoke(gameObject);
+            Destroy(gameObject);
+
+        }
     }
 
     public void Moverse(Vector3 objetivo)
@@ -137,9 +148,12 @@ public class PersonajeController : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid), 1 * Time.deltaTime);
             }*/
-            transform.position = GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid);
 
-            GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
+            if (GameManager.grid.GetGrid()[this.objetivo.xGrid, this.objetivo.yGrid].transitable)
+            {
+                transform.position = GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid);
+
+                GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
 
 
             int x = this.objetivo.xGrid;
@@ -148,10 +162,10 @@ public class PersonajeController : MonoBehaviour
             int rotX = x - personaje.x; //Negativo rota
             int rotY = y - personaje.y;//
 
-            personaje.SetX(x);
-            personaje.SetY(y);
+                personaje.SetX(x);
+                personaje.SetY(y);
 
-            //Rotación del personaje en escenario
+            //Rotaciï¿½n del personaje en escenario
             if (rotX > 0)
                 transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 90, transform.rotation.z));
             if (rotX < 0)
@@ -161,29 +175,29 @@ public class PersonajeController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 180, transform.rotation.z));
             if (rotY > 0)
                 transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, transform.rotation.z));
+                
+                GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
-            GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
-
-            this.objetivo = null;
+                this.objetivo = null;
+            }
         }
     }
 
-    IEnumerator cargarEspecial()
+    public IEnumerator cargarEspecial()
     {
         if (!especialCargado)
         {
             yield return new WaitForSeconds(5);
             especialCargado = true;
         }
-        else
-        {
+        //else
+        //{
 
-        }
+        //}
 
-        yield return new WaitForSeconds(2);
-        StartCoroutine(cargarEspecial());
+        //yield return new WaitForSeconds(2);
+        //StartCoroutine(cargarEspecial());
     }
-
 
     public void BocadilloOn(bool accion, string texto)
     {
@@ -201,6 +215,4 @@ public class PersonajeController : MonoBehaviour
         transform.Find("Canvas").transform.Find("TextoBocadillo").gameObject.SetActive(false);
         transform.Find("Canvas").transform.Find("ImagenBocadillo").gameObject.SetActive(false);
     }
-
-
 }
