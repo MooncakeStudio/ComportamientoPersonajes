@@ -144,7 +144,7 @@ public class BTMele : BTAbstracto
     {
         if (GetComponent<PersonajeController>().AlguienProvocando())
         {
-            StartCoroutine(muestraBocadillo(false, "Provocando"));
+            //StartCoroutine(muestraBocadillo(false, "Provocando"));
             return ReturnValues.Succeed;
 
         }
@@ -164,7 +164,7 @@ public class BTMele : BTAbstracto
 
         if (enemigo != null)
         {
-            StartCoroutine(muestraBocadillo(false, "Enemigo a rango"));
+            //StartCoroutine(muestraBocadillo(false, "Enemigo a rango"));
             return ReturnValues.Succeed;
         }
         else
@@ -221,7 +221,7 @@ public class BTMele : BTAbstracto
     {
         if (GetComponent<PersonajeController>().alguienPidiendoAuxilio())
         {
-            StartCoroutine(muestraBocadillo(false, "Ayudo"));
+            //StartCoroutine(muestraBocadillo(false, "Ayudo"));
             return ReturnValues.Succeed;
         }
         else
@@ -244,7 +244,7 @@ public class BTMele : BTAbstracto
         {
             return ReturnValues.Failed;
         }*/
-        StartCoroutine(muestraBocadillo(false, "Especial cargado"));
+        //StartCoroutine(muestraBocadillo(false, "Especial cargado"));
         return ReturnValues.Succeed;
     }
 
@@ -253,7 +253,7 @@ public class BTMele : BTAbstracto
     {
         if (GetComponent<MeleeController>().GetPersonaje().GetVida() > 20)
         {
-            StartCoroutine(muestraBocadillo(false, "Suficiente Vida"));
+            //StartCoroutine(muestraBocadillo(false, "Suficiente Vida"));
             return ReturnValues.Succeed;
         }
         else
@@ -287,7 +287,7 @@ public class BTMele : BTAbstracto
 
         if (enemigo != null)
         {
-            StartCoroutine(muestraBocadillo(false, "Enemigo a rango"));
+            //StartCoroutine(muestraBocadillo(false, "Enemigo a rango"));
             return ReturnValues.Succeed;
         }
         else
@@ -302,7 +302,7 @@ public class BTMele : BTAbstracto
     {
         if (GetComponent<MeleeController>().GetPersonaje().GetVida() > 20)
         {
-            StartCoroutine(muestraBocadillo(false, "Suficiente vida"));
+            //StartCoroutine(muestraBocadillo(false, "Suficiente vida"));
             return ReturnValues.Succeed;
         }
         else
@@ -334,7 +334,7 @@ public class BTMele : BTAbstracto
         if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <
             GetComponent<MeleeController>().GetPersonaje().GetVida())
         {
-            StartCoroutine(muestraBocadillo(false, "Enemigo tiene poca vida"));
+            //StartCoroutine(muestraBocadillo(false, "Enemigo tiene poca vida"));
             return ReturnValues.Succeed;
         }
         else
@@ -386,11 +386,11 @@ public class BTMele : BTAbstracto
 
         if (enemigo != null)
         {
-            StartCoroutine(muestraBocadillo(true, "Me muevo hacia el enemigo"));
             return ReturnValues.Failed;
         }
         else
         {
+            StartCoroutine(muestraBocadillo(true, "Me muevo hacia el enemigo"));
             return ReturnValues.Succeed;
         }
 
@@ -402,7 +402,7 @@ public class BTMele : BTAbstracto
     {
         if (GetComponent<MeleeController>().GetPersonaje().GetVida() <= 20)
         {
-            StartCoroutine(muestraBocadillo(false, "Tengo poca vida"));
+            //StartCoroutine(muestraBocadillo(false, "Tengo poca vida"));
             return ReturnValues.Succeed;
         }
         else
@@ -430,7 +430,7 @@ public class BTMele : BTAbstracto
     {
         if (GameManager.hayObj)
         {
-            StartCoroutine(muestraBocadillo(false, "Vida generada"));
+            //StartCoroutine(muestraBocadillo(false, "Vida generada"));
             return ReturnValues.Succeed;
         }
         else
@@ -447,7 +447,7 @@ public class BTMele : BTAbstracto
         var movimientoManager = GetComponent<MeleeController>();
 
         movimientoManager.Moverse(GameManager.objetivo);
-        
+
         GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
