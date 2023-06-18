@@ -2248,7 +2248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050656572}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3454742, y: 0.5330353, z: -1.2237101}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 273848114}
@@ -3663,8 +3663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017354ffacc7939468ec2f2fcaa19d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alto: 22
-  ancho: 22
+  alto: 44
+  ancho: 44
   tamanyoCelda: 1
   mascaraObstaculos:
     serializedVersion: 2
@@ -3677,7 +3677,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948502660}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.154526, y: -0.5330353, z: -9.27629}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1050656573}
