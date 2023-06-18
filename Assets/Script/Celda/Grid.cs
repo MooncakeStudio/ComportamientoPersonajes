@@ -14,7 +14,7 @@ public class Grid : MonoBehaviour
 
     [SerializeField]float tamanyoCelda = 1f;
 
-    [Header("Máscara de Obstáculos")]
+    [Header("Mï¿½scara de Obstï¿½culos")]
     [SerializeField] LayerMask mascaraObstaculos;
 
 
@@ -115,8 +115,8 @@ public class Grid : MonoBehaviour
 
     public Celda GetCelda(Vector3 posicion)
     {
-        float porcentajeX = (posicion.x + ancho / 2) / ancho;
-        float porcentajeZ = (posicion.z + alto / 2) / alto;
+        float porcentajeX = posicion.x / ancho;
+        float porcentajeZ = posicion.z / alto;
 
         porcentajeX = Mathf.Clamp01(porcentajeX);
         porcentajeZ = Mathf.Clamp01(porcentajeZ);

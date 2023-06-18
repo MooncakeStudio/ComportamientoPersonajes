@@ -12,6 +12,7 @@ public class Celda
 
     private PersonajeController personaje = null;
     private ObjectController objeto = null;
+    private TorreController torre = null;
 
     public Celda padre;
     public int costeG;
@@ -39,6 +40,12 @@ public class Celda
     {
         this.objeto = objeto;
         this.transitable = (this.objeto != null) ? false : true;
+    }
+
+    public void SetTorre(TorreController torre)
+    {
+        this.torre = torre;
+        this.transitable = false;
     }
 
 
