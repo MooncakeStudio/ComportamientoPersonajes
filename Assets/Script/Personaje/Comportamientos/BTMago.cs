@@ -26,7 +26,7 @@ public class BTMago : BTAbstracto
     {
         BT.Update();
 
-        yield return new WaitForSeconds(GetComponent<MagoController>().GetVelocidad());
+        yield return new WaitForSeconds(GetComponent<MagoController>().GetVelocidad() / 100);
 
         //BT.Reset();
         StartCoroutine(ejecutarArbol());
@@ -280,7 +280,7 @@ public class BTMago : BTAbstracto
     private void SuficienteVidaAction() { }
     private ReturnValues SuficienteVidaSuccessCheck()
     {
-        if (GetComponent<MagoController>().GetPersonaje().GetVida() > 20)
+        if (GetComponent<MagoController>().GetPersonaje().GetVida() > 40)
         {
             return ReturnValues.Succeed;
         }
@@ -321,7 +321,7 @@ public class BTMago : BTAbstracto
     private void NoSuficienteVidaAction() { }
     private ReturnValues NoSuficienteVidaSuccessCheck()
     {
-        if (GetComponent<MagoController>().GetPersonaje().GetVida() <= 20)
+        if (GetComponent<MagoController>().GetPersonaje().GetVida() <= 40)
         {
             return ReturnValues.Succeed;
         }

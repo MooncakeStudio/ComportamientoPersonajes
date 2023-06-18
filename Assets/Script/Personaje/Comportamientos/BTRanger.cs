@@ -1,14 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
-using System;
 
 public class BTRanger : BTAbstracto
 {
 
+    #region variables
+
+    bool aliadosCerca;
+
+    private BehaviourTreeEngine BT;
+
+
+    private SelectorNode RootSelector;
+    private SequenceNode ProvocandoSec;
+    private LeafNode EnemigoProvocando;
+    private SelectorNode DecisionProvocando;
+    private SequenceNode SecuenciaProvocando;
+    private LeafNode Moverse;
+    private LeafNode EnemigoRango;
+    private LeafNode AtacarProvocado;
+    private SequenceNode EnemigoARangoSec;
+    private LeafNode EnemigoRangoAtaque;
+    private SelectorNode SelectorAtaque;
+    private SequenceNode SecVidaAtaque;
+    private LeafNode SuficienteVida;
+    private LeafNode Atacar;
+    private SelectorNode DecisionPocaVida;
+    private SequenceNode SecPocaVida;
+    private LeafNode EnemigoPocaVida;
+    private LeafNode AtacarPocaVida;
+    private LeafNode Auxilio;
+    private SelectorNode DecisionMovimiento;
+    private SequenceNode SecVida;
+    private LeafNode NoSuficienteVida;
+    private SelectorNode DecisionObjVida;
+    private SequenceNode SecVidaGenerada;
+    private LeafNode VidaGenerada;
+    private LeafNode MoverseVida;
+    private LeafNode AuxilioNoOBjVida;
+    private SequenceNode SecInspirar;
+    private LeafNode EspecialCargado;
+    private SelectorNode DecisionInspirar;
+    private SequenceNode ComprobarInspirar;
+    private LeafNode AliadoARango;
+    private LeafNode Inspirar;
+    private LeafNode MoverAAliado;
+    private SelectorNode DecisionMoverse;
+    private SequenceNode SecTorre;
+    private LeafNode TorreAsequible;
+    private LeafNode TorreVacia;
+    private LeafNode SubirTorre;
+    private LeafNode MoverseEnemigo;
+
+    //Place your variables here
+
+    #endregion variables
+
+    // Start is called before the first frame update
     public BTRanger() : base()
     {
         this.BT = new BehaviourTreeEngine(false);
@@ -22,165 +72,140 @@ public class BTRanger : BTAbstracto
         this.BT.Active = false;
     }
 
-    // Update is called once per frame
-    private void FixedUpdate()
-    {
-        BT.Update();
-    }
-
     public override IEnumerator ejecutarArbol()
     {
         BT.Update();
 
-        yield return new WaitForSeconds(GetComponent<PersonajeController>().GetVelocidad());
+        yield return new WaitForSeconds(GetComponent<PersonajeController>().GetVelocidad() / 100);
 
         //BT.Reset();
         StartCoroutine(ejecutarArbol());
     }
 
+
     public override void CrearIA()
     {
         //Nodo root
-        SelectorNode nodoRoot = BT.CreateSelectorNode("RootSelector");
+        RootSelector = BT.CreateSelectorNode("RootSelector");
 
-        #region Primera rama
-        SequenceNode provocandoSecuencia = BT.CreateSequenceNode("ProvocandoSec", false);
+        // Nodes
+        ProvocandoSec = BT.CreateSequenceNode("ProvocandoSec", false);
+        EnemigoProvocando = BT.CreateLeafNode("EnemigoProvocando", EnemigoProvocandoAction, EnemigoProvocandoSuccessCheck);
+        DecisionProvocando = BT.CreateSelectorNode("DecisionProvocando");
+        SecuenciaProvocando = BT.CreateSequenceNode("SecuenciaProvocando", true);
+        Moverse = BT.CreateLeafNode("Moverse", MoverseAction, MoverseSuccessCheck);
+        EnemigoRango = BT.CreateLeafNode("EnemigoRango", EnemigoRangoAction, EnemigoRangoSuccessCheck);
+        AtacarProvocado = BT.CreateLeafNode("AtacarProvocado", AtacarAction, AtacarSuccessCheck);
+        EnemigoARangoSec = BT.CreateSequenceNode("EnemigoARangoSec", false);
+        EnemigoRangoAtaque = BT.CreateLeafNode("EnemigoRangoAtaque", EnemigoRangoAction, EnemigoRangoSuccessCheck);
+        SelectorAtaque = BT.CreateSelectorNode("SelectorAtaque");
+        SecVidaAtaque = BT.CreateSequenceNode("SecVidaAtaque", false);
+        SuficienteVida = BT.CreateLeafNode("SuficienteVida", SuficienteVidaAction, SuficienteVidaSuccessCheck);
+        Atacar = BT.CreateLeafNode("Atacar", AtacarAction, AtacarSuccessCheck);
+        DecisionPocaVida = BT.CreateSelectorNode("DecisionPocaVida");
+        SecPocaVida = BT.CreateSequenceNode("SecPocaVida", false);
+        EnemigoPocaVida = BT.CreateLeafNode("EnemigoPocaVida", EnemigoPocaVidaAction, EnemigoPocaVidaSuccessCheck);
+        AtacarPocaVida = BT.CreateLeafNode("AtacarPocaVida", AtacarAction, AtacarSuccessCheck);
+        Auxilio = BT.CreateLeafNode("Auxilio", AuxilioAction, AuxilioSuccessCheck);
+        DecisionMovimiento = BT.CreateSelectorNode("DecisionMovimiento");
+        SecVida = BT.CreateSequenceNode("SecVida", false);
+        NoSuficienteVida = BT.CreateLeafNode("NoSuficienteVida", NoSuficienteVidaAction, NoSuficienteVidaSuccessCheck);
+        DecisionObjVida = BT.CreateSelectorNode("DecisionObjVida");
+        SecVidaGenerada = BT.CreateSequenceNode("SecVidaGenerada", false);
+        VidaGenerada = BT.CreateLeafNode("VidaGenerada", VidaGeneradaAction, VidaGeneradaSuccessCheck);
+        MoverseVida = BT.CreateLeafNode("MoverseVida", MoverseVidaAction, MoverseVidaSuccessCheck);
+        AuxilioNoOBjVida = BT.CreateLeafNode("AuxilioNoOBjVida", AuxilioAction, AuxilioSuccessCheck);
+        SecInspirar = BT.CreateSequenceNode("SecInspirar", false);
+        EspecialCargado = BT.CreateLeafNode("EspecialCargado", EspecialCargadoAction, EspecialCargadoSuccessCheck);
+        DecisionInspirar = BT.CreateSelectorNode("DecisionInspirar");
+        ComprobarInspirar = BT.CreateSequenceNode("ComprobarInspirar", false);
+        AliadoARango = BT.CreateLeafNode("AliadoARango", AliadoARangoAction, AliadoARangoSuccessCheck);
+        Inspirar = BT.CreateLeafNode("Inspirar", InspirarAction, InspirarSuccessCheck);
+        MoverAAliado = BT.CreateLeafNode("MoverAAliado", MoverAAliadoAction, MoverAAliadoSuccessCheck);
+        DecisionMoverse = BT.CreateSelectorNode("DecisionMoverse");
+        SecTorre = BT.CreateSequenceNode("SecTorre", false);
+        TorreAsequible = BT.CreateLeafNode("TorreAsequible", TorreAsequibleAction, TorreAsequibleSuccessCheck);
+        TorreVacia = BT.CreateLeafNode("TorreVacia", TorreVaciaAction, TorreVaciaSuccessCheck);
+        SubirTorre = BT.CreateLeafNode("SubirTorre", SubirTorreAction, SubirTorreSuccessCheck);
+        MoverseEnemigo = BT.CreateLeafNode("MoverseEnemigo", MoverseAction, MoverseSuccessCheck);
 
-        LeafNode enemigoProvocandoPerception = BT.CreateLeafNode("EnemigoProvocando", EnemigoProvocandoAction, EnemigoProvocandoSuccessCheck);
-        SelectorNode decisionProvocando = BT.CreateSelectorNode("DecisionProvocando");
-        provocandoSecuencia.AddChild(enemigoProvocandoPerception);
-        provocandoSecuencia.AddChild(decisionProvocando);
+        LoopDecoratorNode mainLoop = BT.CreateLoopNode("loop", RootSelector);
 
-        SequenceNode secuenciaProvocando = BT.CreateSequenceNode("SecuenciaProvocando", false);
-        LeafNode moverseAccion = BT.CreateLeafNode("Moverse", MoverseEnemigoAction, MoverseEnemigoSuccessCheck);
-        decisionProvocando.AddChild(secuenciaProvocando);
-        decisionProvocando.AddChild(moverseAccion);
+        // Child adding
+        RootSelector.AddChild(ProvocandoSec);
+        RootSelector.AddChild(EnemigoARangoSec);
+        RootSelector.AddChild(DecisionMovimiento);
 
-        LeafNode enemigoRangoPercepcion = BT.CreateLeafNode("EnemigoRango", EnemigoARangoAction, EnemigoARangoSuccessCheck);
-        LeafNode atacarAccion = BT.CreateLeafNode("Atacar", AtacarAction, AtacarSuccessCheck);
-        secuenciaProvocando.AddChild(enemigoRangoPercepcion);
-        secuenciaProvocando.AddChild(atacarAccion);
-        #endregion
+        ProvocandoSec.AddChild(EnemigoProvocando);
+        ProvocandoSec.AddChild(DecisionProvocando);
 
-        #region Segunda rama
-        SequenceNode enemigoARangoSecuencia = BT.CreateSequenceNode("EnemigoARangoSec", false);
+        DecisionProvocando.AddChild(SecuenciaProvocando);
+        DecisionProvocando.AddChild(Moverse);
 
-        //LeafNode enemigoRangoPercepcion = BT.CreateLeafNode("EnemigoRango", EnemigoARangoAction, EnemigoARangoSuccessCheck);
-        SelectorNode decisionEnemigoARango = BT.CreateSelectorNode("DecisionProvocando");
-        enemigoARangoSecuencia.AddChild(enemigoRangoPercepcion);
-        enemigoARangoSecuencia.AddChild(decisionEnemigoARango);
+        SecuenciaProvocando.AddChild(EnemigoRango);
+        SecuenciaProvocando.AddChild(AtacarProvocado);
 
+        EnemigoARangoSec.AddChild(EnemigoRangoAtaque);
+        EnemigoARangoSec.AddChild(SelectorAtaque);
 
-        SequenceNode secuenciaSuficienteVida = BT.CreateSequenceNode("SecuenciaProvocando", false);
-        decisionEnemigoARango.AddChild(secuenciaSuficienteVida);
+        SelectorAtaque.AddChild(SecVidaAtaque);
+        SelectorAtaque.AddChild(DecisionPocaVida);
 
-        LeafNode suficienteVidaPerception = BT.CreateLeafNode("SuficienteVida", SuficienteVidaAction, SuficienteVidaSuccessCheck);
-        //LeafNode atacarAccion = BT.CreateLeafNode("Atacar", AtacarAction, AtacarSuccessCheck);
-        secuenciaSuficienteVida.AddChild(suficienteVidaPerception);
-        secuenciaSuficienteVida.AddChild(atacarAccion);
+        SecVidaAtaque.AddChild(SuficienteVida);
+        SecVidaAtaque.AddChild(Atacar);
 
+        DecisionPocaVida.AddChild(SecPocaVida);
+        DecisionPocaVida.AddChild(Auxilio);
 
-        SelectorNode decisionEnemigoPocaVida = BT.CreateSelectorNode("decisionEnemigoPocaVida");
-        decisionEnemigoARango.AddChild(decisionEnemigoPocaVida);
+        SecPocaVida.AddChild(EnemigoPocaVida);
+        SecPocaVida.AddChild(AtacarPocaVida);
 
-        SequenceNode secuenciaEnemigoPocaVida = BT.CreateSequenceNode("secuenciaEnemigoPocaVida", false);
-        decisionEnemigoPocaVida.AddChild(secuenciaEnemigoPocaVida);
-        LeafNode enemigoPocaVidaPercerpcion = BT.CreateLeafNode("EnemigoPocaVida", EnemigoPocaVidaAction, EnemigoPocaVidaSuccessCheck);
-        //LeafNode atacarAccion = BT.CreateLeafNode("Atacar", AtacarAction, AtacarSuccessCheck);
-        secuenciaEnemigoPocaVida.AddChild(enemigoPocaVidaPercerpcion);
-        secuenciaEnemigoPocaVida.AddChild(atacarAccion);
-        LeafNode pedirAuxilioAccion = BT.CreateLeafNode("PedirAuxilio", PedirAuxilioAction, PedirAuxilioSuccessCheck);
-        decisionEnemigoPocaVida.AddChild(pedirAuxilioAccion);
+        DecisionMovimiento.AddChild(SecVida);
+        DecisionMovimiento.AddChild(SecInspirar);
+        DecisionMovimiento.AddChild(MoverseEnemigo);
 
-        #endregion
+        SecVida.AddChild(NoSuficienteVida);
+        SecVida.AddChild(DecisionObjVida);
 
-        #region Tercera rama
-        SelectorNode noSuficienteVidaSelector = BT.CreateSelectorNode("NoSuficienteVidaSelec");
+        DecisionObjVida.AddChild(SecVidaGenerada);
+        DecisionObjVida.AddChild(AuxilioNoOBjVida);
 
-        #region Subrama 1
-        SequenceNode noSuficienteVidaSecuencia = BT.CreateSequenceNode("NoSuficienteVidaSec", false);
-        noSuficienteVidaSelector.AddChild(noSuficienteVidaSecuencia);
+        SecVidaGenerada.AddChild(VidaGenerada);
+        SecVidaGenerada.AddChild(MoverseVida);
 
-        LeafNode noSuficienteVidaPerception = BT.CreateLeafNode("NoSuficienteVida", NoSuficienteVidaAction, NoSuficienteVidaSuccessCheck);
-        SelectorNode vidageneradaSelector = BT.CreateSelectorNode("VidageneradaSelec");
-        noSuficienteVidaSecuencia.AddChild(noSuficienteVidaPerception);
-        noSuficienteVidaSecuencia.AddChild(vidageneradaSelector);
+        SecInspirar.AddChild(EspecialCargado);
+        SecInspirar.AddChild(DecisionInspirar);
 
-        SequenceNode vidaGeneradaSecuencia = BT.CreateSequenceNode("VidaGeneradaSec", false);
-        //LeafNode pedirAuxilioAccion = BT.CreateLeafNode("PedirAuxilioVida", PedirAuxilioAction, PedirAuxilioSuccessCheck);
-        vidageneradaSelector.AddChild(vidaGeneradaSecuencia);
-        vidageneradaSelector.AddChild(pedirAuxilioAccion);
+        DecisionInspirar.AddChild(ComprobarInspirar);
+        DecisionInspirar.AddChild(MoverAAliado);
 
-        LeafNode vidaGeneradaPerception = BT.CreateLeafNode("VidaGenerada", VidaGeneradaAction, VidaGeneradaSuccessCheck);
-        LeafNode moverseVidaAccion = BT.CreateLeafNode("MoverseVida", MoverseVidaAction, MoverseVidaSuccessCheck);
-        vidaGeneradaSecuencia.AddChild(vidaGeneradaPerception);
-        vidaGeneradaSecuencia.AddChild(moverseVidaAccion);
-        #endregion
+        ComprobarInspirar.AddChild(AliadoARango);
+        ComprobarInspirar.AddChild(Inspirar);
 
-        #region Subrama 2
-        SequenceNode especialCargadoSecuencia = BT.CreateSequenceNode("EspecialCargadoSec", false);
-        noSuficienteVidaSelector.AddChild(especialCargadoSecuencia);
+        //DecisionMoverse.AddChild(SecTorre);
+        //DecisionMoverse.AddChild(MoverseEnemigo);
 
-        LeafNode especialCargadoPerception = BT.CreateLeafNode("EspecialCargado", EspecialCargadoAction, EspecialCargadoSuccessCheck);
-        LeafNode inspirarAccion = BT.CreateLeafNode("Inspirar", InspirarAction, InspirarSuccessCheck);
-        especialCargadoSecuencia.AddChild(especialCargadoPerception);
-        especialCargadoSecuencia.AddChild(inspirarAccion);
-        #endregion
+        //SecTorre.AddChild(TorreAsequible);
+        //SecTorre.AddChild(TorreVacia);
+        //SecTorre.AddChild(SubirTorre);
 
-        #region Subrama 3
-        SelectorNode torreAsequibleSelector = BT.CreateSelectorNode("TorreAsequibleSelec");
-        noSuficienteVidaSelector.AddChild(torreAsequibleSelector);
+        // SetRoot
+        BT.SetRootNode(RootSelector);
 
-        SequenceNode torreAsequibleSecuencia = BT.CreateSequenceNode("TorreAsequibleSec", false);
-        LeafNode moverseEnemigoAccion = BT.CreateLeafNode("Moverse", MoverseEnemigoAction, MoverseEnemigoSuccessCheck);
-        torreAsequibleSelector.AddChild(torreAsequibleSecuencia);
-        torreAsequibleSelector.AddChild(moverseEnemigoAccion);
-
-
-        LeafNode torreAsequiblePercepcion = BT.CreateLeafNode("TorreAsequible", TorreAsequibleAction, TorreAsequibleSuccessCheck);
-        LeafNode torreVaciaPercepcion = BT.CreateLeafNode("TorreVacia", TorreVaciaAction, TorreVaciaSuccessCheck);
-        LeafNode subirTorreAccion = BT.CreateLeafNode("SubirTorre", SubirTorreAction, SubirTorreSuccessCheck);
-        torreAsequibleSecuencia.AddChild(torreAsequiblePercepcion);
-        torreAsequibleSecuencia.AddChild(torreVaciaPercepcion);
-        torreAsequibleSecuencia.AddChild(subirTorreAccion);
-        #endregion
-
-        #endregion
-
-        LoopDecoratorNode mainLoop = BT.CreateLoopNode("loop", nodoRoot);
-
-        nodoRoot.AddChild(provocandoSecuencia);
-        nodoRoot.AddChild(enemigoARangoSecuencia);
-        nodoRoot.AddChild(noSuficienteVidaSelector);
-
-        // Establecer RaÃ­z
-        BT.SetRootNode(nodoRoot);
     }
 
-    #region Provocado Secuencia
-    private void EnemigoProvocandoAction() { }
+
+    /* ACCIONES */
+
+    #region Provocando Secuencia
+    private void EnemigoProvocandoAction()
+    {
+
+    }
 
     private ReturnValues EnemigoProvocandoSuccessCheck()
     {
-        if (GetComponent<PersonajeController>().AlguienProvocando())
-        {
-            return ReturnValues.Succeed;
-        }
-        else
-        {
-            return ReturnValues.Failed;
-        }
-
-        //return ReturnValues.Failed;
-
-    }
-
-    private void EnemigoARangoProvocandoAction(){ }
-    private ReturnValues EnemigoARangoProvocandoSuccessCheck()
-    {
-        enemigo = GetComponent<RangerController>().GetPersonaje().EnemigoARango();
-
-        if (enemigo != null)
+        if (GetComponent<RangerController>().AlguienProvocando())
         {
             return ReturnValues.Succeed;
         }
@@ -191,31 +216,88 @@ public class BTRanger : BTAbstracto
     }
     #endregion
 
-    #region Especial Secuencia
-    private void EspecialCargadoAction() { }
+    #region Inspirar Secuencia
+    private void EspecialCargadoAction()
+    {
+
+    }
 
     private ReturnValues EspecialCargadoSuccessCheck()
     {
-        /*if (GetComponent<PersonajeController>().tengoAtaqueEspecial())
+        if (GetComponent<RangerController>().tengoAtaqueEspecial())
         {
-            Debug.Log(gameObject.name + " Especial cargado");
             return ReturnValues.Succeed;
         }
         else
         {
             return ReturnValues.Failed;
-        }*/
+        }
+    }
 
+    private void AliadoARangoAction()
+    {
+        
+    }
+
+    private ReturnValues AliadoARangoSuccessCheck()
+    {
+        var aliado = GetComponent<RangerController>().GetPersonaje() as Ranger;
+        this.aliadosCerca = aliado.AliadoARango();
+        if (aliadosCerca)
+        {
+            return ReturnValues.Succeed;
+        }
+        else
+        {
+            return ReturnValues.Failed;
+        }
+    }
+
+    private void InspirarAction()
+    {
+        GetComponent<RangerController>().Inspirar();
+
+        GetComponent<RangerController>().FinTurno();
+        GetBT().Active = false;
+    }
+
+    private ReturnValues InspirarSuccessCheck()
+    {
+        StartCoroutine(muestraBocadillo(true, "Curo"));
         return ReturnValues.Succeed;
     }
 
-    private void InspirarAction() { }
-    private ReturnValues InspirarSuccessCheck() { return ReturnValues.Succeed; }
+    private void MoverAAliadoAction()
+    {
+        var aliado = GetComponent<RangerController>().getAliadoCercano();
+        GetComponent<RangerController>().Moverse(aliado.transform.position);
+
+        GetComponent<RangerController>().FinTurno();
+    }
+
+    private ReturnValues MoverAAliadoSuccessCheck()
+    {
+        var aliado = GetComponent<RangerController>().GetPersonaje() as Ranger;
+        this.aliadosCerca = aliado.AliadoARango();
+        if (aliadosCerca)
+        {
+            return ReturnValues.Failed;
+        }
+        else
+        {
+            StartCoroutine(muestraBocadillo(true, "Voy a Aliado"));
+            return ReturnValues.Succeed;
+        }
+    }
     #endregion
 
     #region Atacar Secuencia
-    private void EnemigoARangoAction() { }
-    private ReturnValues EnemigoARangoSuccessCheck()
+    private void EnemigoRangoAction()
+    {
+
+    }
+
+    private ReturnValues EnemigoRangoSuccessCheck()
     {
         enemigo = GetComponent<RangerController>().GetPersonaje().EnemigoARango();
 
@@ -227,13 +309,16 @@ public class BTRanger : BTAbstracto
         {
             return ReturnValues.Failed;
         }
-        //return ReturnValues.Succeed;
     }
 
-    private void SuficienteVidaAction() { }
+    private void SuficienteVidaAction()
+    {
+
+    }
+
     private ReturnValues SuficienteVidaSuccessCheck()
     {
-        if (GetComponent<RangerController>().GetPersonaje().GetVida() > 20)
+        if (GetComponent<RangerController>().GetPersonaje().GetVida() > 40)
         {
             return ReturnValues.Succeed;
         }
@@ -246,24 +331,33 @@ public class BTRanger : BTAbstracto
     private void AtacarAction()
     {
         Debug.Log(gameObject.name + " ataca");
-        GetComponent<RangerController>().GetPersonaje().Atacar(enemigo);
+        int vidaEnemigo = GetComponent<RangerController>().GetPersonaje().Atacar(enemigo);
         Debug.Log(enemigo.name + " tiene vida: " + enemigo.GetPersonaje().GetVida());
 
-        GetComponent<PersonajeController>().FinTurno();
+        if (vidaEnemigo == 0)
+        {
+            enemigo.GetComponent<PersonajeController>().EstoyMuerto();
+        }
+
+        GetComponent<RangerController>().FinTurno();
         this.GetBT().Active = false;
-        //GetComponent<PersonajeController>().FinTurno();
     }
+
     private ReturnValues AtacarSuccessCheck()
     {
+        StartCoroutine(muestraBocadillo(true, "Ataque"));
         return ReturnValues.Succeed;
     }
 
-    private void EnemigoPocaVidaAction() { }
+    private void EnemigoPocaVidaAction()
+    {
+
+    }
 
     private ReturnValues EnemigoPocaVidaSuccessCheck()
     {
         if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <
-            GetComponent<RangerController>().GetPersonaje().GetVida())
+             GetComponent<RangerController>().GetPersonaje().GetVida())
         {
             return ReturnValues.Succeed;
         }
@@ -273,44 +367,46 @@ public class BTRanger : BTAbstracto
         }
     }
 
-    private void PedirAuxilioAction()
+    private void AuxilioAction()
     {
+        Debug.Log("Socorro, que me pegan");
 
-        var aliado = GetComponent<PersonajeController>().getAliadoCercano();
+        var aliado = GetComponent<RangerController>().getAliadoCercano();
         GetComponent<RangerController>().Moverse(aliado.transform.position);
-        GetComponent<PersonajeController>().pidiendoAuxilio();
+        GetComponent<RangerController>().pidiendoAuxilio();
         //GetComponent<PersonajeController>().FinTurno();
         this.GetBT().Active = false;
     }
-    private ReturnValues PedirAuxilioSuccessCheck()
-    {
-        /*if (!GetComponent<PersonajeController>().pidoAuxilio())
+
+    private ReturnValues AuxilioSuccessCheck()
+    {   
+        if (!GetComponent<RangerController>().pidoAuxilio())
         {
-            Debug.Log(gameObject.name+ " Pido auxilio");
+            StartCoroutine(muestraBocadillo(true, "Auxilio"));
+            Debug.Log(gameObject.name + " Pido auxilio");
             return ReturnValues.Succeed;
         }
         else
         {
             return ReturnValues.Failed;
-        }*/
-
-        return ReturnValues.Succeed;
+        }
     }
     #endregion
 
     #region Moverse Secuencia
-    private void MoverseEnemigoAction()
+    private void MoverseAction()
     {
-        var enemigo = GetComponent<PersonajeController>().getEnemigoObjetivo();
+        var enemigo = GetComponent<RangerController>().getEnemigoObjetivo();
 
         GetComponent<RangerController>().Moverse(enemigo.transform.position);
 
 
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<RangerController>().FinTurno();
         this.GetBT().Active = false;
     }
-    private ReturnValues MoverseEnemigoSuccessCheck()
+
+    private ReturnValues MoverseSuccessCheck()
     {
         enemigo = GetComponent<RangerController>().GetPersonaje().EnemigoARango();
 
@@ -320,16 +416,19 @@ public class BTRanger : BTAbstracto
         }
         else
         {
+            StartCoroutine(muestraBocadillo(true, "Voy a Enemigo"));
             return ReturnValues.Succeed;
         }
-
-        //return ReturnValues.Succeed;
     }
 
-    private void NoSuficienteVidaAction() { }
+    private void NoSuficienteVidaAction()
+    {
+
+    }
+
     private ReturnValues NoSuficienteVidaSuccessCheck()
     {
-        if (GetComponent<RangerController>().GetPersonaje().GetVida() <= 20)
+        if (GetComponent<RangerController>().GetPersonaje().GetVida() <= 40)
         {
             return ReturnValues.Succeed;
         }
@@ -339,7 +438,11 @@ public class BTRanger : BTAbstracto
         }
     }
 
-    private void VidaGeneradaAction() { }
+    private void VidaGeneradaAction()
+    {
+
+    }
+
     private ReturnValues VidaGeneradaSuccessCheck()
     {
         if (GameManager.hayObj)
@@ -354,27 +457,51 @@ public class BTRanger : BTAbstracto
 
     private void MoverseVidaAction()
     {
-
         var movimientoManager = GetComponent<RangerController>();
 
         movimientoManager.Moverse(GameManager.objetivo);
 
-        GetComponent<PersonajeController>().FinTurno();
+        GetComponent<RangerController>().FinTurno();
         this.GetBT().Active = false;
     }
+
     private ReturnValues MoverseVidaSuccessCheck()
     {
+        StartCoroutine(muestraBocadillo(true, "Voy a Vida"));
         return ReturnValues.Succeed;
     }
-
-    private void TorreAsequibleAction() { }
-    private ReturnValues TorreAsequibleSuccessCheck() { return ReturnValues.Succeed; }
-
-    private void TorreVaciaAction() { }
-    private ReturnValues TorreVaciaSuccessCheck() { return ReturnValues.Succeed; }
-
-    private void SubirTorreAction() { }
-
-    private ReturnValues SubirTorreSuccessCheck() { return ReturnValues.Succeed; }
     #endregion
+
+    private void TorreAsequibleAction()
+    {
+
+    }
+
+    private ReturnValues TorreAsequibleSuccessCheck()
+    {
+        //Write here the code for the success check for TorreAsequible
+        return ReturnValues.Failed;
+    }
+
+    private void TorreVaciaAction()
+    {
+
+    }
+
+    private ReturnValues TorreVaciaSuccessCheck()
+    {
+        //Write here the code for the success check for TorreVacia
+        return ReturnValues.Failed;
+    }
+
+    private void SubirTorreAction()
+    {
+
+    }
+
+    private ReturnValues SubirTorreSuccessCheck()
+    {
+        //Write here the code for the success check for SubirTorre
+        return ReturnValues.Failed;
+    }
 }

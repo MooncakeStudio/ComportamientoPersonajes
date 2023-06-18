@@ -8,14 +8,6 @@ public class Mele : Personaje
     public Mele(int vida, int ataque, string faccion):base(vida, ataque, faccion) { }
     public Mele(int vida, int ataque, string faccion, int x, int y):base(vida,ataque,faccion, x, y) { }
 
-    public override int Atacar(PersonajeController enemigo)
-    {
-        var enemigoAux = enemigo.GetPersonaje();
-        enemigoAux.Herida(this.ataque);
-
-        return enemigo.GetPersonaje().GetVida();
-    }
-
     public override PersonajeController EnemigoARango()
     {
         for (int i = -1; i <= 1; i++)

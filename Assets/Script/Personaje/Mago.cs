@@ -12,14 +12,6 @@ public class Mago : Personaje
     public int GetCuracion() { return this.VidaCurar; }
     public void SetCuracion(int VidaCurar) { this.VidaCurar = VidaCurar; }
 
-    public override int Atacar(PersonajeController enemigo)
-    {
-        var enemigoAux = enemigo.GetPersonaje();
-        enemigoAux.Herida(this.ataque);
-
-        return enemigo.GetPersonaje().GetVida();
-    }
-
     public override PersonajeController EnemigoARango()
     {
         for (int i = -3; i <= 3; i++)

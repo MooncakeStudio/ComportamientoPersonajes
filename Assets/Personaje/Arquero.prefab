@@ -1702,6 +1702,8 @@ GameObject:
   - component: {fileID: 8975388156444118590}
   - component: {fileID: 7676986010393081389}
   - component: {fileID: 5764230152689693066}
+  - component: {fileID: 8378907670122134574}
+  - component: {fileID: 4976144304864474240}
   m_Layer: 8
   m_Name: Arquero
   m_TagString: Equipo1
@@ -1778,6 +1780,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &8378907670122134574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975388156444118591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f0beaef99b8194ea3df786584fea70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aliadoAuxilio: 0
+  enemigoProvocando: 0
+  velocidad: 2.5
+  accionImage: {fileID: 21300000, guid: 4eb49008b6307184e8344ed9e7d5d3ec, type: 3}
+  percepcionImage: {fileID: 21300000, guid: 9b8fcfd4d966e824a81e56b4d0b54339, type: 3}
+  VidaPoner: 100
+  ataque: 15
+--- !u!114 &4976144304864474240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975388156444118591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d70a785ff58d84289a43a4f8b2b1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objetivo: {x: 0, y: 0, z: 0}
 --- !u!1 &8991750757990402423
 GameObject:
   m_ObjectHideFlags: 0

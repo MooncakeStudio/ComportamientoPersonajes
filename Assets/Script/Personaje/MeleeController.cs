@@ -6,7 +6,6 @@ public class MeleeController : PersonajeController
 {
 
     bool provocando = false;
-    bool aliadoProvocando = false;
 
     //Delegados
     public delegate void Provocando(GameObject sender);
@@ -16,7 +15,7 @@ public class MeleeController : PersonajeController
 
     protected override void Awake()
     {
-        this.personaje = new Mele(VidaPoner,ataque,"");
+        this.personaje = new Mele();
         this.personaje.SetVida(VidaPoner);
         personaje.SetAtaque(ataque);
 
@@ -32,9 +31,6 @@ public class MeleeController : PersonajeController
     {
         base.FixedUpdate();
     }
-
-    public bool aliadoEstaProvocando() { return aliadoProvocando; }
-
 
     public void Provocar()
     {

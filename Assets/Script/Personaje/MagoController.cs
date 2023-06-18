@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MagoController : PersonajeController
 {
-    bool aliadoProvocando = false;
-
     [SerializeField] private int VidaPoner;
 
     protected override void Awake()
@@ -25,8 +23,6 @@ public class MagoController : PersonajeController
     {
         base.FixedUpdate();
     }
-
-    public bool aliadoEstaProvocando() { return aliadoProvocando; }
 
     public void Curar(PersonajeController aliado)
     {
