@@ -167,19 +167,19 @@ public class PersonajeController : MonoBehaviour
         }
     }
 
-    IEnumerator cargarEspecial()
+    public IEnumerator cargarEspecial()
     {
         if (!especialCargado)
         {
             yield return new WaitForSeconds(5);
             especialCargado = true;
         }
-        else
-        {
+        //else
+        //{
 
-        }
+        //}
 
-        yield return new WaitForSeconds(2);
-        StartCoroutine(cargarEspecial());
+        //yield return new WaitForSeconds(2);
+        //StartCoroutine(cargarEspecial());
     }
 }

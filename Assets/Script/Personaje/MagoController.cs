@@ -38,5 +38,7 @@ public class MagoController : PersonajeController
         Mathf.Clamp(aliado.GetPersonaje().GetVida(), 0, 100);
         Debug.Log("Vida de :" + aliado.gameObject.name + " tras curar es: " + aliado.GetPersonaje().GetVida());
 
+        especialCargado = false;
+        cargarEspecial();
     }
 }
