@@ -40,4 +40,11 @@ public class BTAbstracto : MonoBehaviour
     {
         StartCoroutine(ejecutarArbol());
     }
+
+    public IEnumerator muestraBocadillo(bool accion, string texto)
+    {
+        GetComponent<PersonajeController>().BocadilloOn(accion, texto);
+        yield return new WaitForSeconds(0.7f);
+        GetComponent<PersonajeController>().BocadilloOff();
+    }
 }
