@@ -1209,7 +1209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &127213606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,7 +1263,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &181928702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1300,6 +1300,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &194634593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 194634595}
+  - component: {fileID: 194634594}
+  m_Layer: 0
+  m_Name: User2.2
+  m_TagString: Equipo2
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &194634594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194634593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534763d9de02052438631064a14ccdda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ejercito:
+  - {fileID: 73630202}
+  - {fileID: 558515505}
+  esMiTurno: 0
+  ejercitoEnemigo:
+  - {fileID: 492800480}
+  - {fileID: 1119811851}
+  enemigosProvocando: []
+  aliadoPideAuxilio:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &194634595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194634593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.70868635, y: 1.9244318, z: -0.99384594}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &200948010
 GameObject:
@@ -3822,6 +3876,60 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &605752800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 605752802}
+  - component: {fileID: 605752801}
+  m_Layer: 0
+  m_Name: User1.2
+  m_TagString: Equipo1
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &605752801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605752800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534763d9de02052438631064a14ccdda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ejercito:
+  - {fileID: 492800480}
+  - {fileID: 1119811851}
+  esMiTurno: 0
+  ejercitoEnemigo:
+  - {fileID: 73630202}
+  - {fileID: 558515505}
+  enemigosProvocando: []
+  aliadoPideAuxilio:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &605752802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605752800}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.70868635, y: 1.9244318, z: -0.99384594}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &698205494 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6880901488789346670, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
@@ -5710,8 +5818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75637d31eace1f644a1cc5a7fd27d013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: {fileID: 127213605}
-  user2: {fileID: 181928701}
+  user: {fileID: 605752800}
+  user2: {fileID: 194634593}
   worldGrid: {fileID: 1948502661}
   a_est: {fileID: 2019278634}
   objeto: {fileID: 8881863970567463873, guid: 6f7106b036a211b4fb776e275a03e56f, type: 3}

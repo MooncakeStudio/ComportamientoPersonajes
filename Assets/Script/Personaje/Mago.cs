@@ -22,9 +22,9 @@ public class Mago : Personaje
 
     public override PersonajeController EnemigoARango()
     {
-        for (int i = -1; i <= 1; i++)
+        for (int i = -3; i <= 3; i++)
         {
-            for (int j = -1; j <= 1; j++)
+            for (int j = -3; j <= 3; j++)
             {
                 int xAux = x + i;
                 int yAux = y + j;
@@ -49,9 +49,9 @@ public class Mago : Personaje
 
     public PersonajeController AliadoARango()
     {
-        for (int i = -1; i <= 1; i++)
+        for (int i = -3; i <= 3; i++)
         {
-            for (int j = -1; j <= 1; j++)
+            for (int j = -3; j <= 3; j++)
             {
                 int xAux = x + i;
                 int yAux = y + j;
