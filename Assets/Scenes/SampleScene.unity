@@ -825,7 +825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3929205648327537884, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3929205648327537884, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1162,7 +1162,7 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
-  VidaPoner: 30
+  VidaPoner: 100
 --- !u!136 &73630205
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1706,7 +1706,7 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
-  VidaPoner: 30
+  VidaPoner: 100
 --- !u!114 &88772096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1914,7 +1914,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &200948010
 GameObject:
@@ -3024,7 +3024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6068054994472305620, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6068054994472305620, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3241,7 +3241,7 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
-  VidaPoner: 30
+  VidaPoner: 100
 --- !u!136 &492800483
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4039,7 +4039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3929205648327537884, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 3929205648327537884, guid: 44736bd0a8b35b1438aa1c3f8b96b977, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4376,7 +4376,7 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
-  VidaPoner: 30
+  VidaPoner: 100
 --- !u!136 &558515508
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4493,7 +4493,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &683412758 stripped
 GameObject:
@@ -4515,7 +4515,7 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
-  VidaPoner: 30
+  VidaPoner: 100
 --- !u!114 &683412760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6075,7 +6075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6068054994472305620, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6068054994472305620, guid: 8b0ed2bc94ddb3b43866e9d4f3f135d9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6292,7 +6292,7 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
-  VidaPoner: 30
+  VidaPoner: 100
 --- !u!136 &1119811854
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6999,7 +6999,7 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
-  VidaPoner: 30
+  VidaPoner: 100
 --- !u!114 &1263181749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7556,7 +7556,7 @@ MonoBehaviour:
   aliadoAuxilio: 0
   enemigoProvocando: 0
   velocidad: 0
-  VidaPoner: 30
+  VidaPoner: 100
 --- !u!114 &1869219083
 MonoBehaviour:
   m_ObjectHideFlags: 0

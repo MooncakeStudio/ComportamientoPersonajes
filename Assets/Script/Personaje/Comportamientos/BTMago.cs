@@ -92,11 +92,11 @@ public class BTMago : BTAbstracto
         secuenciaProvocando.AddChild(atacarAccion);
 
         curarSecuencia.AddChild(aliadoAuxilioPerception);
+        curarSecuencia.AddChild(especialCargadoPerception);
         curarSecuencia.AddChild(selectorCurar);
         selectorCurar.AddChild(secuenciaCura);
         selectorCurar.AddChild(moverseAliadoAccion);
         secuenciaCura.AddChild(aliadoRangoPerception);
-        secuenciaCura.AddChild(especialCargadoPerception);
         secuenciaCura.AddChild(curarAccion);
 
         ataqueSecuencia.AddChild(enemigoRangoAtacarPerception);
@@ -130,7 +130,7 @@ public class BTMago : BTAbstracto
 
     #region Provocado Secuencia
     private void EnemigoProvocandoAction() { }
-    private ReturnValues EnemigoProvocandoSuccessCheck() 
+    private ReturnValues EnemigoProvocandoSuccessCheck()
     {
         if (GetComponent<MagoController>().AlguienProvocando())
         {
@@ -143,7 +143,7 @@ public class BTMago : BTAbstracto
     }
 
     private void EnemigoARangoAction() { }
-    private ReturnValues EnemigoARangoSuccessCheck() 
+    private ReturnValues EnemigoARangoSuccessCheck()
     {
         enemigo = GetComponent<MagoController>().GetPersonaje().EnemigoARango();
 
@@ -157,7 +157,7 @@ public class BTMago : BTAbstracto
         }
     }
 
-    private void AtacarAction() 
+    private void AtacarAction()
     {
         Debug.Log(gameObject.name + " ataca");
         int vidaEnemigo = GetComponent<MagoController>().GetPersonaje().Atacar(enemigo);
@@ -173,7 +173,7 @@ public class BTMago : BTAbstracto
     }
     private ReturnValues AtacarSuccessCheck() { return ReturnValues.Succeed; }
 
-    private void MoverseEnemigoAction() 
+    private void MoverseEnemigoAction()
     {
         var enemigo = GetComponent<MagoController>().getEnemigoObjetivo();
 
@@ -182,7 +182,7 @@ public class BTMago : BTAbstracto
         GetComponent<MagoController>().FinTurno();
         this.GetBT().Active = false;
     }
-    private ReturnValues MoverseEnemigoSuccessCheck() 
+    private ReturnValues MoverseEnemigoSuccessCheck()
     {
         enemigo = GetComponent<MagoController>().GetPersonaje().EnemigoARango();
 
@@ -199,7 +199,7 @@ public class BTMago : BTAbstracto
 
     #region Curar Secuencia
     private void AliadoAuxilioAction() { }
-    private ReturnValues AliadoAuxilioSuccessCheck() 
+    private ReturnValues AliadoAuxilioSuccessCheck()
     {
         if (GetComponent<MagoController>().alguienPidiendoAuxilio())
         {
@@ -210,13 +210,13 @@ public class BTMago : BTAbstracto
             return ReturnValues.Failed;
         }
     }
-    
+
     private void AliadoARangoAction() { }
-    private ReturnValues AliadoARangoSuccessCheck() 
+    private ReturnValues AliadoARangoSuccessCheck()
     {
         var aliado = GetComponent<MagoController>().GetPersonaje() as Mago;
         this.aliadoCercano = aliado.AliadoARango();
-        if(aliadoCercano != null)
+        if (aliadoCercano != null)
         {
             return ReturnValues.Succeed;
         }
@@ -227,9 +227,17 @@ public class BTMago : BTAbstracto
     }
 
     private void EspecialCargadoAction() { }
-    private ReturnValues EspecialCargadoSuccessCheck() { return ReturnValues.Succeed; }
+    private ReturnValues EspecialCargadoSuccessCheck() {
+        if (GetComponent<MagoController>().tengoAtaqueEspecial())
+        {
+            return ReturnValues.Succeed;
+        } else
+        {
+            return ReturnValues.Failed;
+        }
+    }
 
-    private void CurarAction() 
+    private void CurarAction()
     {
         GetComponent<MagoController>().Curar(aliadoCercano);
 
@@ -238,7 +246,7 @@ public class BTMago : BTAbstracto
     }
     private ReturnValues CurarSuccessCheck() { return ReturnValues.Succeed; }
 
-    private void MoverseAliadoAction() 
+    private void MoverseAliadoAction()
     {
         var aliado = GetComponent<MagoController>().getAliadoCercano();
         GetComponent<MagoController>().Moverse(aliado.transform.position);
@@ -246,7 +254,7 @@ public class BTMago : BTAbstracto
         GetComponent<MagoController>().FinTurno();
         GetBT().Active = false;
     }
-    private ReturnValues MoverseAliadoSuccessCheck() 
+    private ReturnValues MoverseAliadoSuccessCheck()
     {
         var aliado = GetComponent<MagoController>().GetPersonaje() as Mago;
         this.aliadoCercano = aliado.AliadoARango();
@@ -263,7 +271,7 @@ public class BTMago : BTAbstracto
 
     #region Atacar Secuencia
     private void SuficienteVidaAction() { }
-    private ReturnValues SuficienteVidaSuccessCheck() 
+    private ReturnValues SuficienteVidaSuccessCheck()
     {
         if (GetComponent<MagoController>().GetPersonaje().GetVida() > 20)
         {
@@ -276,7 +284,7 @@ public class BTMago : BTAbstracto
     }
 
     private void EnemigoPocaVidaAction() { }
-    private ReturnValues EnemigoPocaVidaSuccessCheck() 
+    private ReturnValues EnemigoPocaVidaSuccessCheck()
     {
         if (enemigo.GetComponent<PersonajeController>().GetPersonaje().GetVida() <
             GetComponent<MagoController>().GetPersonaje().GetVida())
@@ -289,7 +297,7 @@ public class BTMago : BTAbstracto
         }
     }
 
-    private void PedirAuxilioAction() 
+    private void PedirAuxilioAction()
     {
         var aliado = GetComponent<MagoController>().getAliadoCercano();
         GetComponent<MagoController>().Moverse(aliado.transform.position);
@@ -301,7 +309,7 @@ public class BTMago : BTAbstracto
 
     #region Moverse Secuencia
     private void NoSuficienteVidaAction() { }
-    private ReturnValues NoSuficienteVidaSuccessCheck() 
+    private ReturnValues NoSuficienteVidaSuccessCheck()
     {
         if (GetComponent<MagoController>().GetPersonaje().GetVida() <= 20)
         {
@@ -314,7 +322,7 @@ public class BTMago : BTAbstracto
     }
 
     private void VidaGeneradaAction() { }
-    private ReturnValues VidaGeneradaSuccessCheck() 
+    private ReturnValues VidaGeneradaSuccessCheck()
     {
         if (GameManager.hayObj)
         {
@@ -326,7 +334,7 @@ public class BTMago : BTAbstracto
         }
     }
 
-    private void MoverseVidaAction() 
+    private void MoverseVidaAction()
     {
         var movimientoManager = GetComponent<MagoController>();
 
