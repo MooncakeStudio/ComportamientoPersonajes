@@ -35,7 +35,8 @@ public class MeleeController : PersonajeController
     public void Provocar()
     {
         provocando = true;
-
+        especialCargado=false;
+        cargarEspecial();
         provocandoEvent?.Invoke(gameObject);
     }
 }

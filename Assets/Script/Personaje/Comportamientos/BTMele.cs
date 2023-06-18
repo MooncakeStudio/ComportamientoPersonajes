@@ -89,7 +89,7 @@ public class BTMele : BTAbstracto
 
         LoopDecoratorNode mainLoop = BT.CreateLoopNode("loop", nodoRoot);
 
-        // Añadir hijos Provocando
+        // Aï¿½adir hijos Provocando
         provocandoSecuencia.AddChild(enemigoProvocandoPerception);
         provocandoSecuencia.AddChild(decisionProvocando);
         decisionProvocando.AddChild(secuenciaProvocando);
@@ -97,13 +97,13 @@ public class BTMele : BTAbstracto
         secuenciaProvocando.AddChild(enemigoRangoPercepcion);
         secuenciaProvocando.AddChild(atacarAccion);
 
-        //Añadir hijos Provocar
+        //Aï¿½adir hijos Provocar
         provocarSecuencia.AddChild(aliadoAuxilio);
         provocarSecuencia.AddChild(especialCargado);
         provocarSecuencia.AddChild(SuficienteVida);
         provocarSecuencia.AddChild(provocarAccion);
 
-        //Añadir hijos Ataque
+        //Aï¿½adir hijos Ataque
         ataqueSecuencia.AddChild(EnemigoARango);
         ataqueSecuencia.AddChild(selecAtaque1);
         selecAtaque1.AddChild(secAtaque1);
@@ -115,7 +115,7 @@ public class BTMele : BTAbstracto
         secAtaque2.AddChild(EnemigoPocaVida);
         secAtaque2.AddChild(atacarEnemigo);
 
-        //Añadir hijos moverse
+        //Aï¿½adir hijos moverse
         moverseSelector.AddChild(secMoverse1);
         moverseSelector.AddChild(moverse);
         secMoverse1.AddChild(PocaVida);
@@ -130,7 +130,7 @@ public class BTMele : BTAbstracto
         nodoRoot.AddChild(ataqueSecuencia);
         nodoRoot.AddChild(moverseSelector);
 
-        // Establecer Raíz
+        // Establecer Raï¿½z
         BT.SetRootNode(mainLoop);
 
     }
@@ -174,7 +174,7 @@ public class BTMele : BTAbstracto
 
     private ReturnValues EspecialCargadoSuccessCheck()
     {
-        /*if (GetComponent<PersonajeController>().tengoAtaqueEspecial())
+        if (GetComponent<PersonajeController>().tengoAtaqueEspecial())
         {
             Debug.Log(gameObject.name + " Especial cargado");
             return ReturnValues.Succeed;
@@ -182,9 +182,9 @@ public class BTMele : BTAbstracto
         else
         {
             return ReturnValues.Failed;
-        }*/
+        }
 
-        return ReturnValues.Failed;
+        //return ReturnValues.Failed;
     }
 
     private void SuficienteVidaAction() { }
