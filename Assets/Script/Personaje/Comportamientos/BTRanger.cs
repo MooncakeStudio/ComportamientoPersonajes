@@ -10,8 +10,6 @@ public class BTRanger : BTAbstracto
 
     bool aliadosCerca;
 
-    private BehaviourTreeEngine BT;
-
 
     private SelectorNode RootSelector;
     private SequenceNode ProvocandoSec;
@@ -70,6 +68,7 @@ public class BTRanger : BTAbstracto
     private void Start()
     {
         this.BT.Active = false;
+        StartCoroutine(ejecutarArbol());
     }
 
     public override IEnumerator ejecutarArbol()
@@ -258,13 +257,18 @@ public class BTRanger : BTAbstracto
         GetComponent<RangerController>().Inspirar();
 
         GetComponent<RangerController>().FinTurno();
-        GetBT().Active = false;
+        this.GetBT().Active = false;
     }
 
     private ReturnValues InspirarSuccessCheck()
     {
-        StartCoroutine(muestraBocadillo(true, "Curo"));
+        if(GetComponent<PersonajeController>().tengoAtaqueEspecial()){
+        StartCoroutine(muestraBocadillo(true, "Inspiran"));
         return ReturnValues.Succeed;
+        } else {
+            return ReturnValues.Failed;
+        }
+        
     }
 
     private void MoverAAliadoAction()

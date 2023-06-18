@@ -46,6 +46,8 @@ public class RangerController : PersonajeController
                 {
                     var aliado = GameManager.GetGrid().GetGrid()[xAux, yAux].GetPersonaje();
                     aliado.GetPersonaje().SetInspirado(true);
+                    this.especialCargado = false;
+                    this.cargarEspecial();
                 }
             }
         }
