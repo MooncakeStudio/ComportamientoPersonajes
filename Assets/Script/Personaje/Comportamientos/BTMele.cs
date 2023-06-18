@@ -54,9 +54,9 @@ public class BTMele : BTAbstracto
         LeafNode enemigoProvocandoPerception = BT.CreateLeafNode("EnemigoProvocando", EnemigoProvocandoAction, EnemigoProvocandoSuccessCheck);
         SelectorNode decisionProvocando = BT.CreateSelectorNode("DecisionProvocando");
         SequenceNode secuenciaProvocando = BT.CreateSequenceNode("SecuenciaProvocando", false);
-        LeafNode enemigoRangoPercepcion = BT.CreateLeafNode("EnemigoRango", EnemigoARangoProvocandoAction, EnemigoARangoProvocandoSuccessCheck);
-        LeafNode atacarAccion = BT.CreateLeafNode("Atacar", AtaqueProvocando, AtaqueProvocandoSuccessCheck);
-        LeafNode moverseAccion = BT.CreateLeafNode("Moverse", MoviendoAEnemigo, MoviendoAEnemigoSuccessCheck);
+        LeafNode enemigoRangoPercepcion = BT.CreateLeafNode("EnemigoRango", EnemigoARangoAction, EnemigoARangoSuccessCheck);
+        LeafNode atacarAccion = BT.CreateLeafNode("Atacar", AtacarAction, AtacarSuccessCheck);
+        LeafNode moverseAccion = BT.CreateLeafNode("Moverse", MoverseEnemigoAction, MoverseEnemigoSuccessCheck);
 
         //Nodos Provocar
         LeafNode aliadoAuxilio = BT.CreateLeafNode("AliadoAuxilio", AliadoAuxilioAction, AliadoAuxilioSuccessCheck);
@@ -153,61 +153,6 @@ public class BTMele : BTAbstracto
 
         //return ReturnValues.Failed;
 
-    }
-
-    private void EnemigoARangoProvocandoAction(){ }
-    private ReturnValues EnemigoARangoProvocandoSuccessCheck()
-    {
-        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
-
-        if (enemigo != null)
-        {
-            return ReturnValues.Succeed;
-        }
-        else
-        {
-            return ReturnValues.Failed;
-        }
-    }
-
-    private void MoviendoAEnemigo()
-    {
-        var enemigo = GetComponent<MeleeController>().getEnemigoObjetivo();
-
-        GetComponent<MeleeController>().Moverse(enemigo.transform.position);
-
-
-
-        GetComponent<MeleeController>().FinTurno();
-        this.GetBT().Active = false;
-    }
-
-    private ReturnValues MoviendoAEnemigoSuccessCheck()
-    {
-        enemigo = GetComponent<MeleeController>().GetPersonaje().EnemigoARango();
-
-        if (enemigo != null)
-        {
-            return ReturnValues.Failed;
-        }
-        else
-        {
-            return ReturnValues.Succeed;
-        }
-    }
-
-    private void AtaqueProvocando()
-    {
-        Debug.Log(gameObject.name + " ataca");
-        GetComponent<MeleeController>().GetPersonaje().Atacar(enemigo);
-
-        GetComponent<MeleeController>().FinTurno();
-        this.GetBT().Active = false;
-    }
-
-    private ReturnValues AtaqueProvocandoSuccessCheck()
-    {
-        return ReturnValues.Succeed;
     }
     #endregion
 
