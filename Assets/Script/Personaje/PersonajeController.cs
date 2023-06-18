@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class PersonajeController : MonoBehaviour
@@ -23,6 +25,9 @@ public class PersonajeController : MonoBehaviour
 
     [SerializeField] protected float velocidad;
     private UserController usuarioControlador;
+
+    [SerializeField] public Sprite accionImage;
+    [SerializeField] public Sprite percepcionImage;
 
     //Delegado para auxilio
     public delegate void PidiendoAuxilio(GameObject sender);
@@ -146,7 +151,8 @@ public class PersonajeController : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid), 1 * Time.deltaTime);
             }*/
 
-            if(GameManager.grid.GetGrid()[this.objetivo.xGrid, this.objetivo.yGrid].transitable){
+            if (GameManager.grid.GetGrid()[this.objetivo.xGrid, this.objetivo.yGrid].transitable)
+            {
                 transform.position = GameManager.grid.GetPosicionGlobal(this.objetivo.xGrid, this.objetivo.yGrid);
 
                 GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
@@ -181,5 +187,22 @@ public class PersonajeController : MonoBehaviour
 
         //yield return new WaitForSeconds(2);
         //StartCoroutine(cargarEspecial());
+    }
+
+    public void BocadilloOn(bool accion, string texto)
+    {
+        transform.Find("Canvas").transform.Find("TextoBocadillo").GetComponent<TextMeshProUGUI>().text = texto;
+
+        Sprite selectedSprite = accion ? accionImage : percepcionImage;
+        transform.Find("Canvas").transform.Find("ImagenBocadillo").GetComponent<Image>().sprite = selectedSprite;
+
+        transform.Find("Canvas").transform.Find("TextoBocadillo").gameObject.SetActive(true);
+        transform.Find("Canvas").transform.Find("ImagenBocadillo").gameObject.SetActive(true);
+    }
+
+    public void BocadilloOff()
+    {
+        transform.Find("Canvas").transform.Find("TextoBocadillo").gameObject.SetActive(false);
+        transform.Find("Canvas").transform.Find("ImagenBocadillo").gameObject.SetActive(false);
     }
 }

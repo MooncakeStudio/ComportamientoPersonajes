@@ -171,7 +171,9 @@ public class BTMago : BTAbstracto
         GetComponent<MagoController>().FinTurno();
         this.GetBT().Active = false;
     }
-    private ReturnValues AtacarSuccessCheck() { return ReturnValues.Succeed; }
+    private ReturnValues AtacarSuccessCheck() {
+        StartCoroutine(muestraBocadillo(true, "Ataque"));
+        return ReturnValues.Succeed; }
 
     private void MoverseEnemigoAction()
     {
@@ -192,6 +194,7 @@ public class BTMago : BTAbstracto
         }
         else
         {
+            StartCoroutine(muestraBocadillo(true, "Voy a Enemigo"));
             return ReturnValues.Succeed;
         }
     }
@@ -244,7 +247,10 @@ public class BTMago : BTAbstracto
         GetComponent<MagoController>().FinTurno();
         GetBT().Active = false;
     }
-    private ReturnValues CurarSuccessCheck() { return ReturnValues.Succeed; }
+    private ReturnValues CurarSuccessCheck() {
+        StartCoroutine(muestraBocadillo(true, "Curo"));
+        return ReturnValues.Succeed; 
+    }
 
     private void MoverseAliadoAction()
     {
@@ -264,6 +270,7 @@ public class BTMago : BTAbstracto
         }
         else
         {
+            StartCoroutine(muestraBocadillo(true, "Voy a Aliado"));
             return ReturnValues.Succeed;
         }
     }
@@ -304,7 +311,10 @@ public class BTMago : BTAbstracto
         GetComponent<MagoController>().pidiendoAuxilio();
         this.GetBT().Active = false;
     }
-    private ReturnValues PedirAuxilioSuccessCheck() { return ReturnValues.Succeed; }
+    private ReturnValues PedirAuxilioSuccessCheck() {
+        StartCoroutine(muestraBocadillo(true, "Auxilio"));
+        return ReturnValues.Succeed; 
+    }
     #endregion
 
     #region Moverse Secuencia
@@ -343,7 +353,10 @@ public class BTMago : BTAbstracto
         GetComponent<MagoController>().FinTurno();
         this.GetBT().Active = false;
     }
-    private ReturnValues MoverseVidaSuccessCheck() { return ReturnValues.Succeed; }
+    private ReturnValues MoverseVidaSuccessCheck() {
+        StartCoroutine(muestraBocadillo(true, "Voy a Vida"));
+        return ReturnValues.Succeed; 
+    }
 
     #endregion
 }
