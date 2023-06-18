@@ -142,14 +142,25 @@ public class PersonajeController : MonoBehaviour
             GameManager.grid.GetGrid()[personaje.GetX(), personaje.GetY()].SetPersonaje(null);
 
 
-
             int x = this.objetivo.xGrid;
             int y = this.objetivo.yGrid;
 
+            int rotX = x - personaje.x; //Negativo rota
+            int rotY = y - personaje.y;//
 
             personaje.SetX(x);
             personaje.SetY(y);
 
+            //Rotación del personaje en escenario
+            if (rotX > 0)
+                transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 90, transform.rotation.z));
+            if (rotX < 0)
+                transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 270, transform.rotation.z));
+
+            if (rotY < 0)
+                transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 180, transform.rotation.z));
+            if (rotY > 0)
+                transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, transform.rotation.z));
 
             GameManager.grid.GetGrid()[x, y].SetPersonaje(GetComponent<PersonajeController>());
 
